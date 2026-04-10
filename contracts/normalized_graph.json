@@ -1,0 +1,211 @@
+{
+  "title": "Journey Under the Sea",
+  "version": "1.0",
+  "start_node": "node_1",
+  "nodes": [
+    {
+      "id": "node_1",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c1a",
+          "text": "Dive into the cave",
+          "target": "node_2",
+          "condition": null
+        },
+        {
+          "id": "c1b",
+          "text": "Surface for air",
+          "target": "node_3",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_2",
+      "is_ending": false,
+      "set_state": {
+        "has_torch": true
+      },
+      "choices": [
+        {
+          "id": "c2a",
+          "text": "Go deeper",
+          "target": "node_5",
+          "condition": null
+        },
+        {
+          "id": "c2b",
+          "text": "Use torch",
+          "target": "node_6",
+          "condition": "has_torch == true"
+        }
+      ]
+    },
+    {
+      "id": "node_3",
+      "is_ending": false,
+      "set_state": {
+        "met_volkov": true
+      },
+      "choices": [
+        {
+          "id": "c3a",
+          "text": "Dive back down",
+          "target": "node_9",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_4",
+      "is_ending": false,
+      "set_state": {},
+      "choices": []
+    },
+    {
+      "id": "node_5",
+      "is_ending": false,
+      "set_state": {
+        "found_ruins": true
+      },
+      "choices": [
+        {
+          "id": "c5a",
+          "text": "Explore ruins",
+          "target": "node_10",
+          "condition": null
+        },
+        {
+          "id": "c5b",
+          "text": "Get swept away",
+          "target": "node_4",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_6",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c6a",
+          "text": "Touch the carvings",
+          "target": "node_12",
+          "condition": null
+        },
+        {
+          "id": "c6b",
+          "text": "Swim back",
+          "target": "node_5",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_7",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c7a",
+          "text": "Take the gold",
+          "target": "node_8",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_8",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c8a",
+          "text": "Try to drop it",
+          "target": "node_7",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_9",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c9a",
+          "text": "Escape",
+          "target": "node_10",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_10",
+      "is_ending": true,
+      "set_state": {},
+      "choices": []
+    },
+    {
+      "id": "node_11",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c11a",
+          "text": "Go to node 8",
+          "target": "node_8",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_12",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c12a",
+          "text": "Flee in terror",
+          "target": "node_10",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_13",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c13a",
+          "text": "Open door",
+          "target": "node_14",
+          "condition": "has_keycard == true"
+        }
+      ]
+    },
+    {
+      "id": "node_14",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c14a",
+          "text": "Leave",
+          "target": "node_10",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_15",
+      "is_ending": true,
+      "set_state": {},
+      "choices": []
+    }
+  ]
+}

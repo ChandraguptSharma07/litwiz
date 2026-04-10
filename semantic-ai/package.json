@@ -1,0 +1,21 @@
+{
+  "name": "nve-semantic-ai",
+  "version": "1.0.0",
+  "description": "NVE semantic validation via Hindsight AI — finds narrative errors with no mathematical representation",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "validate": "ts-node src/index.ts"
+  },
+  "dependencies": {
+    "@vectorize-io/hindsight-client": "^0.1.0",
+    "axios": "^1.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}

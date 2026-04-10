@@ -1,11 +1,16 @@
-import Anthropic from '@anthropic-ai/sdk'
+import Groq from 'groq-sdk'
 import type { IngestResult } from './types'
 
-const client = new Anthropic()
+const client = new Groq({
+  apiKey: process.env.GROQ_API_KEY,
+})
 
-// Hard limit on input text — Claude handles ~200k tokens but we want
-// snappy demo-day performance. 12k chars ≈ ~3k tokens, covers a decent
-// excerpt without hitting latency issues.
+// Groq's llama-3.3-70b is fast and handles structured JSON extraction well.
+// The free tier gives ~6000 tokens/min — plenty for demo-day throughput.
+const MODEL = 'llama-3.3-70b-versatile'
+
+// 12k chars ≈ 3k tokens. Stays well within Groq's context window and
+// keeps response latency under ~5s on the free tier.
 const MAX_INPUT_CHARS = 12_000
 
 const SYSTEM_PROMPT = `You are a narrative structure analyst. Your job is to parse a piece of literature and extract its structure as a directed graph that can be validated for continuity errors.
@@ -59,17 +64,16 @@ export async function ingestLiterature(
 
   const userMessage = `${title ? `Title: "${title}"\n\n` : ''}${wasLong ? `[Note: text was truncated to the first ${MAX_INPUT_CHARS} characters for analysis]\n\n` : ''}TEXT TO ANALYZE:\n\n${truncated}`
 
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-6',
+  const response = await client.chat.completions.create({
+    model: MODEL,
     max_tokens: 8192,
-    system: SYSTEM_PROMPT,
-    messages: [{ role: 'user', content: userMessage }],
+    messages: [
+      { role: 'system', content: SYSTEM_PROMPT },
+      { role: 'user', content: userMessage },
+    ],
   })
 
-  const raw = response.content
-    .filter((b) => b.type === 'text')
-    .map((b) => b.text)
-    .join('')
+  const raw = response.choices[0]?.message?.content ?? ''
 
   // Strip any accidental markdown fences
   const cleaned = raw
@@ -81,18 +85,18 @@ export async function ingestLiterature(
 
   try {
     parsed = JSON.parse(cleaned)
-  } catch (err) {
-    // Try to extract JSON object if Claude added any preamble
+  } catch {
+    // Try to extract JSON if the model added any preamble
     const start = cleaned.indexOf('{')
     const end = cleaned.lastIndexOf('}')
     if (start === -1 || end === -1) {
-      throw new Error(`Claude did not return valid JSON. Response started with: ${raw.slice(0, 200)}`)
+      throw new Error(`Model did not return valid JSON. Response started with: ${raw.slice(0, 200)}`)
     }
     parsed = JSON.parse(cleaned.slice(start, end + 1))
   }
 
   if (!parsed.normalized_graph || !parsed.text_dictionary) {
-    throw new Error('Claude response missing normalized_graph or text_dictionary fields')
+    throw new Error('Response missing normalized_graph or text_dictionary fields')
   }
 
   return {

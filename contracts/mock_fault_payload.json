@@ -1,0 +1,75 @@
+{
+  "narrative_title": "Journey Under the Sea",
+  "validated_at": "2025-01-01T12:00:00Z",
+  "structural_faults": [
+    {
+      "fault_id": "sf_001",
+      "type": "DEAD_END",
+      "severity": "error",
+      "node_id": "node_4",
+      "message": "Node has no outgoing choices and is not marked as an ending. A reader who selects 'Go deeper into the darkness' at node_2 is permanently stuck.",
+      "affected_nodes": ["node_4"],
+      "affected_paths": []
+    },
+    {
+      "fault_id": "sf_002",
+      "type": "UNREACHABLE",
+      "severity": "warning",
+      "node_id": "node_7",
+      "message": "No path from the start node reaches node_7. It forms an isolated cluster with node_8 but has no incoming edges from the main graph.",
+      "affected_nodes": ["node_7", "node_8"],
+      "affected_paths": []
+    },
+    {
+      "fault_id": "sf_003",
+      "type": "UNREACHABLE",
+      "severity": "warning",
+      "node_id": "node_8",
+      "message": "No path from the start node reaches node_8. It is only reachable via node_7, which is itself unreachable.",
+      "affected_nodes": ["node_8"],
+      "affected_paths": []
+    }
+  ],
+  "semantic_faults": [
+    {
+      "fault_id": "sem_001",
+      "type": "CHARACTER_CONTINUITY",
+      "severity": "warning",
+      "node_id": "node_9",
+      "path_id": "path_2",
+      "message": "Captain Volkov is presented as alive and unharmed in node_9. On path_2, node_3 establishes with certainty that Volkov died in an explosion before this point. The graph structure is valid — path_2 is a real path. But the story is not.",
+      "affected_nodes": ["node_3", "node_9"],
+      "hindsight_confidence": 0.97
+    },
+    {
+      "fault_id": "sem_002",
+      "type": "WORLD_RULE_VIOLATION",
+      "severity": "warning",
+      "node_id": "node_14",
+      "path_id": "path_3",
+      "message": "node_14 describes a voice speaking directly into the protagonist's mind, bypassing ears. The story's world rules explicitly prohibit psychic or supernatural phenomena. This is a realistic 1962 Cold War thriller.",
+      "affected_nodes": ["node_14"],
+      "hindsight_confidence": 0.95
+    },
+    {
+      "fault_id": "sem_003",
+      "type": "WORLD_RULE_VIOLATION",
+      "severity": "warning",
+      "node_id": "node_14",
+      "path_id": "path_4",
+      "message": "Same world rule violation as sem_002. node_14 appears on path_4 as well. The psychic voice contradicts the established realistic setting on this path too.",
+      "affected_nodes": ["node_14"],
+      "hindsight_confidence": 0.95
+    }
+  ],
+  "valid_endings": [
+    {
+      "node_id": "node_10",
+      "prose_preview": "You follow the outflow current up through a crack in the rock ceiling and burst through the surface..."
+    },
+    {
+      "node_id": "node_15",
+      "prose_preview": "Behind the far wall is a submarine pen, sealed and dry. The overhead lights still work..."
+    }
+  ]
+}

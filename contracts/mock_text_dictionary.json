@@ -1,0 +1,86 @@
+{
+  "title": "Journey Under the Sea",
+  "world_rules": [
+    "This is a grounded, realistic thriller set in 1962 during the Cold War.",
+    "The story is physically plausible — no magic, no supernatural events, no psychic phenomena.",
+    "Characters behave according to the psychology of their era and their stated motivations.",
+    "Death is permanent. A character established as dead does not reappear."
+  ],
+  "nodes": {
+    "node_1": {
+      "prose": "You hover at the mouth of the cave. Your oxygen gauge reads forty-five minutes. The beam of your headlamp disappears into the dark water ahead, swallowed completely before it reaches twenty feet. Behind you, the open ocean. Ahead, nothing but rock and black water.",
+      "character_states": ["protagonist is alone", "protagonist has oxygen tank with 45 minutes remaining"],
+      "established_facts": ["oxygen = 45 minutes", "location = cave entrance", "time = 1962"]
+    },
+    "node_2": {
+      "prose": "The cave opens into a flooded chamber. Stenciled Cyrillic letters run across a rusted door: СТАНЦИЯ 7. Station 7. Soviet, abandoned. A corroded bracket on the wall holds a torch and, against all probability, it still lights when you strike the flint.",
+      "character_states": ["protagonist has torch", "protagonist is inside Station 7"],
+      "established_facts": ["location = Soviet Station 7", "torch = obtained and working", "station = abandoned Soviet facility"]
+    },
+    "node_3": {
+      "prose": "You break the surface beside a weathered fishing trawler. A broad-shouldered man in a worn naval peacoat leans over the railing — Captain Volkov, from the insignia. He tosses you a line and shouts something in accented English. Before you can climb aboard, the water beneath the hull erupts. A column of fire rises forty feet. Volkov is still on deck. He doesn't make it.",
+      "character_states": ["protagonist is at the surface", "Volkov is dead"],
+      "established_facts": ["Volkov = killed in explosion", "explosion cause = fuel tank rupture", "protagonist witnessed Volkov's death"]
+    },
+    "node_4": {
+      "prose": "A narrow fissure at the back of the chamber leads down to a pocket of trapped air. You rest here for a moment, breathing it in. The air is stale but breathable. The walls are solid on every side. There is no way forward. The fissure behind you has collapsed under the current. You are not going anywhere.",
+      "character_states": ["protagonist is trapped in air pocket"],
+      "established_facts": ["location = trapped air pocket", "exit route = collapsed"]
+    },
+    "node_5": {
+      "prose": "The torch throws an amber cone down a side corridor you missed in the dark. It's carved from the rock — not a natural formation. Someone cut this passage deliberately, at some point, with some specific destination in mind.",
+      "character_states": ["protagonist has torch", "protagonist found carved passage"],
+      "established_facts": ["carved passage = man-made", "location = side corridor off Station 7"]
+    },
+    "node_6": {
+      "prose": "You dive back in from the surface. The cold salt water closes over your head and the explosion's shock is still ringing in your ears. Ahead, half-buried in sediment, you can make out curved walls of poured concrete. The ruins of something large, deliberately submerged.",
+      "character_states": ["protagonist is underwater", "protagonist is approaching ruins"],
+      "established_facts": ["ruins = large concrete structure, deliberately submerged", "Volkov is dead (confirmed before this dive)"]
+    },
+    "node_7": {
+      "prose": "The submarine sits on the seafloor at a forty-five degree list, its aft section buried to the conning tower in silt. The hull number is painted over, but the silhouette is unmistakable: a Whiskey-class, Soviet, early 1950s. Twelve years on the bottom. The forward hatch looks intact.",
+      "character_states": ["protagonist is at the submarine exterior"],
+      "established_facts": ["submarine = Whiskey-class Soviet, early 1950s", "submarine = submerged approximately 12 years", "forward hatch = intact"]
+    },
+    "node_8": {
+      "prose": "Inside the submarine the cold is absolute and the silence is total. Everything is perfectly preserved, like a time capsule — nav charts still pinned to the table, coffee mug still in the bracket, logbook open to the last entry. Among the charts is a set of grid coordinates for something labeled ОБЪЕКТ ВОЛНА. Object Wave. You surface with the charts rolled tight inside your wetsuit.",
+      "character_states": ["protagonist has submarine charts", "protagonist found Object Wave coordinates"],
+      "established_facts": ["Object Wave = Soviet classified project", "coordinates = recovered from submarine", "submarine = preserved 1952 time capsule"]
+    },
+    "node_9": {
+      "prose": "Captain Volkov rises from behind a bank of corroded consoles, alive and completely unharmed. He gives you a wide grin. 'I was beginning to wonder if anyone would find this place,' he says, extending a hand. He seems entirely at ease, as if the last hour never happened.",
+      "character_states": ["protagonist met Volkov in the ruins", "Volkov appears alive"],
+      "established_facts": ["Volkov = present in ruins chamber", "Volkov = alive and uninjured (as presented in this scene)"]
+    },
+    "node_10": {
+      "prose": "You follow the outflow current up through a crack in the rock ceiling and burst through the surface in a spray of white water. Open ocean. You can see the lights of the research vessel two hundred meters to the north, exactly where it should be.",
+      "character_states": ["protagonist has escaped"],
+      "established_facts": ["location = ocean surface", "research vessel = nearby"]
+    },
+    "node_11": {
+      "prose": "The dark tunnel stretches another thirty meters ahead, the walls so narrow your tanks scrape both sides. Your headlamp catches something painted on the rock: a directional arrow, recent enough that the paint hasn't fully flaked. Someone else was in here. Recently.",
+      "character_states": ["protagonist is in the narrow tunnel"],
+      "established_facts": ["arrow marking = painted recently", "someone else accessed this tunnel recently"]
+    },
+    "node_12": {
+      "prose": "A section of the tunnel ceiling has come down, blocking the passage completely. The collapse looks recent — maybe days old. Silt still hangs in the water. There is nothing here. You turn around.",
+      "character_states": ["protagonist found blocked tunnel"],
+      "established_facts": ["tunnel = collapsed, impassable", "collapse = recent (days old)"]
+    },
+    "node_13": {
+      "prose": "The tunnel opens into a natural chamber laced with bioluminescent organisms — clusters of them on every surface, pulsing with a cold blue light. The rhythmic sound is louder here, coming from somewhere behind the far wall. It almost sounds like breathing.",
+      "character_states": ["protagonist is in the bioluminescent chamber"],
+      "established_facts": ["location = natural chamber", "bioluminescent organisms = present", "sound = rhythmic, source unknown, coming from behind far wall"]
+    },
+    "node_14": {
+      "prose": "A voice speaks directly into your mind, bypassing your ears entirely. Clear as a spoken word, it tells you to turn back. That what lies ahead is not meant for the living. The water around you goes perfectly still, as if the ocean itself is holding its breath.",
+      "character_states": ["protagonist experienced psychic voice"],
+      "established_facts": ["psychic voice = occurred", "voice = non-physical, direct mental transmission", "water = unnaturally still"]
+    },
+    "node_15": {
+      "prose": "Behind the far wall is a submarine pen, sealed and dry. The overhead lights still work. Lined against one wall are eight ballistic missile casings, each stenciled with a codename you recognize from classified Navy briefings. You have found what the Atlantic Fleet lost in 1961 and spent eighteen months denying it ever existed.",
+      "character_states": ["protagonist found the submarine pen", "protagonist identified the missile casings"],
+      "established_facts": ["submarine pen = sealed, dry, functional", "missile casings = 8 units, classified codenames", "Navy lost and denied this facility in 1961"]
+    }
+  }
+}

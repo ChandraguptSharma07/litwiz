@@ -5,29 +5,23 @@
     "The story is set in 1962 during the Cold War."
   ],
   "nodes": {
-    "node_6": {
-      "prose": "The torch reveals ancient carvings on the wall, not of human origin.",
-      "character_states": [],
-      "established_facts": [
-        "saw ancient carvings"
-      ]
-    },
-    "node_8": {
-      "prose": "The gold is too heavy. You are trapped in the cache.",
+    "node_4": {
+      "prose": "The current pulls you into a deeper chamber. You find an air pocket and rest, but there is no way forward.",
       "character_states": [],
       "established_facts": []
     },
-    "node_12": {
-      "prose": "As you touch the carvings, a telepathic warning echoes in your mind, sent from a ghostly apparition of an ancient sea king.",
-      "character_states": [
-        "heard telepathic warning"
-      ],
-      "established_facts": [
-        "encountered supernatural sea king"
-      ]
-    },
     "node_15": {
       "prose": "The ruins become your permanent home.",
+      "character_states": [],
+      "established_facts": []
+    },
+    "node_13": {
+      "prose": "You find a locked blast door that requires a keycard you never found.",
+      "character_states": [],
+      "established_facts": []
+    },
+    "node_14": {
+      "prose": "You enter the blast door chamber.",
       "character_states": [],
       "established_facts": []
     },
@@ -39,15 +33,28 @@
         "entered access code"
       ]
     },
-    "node_14": {
-      "prose": "You enter the blast door chamber.",
+    "node_8": {
+      "prose": "The gold is too heavy. You are trapped in the cache.",
       "character_states": [],
       "established_facts": []
     },
-    "node_11": {
-      "prose": "This node loops back to node_8, making an unreachable cycle.",
-      "character_states": [],
-      "established_facts": []
+    "node_7": {
+      "prose": "You find a hidden cache of Soviet gold.",
+      "character_states": [
+        "found gold"
+      ],
+      "established_facts": [
+        "gold cache located"
+      ]
+    },
+    "node_9": {
+      "prose": "Captain Volkov greets you warmly underwater and offers you tea from his submarine.",
+      "character_states": [
+        "protagonist met Volkov again"
+      ],
+      "established_facts": [
+        "Volkov is alive and friendly"
+      ]
     },
     "node_10": {
       "prose": "You finally find a clear path to the surface, escaping the perilous depths.",
@@ -67,6 +74,23 @@
         "station = abandoned since 1950s"
       ]
     },
+    "node_3": {
+      "prose": "You surface and meet Captain Volkov. Unfortunately, a sudden explosion rips through the boat. Volkov perishes in the blast.",
+      "character_states": [
+        "Volkov is dead"
+      ],
+      "established_facts": [
+        "boat exploded",
+        "Volkov died"
+      ]
+    },
+    "node_6": {
+      "prose": "The torch reveals ancient carvings on the wall, not of human origin.",
+      "character_states": [],
+      "established_facts": [
+        "saw ancient carvings"
+      ]
+    },
     "node_1": {
       "prose": "You stand at the mouth of the underwater cave. Your oxygen tank reads 45 minutes. The darkness ahead is absolute.",
       "character_states": [
@@ -78,43 +102,19 @@
         "location = cave entrance"
       ]
     },
-    "node_9": {
-      "prose": "Captain Volkov greets you warmly underwater and offers you tea from his submarine.",
+    "node_12": {
+      "prose": "As you touch the carvings, a telepathic warning echoes in your mind, sent from a ghostly apparition of an ancient sea king.",
       "character_states": [
-        "protagonist met Volkov again"
+        "heard telepathic warning"
       ],
       "established_facts": [
-        "Volkov is alive and friendly"
+        "encountered supernatural sea king"
       ]
     },
-    "node_4": {
-      "prose": "The current pulls you into a deeper chamber. You find an air pocket and rest, but there is no way forward.",
+    "node_11": {
+      "prose": "This node loops back to node_8, making an unreachable cycle.",
       "character_states": [],
       "established_facts": []
-    },
-    "node_3": {
-      "prose": "You surface and meet Captain Volkov. Unfortunately, a sudden explosion rips through the boat. Volkov perishes in the blast.",
-      "character_states": [
-        "Volkov is dead"
-      ],
-      "established_facts": [
-        "boat exploded",
-        "Volkov died"
-      ]
-    },
-    "node_13": {
-      "prose": "You find a locked blast door that requires a keycard you never found.",
-      "character_states": [],
-      "established_facts": []
-    },
-    "node_7": {
-      "prose": "You find a hidden cache of Soviet gold.",
-      "character_states": [
-        "found gold"
-      ],
-      "established_facts": [
-        "gold cache located"
-      ]
     }
   }
 }

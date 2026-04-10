@@ -116,7 +116,7 @@ app.listen(PORT, () => {
   console.log()
   console.log('╔══════════════════════════════════════════════╗')
   console.log('║  NVE Server                                  ║')
-  console.log(`║  http://localhost:${PORT}                       ║`)
+  console.log(`║  http://localhost:${PORT}                    ║`)
   console.log('║                                              ║')
   console.log('║  POST /api/ingest                            ║')
   console.log('║  POST /api/validate/structural               ║')

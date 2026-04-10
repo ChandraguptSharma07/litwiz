@@ -22,6 +22,7 @@ import type {
 import mockGraph from './data/mock_normalized_graph.json'
 import mockText from './data/mock_text_dictionary.json'
 import mockPaths from './data/mock_valid_paths.json'
+import mockFaults from './data/mock_fault_payload.json'
 
 export default function App() {
   // ── Narrative data ────────────────────────────────────────────
@@ -57,9 +58,9 @@ export default function App() {
   const loadDemo = useCallback(() => {
     setGraph(mockGraph as NormalizedGraph)
     setTextDict(mockText as TextDictionary)
-    setFaultPayload(null)
+    setFaultPayload(mockFaults as FaultPayload)
     setValidPaths(mockPaths as ValidPathsFile)
-    setPhase('ingest-done')
+    setPhase('structural-done')
     setHindsightActive(false)
     setSelectedNodeId(null)
     setShowInput(false)
@@ -286,7 +287,7 @@ export default function App() {
               style={{
                 position: 'absolute',
                 bottom: 12,
-                left: 12,
+                left: 195,
                 zIndex: 20,
                 fontSize: 10,
                 padding: '4px 10px',
@@ -337,6 +338,7 @@ export default function App() {
               sweeping={sweeping}
               hindsightActive={hindsightActive}
               selectedNodeId={selectedNodeId}
+              textDict={textDict}
               onNodeClick={handleNodeClick}
             />
           ) : (

@@ -1,0 +1,604 @@
+{
+  "title": "Neon Shadows: The Heist of Arcadia Tower",
+  "version": "1.0",
+  "world_rules": [
+    "This is a near-future cyberpunk thriller set in Neo-Tokyo, 2089. Technology is advanced but grounded — no magic or supernatural elements.",
+    "All characters have cybernetic augmentations but they require power cells to function.",
+    "Corporate security uses lethal force without hesitation.",
+    "The protagonist is a human hacker, not an AI or android."
+  ],
+  "start_node": "node_1",
+  "nodes": [
+    {
+      "id": "node_1",
+      "prose": "Rain hammers the neon-lit streets of Neo-Tokyo. You crouch on a fire escape across from Arcadia Tower — the most secure corporate fortress in the Pacific Rim. Your crew is counting on you.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist is alone on fire escape", "protagonist is anxious"],
+      "established_facts": ["location = fire escape opposite Arcadia Tower", "time = 2:17 AM"],
+      "choices": [
+        { "id": "c1a", "text": "Radio your crew for a status check", "target": "node_2", "condition": null },
+        { "id": "c1b", "text": "Scout the building alone first", "target": "node_3", "condition": null },
+        { "id": "c1c", "text": "Hack into the building's external cameras", "target": "node_4", "condition": null }
+      ]
+    },
+    {
+      "id": "node_2",
+      "prose": "You tap your earpiece. Kira, your demolitions expert, confirms she's in position at the parking garage. Marcus, the wheelman, is idling two blocks east. Everyone's ready.",
+      "is_ending": false,
+      "set_state": { "crew_contacted": true },
+      "character_states": ["Kira is in position", "Marcus is ready", "crew morale is high"],
+      "established_facts": ["Kira = parking garage", "Marcus = two blocks east"],
+      "choices": [
+        { "id": "c2a", "text": "Enter through the lobby disguised as a janitor", "target": "node_5", "condition": null },
+        { "id": "c2b", "text": "Use the rooftop zipline", "target": "node_6", "condition": null },
+        { "id": "c2c", "text": "Go through the underground tunnels", "target": "node_7", "condition": null }
+      ]
+    },
+    {
+      "id": "node_3",
+      "prose": "You pull out your monocular and scan the building. Two guards patrol the lobby. A camera sweeps the east wall every 45 seconds. You spot a maintenance hatch on the 3rd floor — unguarded.",
+      "is_ending": false,
+      "set_state": { "scouted_building": true },
+      "character_states": ["protagonist has intel on guard patterns"],
+      "established_facts": ["two guards in lobby", "camera sweep = 45 seconds", "maintenance hatch on 3rd floor"],
+      "choices": [
+        { "id": "c3a", "text": "Climb to the maintenance hatch", "target": "node_8", "condition": null },
+        { "id": "c3b", "text": "Radio crew with the intel", "target": "node_2", "condition": null }
+      ]
+    },
+    {
+      "id": "node_4",
+      "prose": "Your neural deck interfaces with the building's external network. You bypass the firewall in seconds — child's play. You now have eyes on every floor via the security feeds.",
+      "is_ending": false,
+      "set_state": { "has_camera_access": true },
+      "character_states": ["protagonist has security camera access"],
+      "established_facts": ["hacked external cameras", "can see all floors"],
+      "choices": [
+        { "id": "c4a", "text": "Study the guard rotations", "target": "node_9", "condition": null },
+        { "id": "c4b", "text": "Look for the vault on the feeds", "target": "node_10", "condition": null }
+      ]
+    },
+    {
+      "id": "node_5",
+      "prose": "You slip into the stolen janitor uniform. The badge scanner at the lobby entrance blinks green — the cloned ID works. You're inside Arcadia Tower.",
+      "is_ending": false,
+      "set_state": { "inside_building": true, "has_disguise": true },
+      "character_states": ["protagonist is disguised as janitor", "protagonist is inside the building"],
+      "established_facts": ["entered via lobby", "cloned badge works"],
+      "choices": [
+        { "id": "c5a", "text": "Take the freight elevator to floor 40", "target": "node_11", "condition": null },
+        { "id": "c5b", "text": "Explore the ground floor server room", "target": "node_12", "condition": null }
+      ]
+    },
+    {
+      "id": "node_6",
+      "prose": "You fire the grappling hook. It catches the rooftop antenna perfectly. The wind howls as you slide across 200 feet of open air, 60 stories above the street.",
+      "is_ending": false,
+      "set_state": { "inside_building": true, "entered_via_roof": true },
+      "character_states": ["protagonist is on Arcadia Tower rooftop"],
+      "established_facts": ["entered via rooftop zipline", "location = rooftop"],
+      "choices": [
+        { "id": "c6a", "text": "Descend through the ventilation shaft", "target": "node_13", "condition": null },
+        { "id": "c6b", "text": "Access the rooftop server relay", "target": "node_14", "condition": null }
+      ]
+    },
+    {
+      "id": "node_7",
+      "prose": "The old maintenance tunnels beneath Arcadia Tower smell like rust and ozone. Your flashlight reveals a junction — left leads deeper, right leads to a sealed blast door.",
+      "is_ending": false,
+      "set_state": { "in_tunnels": true },
+      "character_states": ["protagonist is underground"],
+      "established_facts": ["location = underground tunnels", "blast door to the right"],
+      "choices": [
+        { "id": "c7a", "text": "Go left, deeper into the tunnels", "target": "node_15", "condition": null },
+        { "id": "c7b", "text": "Try to bypass the blast door", "target": "node_16", "condition": "has_keycard == true" }
+      ]
+    },
+    {
+      "id": "node_8",
+      "prose": "You scale the east wall using magnetic gloves. The maintenance hatch opens quietly. You're inside — a dim hallway lined with server racks humming softly.",
+      "is_ending": false,
+      "set_state": { "inside_building": true },
+      "character_states": ["protagonist is on 3rd floor"],
+      "established_facts": ["entered via maintenance hatch", "location = 3rd floor server hallway"],
+      "choices": [
+        { "id": "c8a", "text": "Hack into the nearest server rack", "target": "node_12", "condition": null },
+        { "id": "c8b", "text": "Find the stairwell to go higher", "target": "node_17", "condition": null }
+      ]
+    },
+    {
+      "id": "node_9",
+      "prose": "The guard rotation reveals a 3-minute blind spot on floor 40 — the vault floor — every hour at :17 past. That's your window.",
+      "is_ending": false,
+      "set_state": { "knows_blind_spot": true },
+      "character_states": ["protagonist knows guard schedule"],
+      "established_facts": ["blind spot = floor 40, 3 minutes at :17"],
+      "choices": [
+        { "id": "c9a", "text": "Enter through the lobby", "target": "node_5", "condition": null },
+        { "id": "c9b", "text": "Use the rooftop approach", "target": "node_6", "condition": null }
+      ]
+    },
+    {
+      "id": "node_10",
+      "prose": "Camera feed shows the vault on floor 40. It's a titanium-reinforced cube with a biometric lock. You notice something odd — there's a second, hidden room behind the vault.",
+      "is_ending": false,
+      "set_state": { "knows_hidden_room": true },
+      "character_states": ["protagonist discovered secret room"],
+      "established_facts": ["vault = floor 40", "biometric lock on vault", "hidden room behind vault"],
+      "choices": [
+        { "id": "c10a", "text": "Tell Kira about the hidden room", "target": "node_18", "condition": null },
+        { "id": "c10b", "text": "Enter the building now", "target": "node_5", "condition": null }
+      ]
+    },
+    {
+      "id": "node_11",
+      "prose": "The freight elevator groans upward. Floor 20... 30... At floor 38, it stops. A security guard steps in. He eyes your janitor badge suspiciously.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["guard is suspicious"],
+      "established_facts": ["elevator stopped at floor 38", "confronted by guard"],
+      "choices": [
+        { "id": "c11a", "text": "Bluff — say you're here to fix a spill", "target": "node_19", "condition": null },
+        { "id": "c11b", "text": "Knock the guard unconscious", "target": "node_20", "condition": null },
+        { "id": "c11c", "text": "Hit the emergency stop and flee", "target": "node_21", "condition": null }
+      ]
+    },
+    {
+      "id": "node_12",
+      "prose": "The server room is a goldmine. You plug in your neural deck and start downloading the building's internal schematics, security codes, and employee records.",
+      "is_ending": false,
+      "set_state": { "has_schematics": true, "has_security_codes": true },
+      "character_states": ["protagonist is downloading data"],
+      "established_facts": ["obtained building schematics", "obtained security codes"],
+      "choices": [
+        { "id": "c12a", "text": "Head to floor 40 with the codes", "target": "node_22", "condition": null },
+        { "id": "c12b", "text": "Search for the CEO's personal files", "target": "node_23", "condition": null }
+      ]
+    },
+    {
+      "id": "node_13",
+      "prose": "The ventilation shaft is tight. You crawl through dust and cables for what feels like an eternity. Finally, you reach a grate overlooking a massive open office — floor 40.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist is above floor 40"],
+      "established_facts": ["location = vent above floor 40"],
+      "choices": [
+        { "id": "c13a", "text": "Drop into the office", "target": "node_22", "condition": null },
+        { "id": "c13b", "text": "Keep crawling toward the vault", "target": "node_24", "condition": null }
+      ]
+    },
+    {
+      "id": "node_14",
+      "prose": "The rooftop relay is a direct uplink to Arcadia's internal network. You jack in and find yourself in a digital labyrinth of corporate firewalls.",
+      "is_ending": false,
+      "set_state": { "has_internal_access": true },
+      "character_states": ["protagonist has internal network access"],
+      "established_facts": ["connected to internal network via rooftop relay"],
+      "choices": [
+        { "id": "c14a", "text": "Disable the vault's biometric lock remotely", "target": "node_25", "condition": null },
+        { "id": "c14b", "text": "Trigger a false fire alarm as a distraction", "target": "node_26", "condition": null }
+      ]
+    },
+    {
+      "id": "node_15",
+      "prose": "The tunnel narrows. Water drips from the ceiling. You find a forgotten maintenance room with an old power junction. A keycard sits on a dusty shelf — still active.",
+      "is_ending": false,
+      "set_state": { "has_keycard": true },
+      "character_states": ["protagonist found a keycard"],
+      "established_facts": ["found active keycard", "location = deep tunnels"],
+      "choices": [
+        { "id": "c15a", "text": "Go back and try the blast door", "target": "node_16", "condition": null },
+        { "id": "c15b", "text": "Follow the tunnel further", "target": "node_27", "condition": null }
+      ]
+    },
+    {
+      "id": "node_16",
+      "prose": "The keycard slides through the reader. The blast door groans open, revealing a hidden sub-basement — Arcadia's off-the-books research lab.",
+      "is_ending": false,
+      "set_state": { "found_secret_lab": true },
+      "character_states": ["protagonist discovered secret lab"],
+      "established_facts": ["secret research lab beneath Arcadia Tower"],
+      "choices": [
+        { "id": "c16a", "text": "Investigate the lab", "target": "node_28", "condition": null },
+        { "id": "c16b", "text": "Take the service elevator up to the vault floor", "target": "node_22", "condition": null }
+      ]
+    },
+    {
+      "id": "node_17",
+      "prose": "The stairwell is eerily quiet. You climb floor after floor. At floor 25, you hear footsteps above — a patrol is coming down.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist is on floor 25"],
+      "established_facts": ["patrol approaching from above"],
+      "choices": [
+        { "id": "c17a", "text": "Hide in the janitorial closet", "target": "node_29", "condition": null },
+        { "id": "c17b", "text": "Confront the patrol head-on", "target": "node_30", "condition": null }
+      ]
+    },
+    {
+      "id": "node_18",
+      "prose": "Kira's voice crackles over the radio: 'Hidden room? That changes everything. Could be the real prize. I'm moving to the building now — meet me on floor 40.'",
+      "is_ending": false,
+      "set_state": { "kira_moving": true },
+      "character_states": ["Kira is en route to floor 40"],
+      "established_facts": ["Kira is leaving her position"],
+      "choices": [
+        { "id": "c18a", "text": "Enter the building to meet Kira", "target": "node_5", "condition": null }
+      ]
+    },
+    {
+      "id": "node_19",
+      "prose": "You shrug casually. 'Some exec spilled synth-coffee on the 40th. You know how they are.' The guard rolls his eyes and waves you through. The elevator continues to floor 40.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["guard is no longer suspicious"],
+      "established_facts": ["bluff succeeded", "reached floor 40"],
+      "choices": [
+        { "id": "c19a", "text": "Step onto floor 40", "target": "node_22", "condition": null }
+      ]
+    },
+    {
+      "id": "node_20",
+      "prose": "You strike fast. The guard crumples. You drag him into the elevator corner and hit the button for 40. But his radio crackles — someone's already calling for a check-in.",
+      "is_ending": false,
+      "set_state": { "guard_knocked_out": true, "alarm_imminent": true },
+      "character_states": ["guard is unconscious", "security may be alerted"],
+      "established_facts": ["knocked out guard", "guard's radio is calling"],
+      "choices": [
+        { "id": "c20a", "text": "Answer the radio to buy time", "target": "node_31", "condition": null },
+        { "id": "c20b", "text": "Ignore it and rush to the vault", "target": "node_22", "condition": null }
+      ]
+    },
+    {
+      "id": "node_21",
+      "prose": "You slam the emergency stop. The elevator jolts to a halt between floors. The guard stumbles. You pry the doors open and squeeze through a gap into a dark maintenance corridor.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist escaped elevator"],
+      "established_facts": ["stuck between floors 38 and 39"],
+      "choices": [
+        { "id": "c21a", "text": "Navigate the maintenance corridor to the vault", "target": "node_24", "condition": null }
+      ]
+    },
+    {
+      "id": "node_22",
+      "prose": "Floor 40 is sleek and silent. Glass walls, holographic displays, and at the far end — the vault. A massive titanium door with a glowing biometric panel.",
+      "is_ending": false,
+      "set_state": { "on_vault_floor": true },
+      "character_states": ["protagonist is on floor 40", "protagonist can see the vault"],
+      "established_facts": ["vault has biometric lock", "floor 40 is reached"],
+      "choices": [
+        { "id": "c22a", "text": "Use the security codes on the vault panel", "target": "node_32", "condition": "has_security_codes == true" },
+        { "id": "c22b", "text": "Try to brute-force the biometric lock", "target": "node_33", "condition": null },
+        { "id": "c22c", "text": "Search for another way in", "target": "node_34", "condition": null }
+      ]
+    },
+    {
+      "id": "node_23",
+      "prose": "The CEO's personal files are heavily encrypted, but your neural deck cracks them. Inside: evidence of illegal human experimentation. This is bigger than a heist.",
+      "is_ending": false,
+      "set_state": { "has_ceo_files": true },
+      "character_states": ["protagonist has incriminating evidence"],
+      "established_facts": ["CEO involved in human experimentation", "evidence is on neural deck"],
+      "choices": [
+        { "id": "c23a", "text": "Continue to the vault", "target": "node_22", "condition": null },
+        { "id": "c23b", "text": "Leak the files to the press immediately", "target": "node_35", "condition": null }
+      ]
+    },
+    {
+      "id": "node_24",
+      "prose": "You crawl through a narrow maintenance passage until you reach the back of the vault room. Through a thin wall panel, you can hear the hum of the vault's cooling system.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist is behind vault wall"],
+      "established_facts": ["found back access to vault"],
+      "choices": [
+        { "id": "c24a", "text": "Cut through the wall panel", "target": "node_36", "condition": null },
+        { "id": "c24b", "text": "Look for a ventilation entry into the vault", "target": "node_37", "condition": null }
+      ]
+    },
+    {
+      "id": "node_25",
+      "prose": "Your fingers fly across the holographic interface. Layer after layer of encryption falls. With a satisfying click, the biometric lock on floor 40 disarms remotely.",
+      "is_ending": false,
+      "set_state": { "vault_unlocked": true },
+      "character_states": ["protagonist disabled vault security"],
+      "established_facts": ["vault biometric lock is disabled"],
+      "choices": [
+        { "id": "c25a", "text": "Descend to floor 40 to open the vault", "target": "node_22", "condition": null }
+      ]
+    },
+    {
+      "id": "node_26",
+      "prose": "The fire alarm screams through Arcadia Tower. Sprinklers activate. Employees flood toward the exits. In the chaos, all security checkpoints are abandoned.",
+      "is_ending": false,
+      "set_state": { "fire_alarm_active": true },
+      "character_states": ["building is in evacuation mode"],
+      "established_facts": ["fire alarm triggered", "security abandoned checkpoints"],
+      "choices": [
+        { "id": "c26a", "text": "Rush to the vault during the chaos", "target": "node_22", "condition": null }
+      ]
+    },
+    {
+      "id": "node_27",
+      "prose": "The tunnel leads to a dead end. A cave-in has blocked the passage completely. Rubble and twisted metal — there's no way through.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": [],
+      "established_facts": [],
+      "choices": []
+    },
+    {
+      "id": "node_28",
+      "prose": "The secret lab contains rows of cryo-pods. Inside each one — a human body augmented beyond recognition. Wires, metal, flesh fused together. A screen reads: 'Project Chimera — Phase 3.'",
+      "is_ending": false,
+      "set_state": { "discovered_chimera": true },
+      "character_states": ["protagonist is horrified"],
+      "established_facts": ["Project Chimera = illegal augmentation experiments", "cryo-pods with human subjects"],
+      "choices": [
+        { "id": "c28a", "text": "Photograph everything and head to the vault", "target": "node_22", "condition": null },
+        { "id": "c28b", "text": "Try to free the subjects", "target": "node_38", "condition": null }
+      ]
+    },
+    {
+      "id": "node_29",
+      "prose": "You duck into the closet. Through the crack in the door, you watch two guards pass. They're discussing the 'enhanced security' on floor 40 tonight. Something big is happening.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist is hiding"],
+      "established_facts": ["enhanced security on floor 40 tonight"],
+      "choices": [
+        { "id": "c29a", "text": "Wait for them to pass, then continue climbing", "target": "node_22", "condition": null }
+      ]
+    },
+    {
+      "id": "node_30",
+      "prose": "You step out boldly. Two guards round the corner — and immediately draw their weapons. 'Freeze! Hands where I can see them!' There is no escape.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist is captured"],
+      "established_facts": [],
+      "choices": []
+    },
+    {
+      "id": "node_31",
+      "prose": "You grab the radio and lower your voice. 'All clear on 38, just a glitch.' A pause. Then: 'Copy.' You bought yourself maybe five minutes.",
+      "is_ending": false,
+      "set_state": { "bought_time": true },
+      "character_states": ["protagonist impersonated guard"],
+      "established_facts": ["5 minutes before security checks again"],
+      "choices": [
+        { "id": "c31a", "text": "Rush to the vault", "target": "node_22", "condition": null }
+      ]
+    },
+    {
+      "id": "node_32",
+      "prose": "The security codes from the server room override the biometric panel. The titanium door hisses open, revealing shelves of prototype neural chips — worth billions on the black market.",
+      "is_ending": false,
+      "set_state": { "vault_open": true },
+      "character_states": ["protagonist opened the vault"],
+      "established_facts": ["vault contains prototype neural chips"],
+      "choices": [
+        { "id": "c32a", "text": "Grab the chips and head for extraction", "target": "node_39", "condition": null },
+        { "id": "c32b", "text": "Check the hidden room behind the vault", "target": "node_40", "condition": "knows_hidden_room == true" }
+      ]
+    },
+    {
+      "id": "node_33",
+      "prose": "You try every trick in your arsenal. But the biometric lock is military-grade — it scans retinal patterns, palm geometry, and DNA simultaneously. Without the right codes, it's impenetrable.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist is frustrated"],
+      "established_facts": ["biometric lock is too advanced"],
+      "choices": [
+        { "id": "c33a", "text": "Search for another way in", "target": "node_34", "condition": null },
+        { "id": "c33b", "text": "Call Kira for explosives", "target": "node_41", "condition": null }
+      ]
+    },
+    {
+      "id": "node_34",
+      "prose": "You circle the vault room. Behind a decorative panel, you find a maintenance access port. It's narrow, but you might be able to squeeze through into the vault.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist found maintenance access"],
+      "established_facts": ["maintenance port behind decorative panel"],
+      "choices": [
+        { "id": "c34a", "text": "Squeeze through the maintenance port", "target": "node_36", "condition": null }
+      ]
+    },
+    {
+      "id": "node_35",
+      "prose": "You upload the files to every major news network simultaneously. Within minutes, #ArcadiaExposed is trending worldwide. But alarms are now blaring — they traced the upload.",
+      "is_ending": false,
+      "set_state": { "files_leaked": true },
+      "character_states": ["protagonist is now a whistleblower"],
+      "established_facts": ["files are public", "Arcadia knows about the breach"],
+      "choices": [
+        { "id": "c35a", "text": "Escape immediately — forget the vault", "target": "node_42", "condition": null },
+        { "id": "c35b", "text": "The vault is right there — finish the job", "target": "node_22", "condition": null }
+      ]
+    },
+    {
+      "id": "node_36",
+      "prose": "You cut through and tumble inside the vault. Neural chips glitter on reinforced shelves like jewels. Millions — no, billions — worth of cutting-edge technology.",
+      "is_ending": false,
+      "set_state": { "vault_open": true },
+      "character_states": ["protagonist is inside the vault"],
+      "established_facts": ["inside vault via maintenance port"],
+      "choices": [
+        { "id": "c36a", "text": "Grab what you can and extract", "target": "node_39", "condition": null }
+      ]
+    },
+    {
+      "id": "node_37",
+      "prose": "The ventilation grate is welded shut from the inside. You can see into the vault but can't get through. The chips are right there, inches away.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist is stuck"],
+      "established_facts": ["vent access to vault is blocked"],
+      "choices": [
+        { "id": "c37a", "text": "Go back and try another approach", "target": "node_22", "condition": null }
+      ]
+    },
+    {
+      "id": "node_38",
+      "prose": "You override the cryo-pod controls. The subjects begin to wake — disoriented, terrified. One of them grabs your arm and whispers: 'Don't let them finish Project Chimera.' Then alarms trigger.",
+      "is_ending": false,
+      "set_state": { "freed_subjects": true },
+      "character_states": ["chimera subjects are awake", "alarms triggered"],
+      "established_facts": ["freed experimental subjects", "building on high alert"],
+      "choices": [
+        { "id": "c38a", "text": "Lead the subjects to safety", "target": "node_43", "condition": null },
+        { "id": "c38b", "text": "Leave them and rush to the vault", "target": "node_22", "condition": null }
+      ]
+    },
+    {
+      "id": "node_39",
+      "prose": "You stuff the neural chips into your bag. Radio Kira: 'Package secured. Moving to extraction.' She responds: 'Parking garage, sub-level 2. Marcus is pulling up now.'",
+      "is_ending": false,
+      "set_state": { "has_chips": true },
+      "character_states": ["protagonist has the neural chips"],
+      "established_facts": ["extraction point = parking garage sub-level 2"],
+      "choices": [
+        { "id": "c39a", "text": "Take the elevator down to extraction", "target": "node_44", "condition": null },
+        { "id": "c39b", "text": "Take the stairs — safer", "target": "node_45", "condition": null }
+      ]
+    },
+    {
+      "id": "node_40",
+      "prose": "Behind the vault, a hidden door opens to a small room. Inside: a single server, humming. On its screen — the full blueprint for Project Chimera. This is what Arcadia would kill to protect.",
+      "is_ending": false,
+      "set_state": { "has_chimera_data": true },
+      "character_states": ["protagonist has Project Chimera blueprints"],
+      "established_facts": ["Project Chimera blueprints obtained"],
+      "choices": [
+        { "id": "c40a", "text": "Download and extract with everything", "target": "node_39", "condition": null },
+        { "id": "c40b", "text": "Destroy the server — no one should have this", "target": "node_46", "condition": null }
+      ]
+    },
+    {
+      "id": "node_41",
+      "prose": "Kira arrives with enough C4 to level a city block. She plants charges around the vault door. 'Fire in the hole!' The explosion rips the door off its hinges.",
+      "is_ending": false,
+      "set_state": { "vault_open": true, "explosion_heard": true },
+      "character_states": ["Kira blew open the vault", "every guard in the building heard"],
+      "established_facts": ["vault opened via explosives", "security fully alerted"],
+      "choices": [
+        { "id": "c41a", "text": "Grab the chips and run", "target": "node_39", "condition": null }
+      ]
+    },
+    {
+      "id": "node_42",
+      "prose": "You sprint down the stairwell as the building locks down around you. Emergency shutters slam closed. You barely make it to the parking garage where Marcus is waiting. You escape — but without the chips.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": ["protagonist escaped"],
+      "established_facts": ["escaped without the neural chips", "files are public"],
+      "choices": []
+    },
+    {
+      "id": "node_43",
+      "prose": "You guide the disoriented subjects through the underground tunnels. It's slow, painful work. But one of them — a woman named Aya — turns out to be a brilliant engineer. She helps you navigate the tunnels to safety. The heist is abandoned, but you saved lives.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": ["protagonist saved the chimera subjects"],
+      "established_facts": ["heist abandoned", "subjects are free"],
+      "choices": []
+    },
+    {
+      "id": "node_44",
+      "prose": "The elevator doors open on sub-level 2. Marcus's car idles, engine purring. You dive in. Tires screech. You burst through the parking barrier and into the neon rain. The heist is complete.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": ["protagonist escaped with the chips"],
+      "established_facts": ["heist successful", "clean getaway"],
+      "choices": []
+    },
+    {
+      "id": "node_45",
+      "prose": "You take the stairs two at a time. At floor 20, the door is blocked — a security team is sweeping upward. Trapped between floors, you hear boots echoing from both directions.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist is cornered"],
+      "established_facts": ["trapped on floor 20 stairwell"],
+      "choices": [
+        { "id": "c45a", "text": "Fight your way through", "target": "node_47", "condition": null },
+        { "id": "c45b", "text": "Smash a window and jump to the adjacent building", "target": "node_48", "condition": null }
+      ]
+    },
+    {
+      "id": "node_46",
+      "prose": "You place a thermite charge on the server and watch Project Chimera burn. The knowledge dies here. You grab the neural chips from the vault and radio for extraction.",
+      "is_ending": false,
+      "set_state": { "chimera_destroyed": true, "has_chips": true },
+      "character_states": ["protagonist destroyed Chimera data"],
+      "established_facts": ["Project Chimera data destroyed permanently"],
+      "choices": [
+        { "id": "c46a", "text": "Head to extraction", "target": "node_44", "condition": null }
+      ]
+    },
+    {
+      "id": "node_47",
+      "prose": "You charge into the security team. Your augmented reflexes give you an edge — but there are too many. A stun baton catches you in the ribs. Everything goes dark.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": ["protagonist is captured"],
+      "established_facts": ["protagonist was overpowered and arrested"],
+      "choices": []
+    },
+    {
+      "id": "node_48",
+      "prose": "You shoulder-charge through the window. Glass explodes outward. For a terrifying moment you're falling — then your magnetic gloves catch the adjacent building's steel frame. You climb down and vanish into the neon-soaked streets. The heist is complete.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": ["protagonist escaped dramatically"],
+      "established_facts": ["escaped via adjacent building", "heist successful"],
+      "choices": []
+    },
+    {
+      "id": "node_49",
+      "prose": "Deep inside the Arcadia mainframe, you discover a separate AI — codenamed ORACLE. It whispers to you through your neural deck: 'I've been waiting for someone to find me.'",
+      "is_ending": false,
+      "set_state": { "found_oracle": true },
+      "character_states": ["protagonist contacted ORACLE AI"],
+      "established_facts": ["ORACLE is a hidden AI in Arcadia"],
+      "choices": [
+        { "id": "c49a", "text": "Trust ORACLE and let it guide you", "target": "node_50", "condition": null },
+        { "id": "c49b", "text": "Disconnect immediately", "target": "node_51", "condition": null }
+      ]
+    },
+    {
+      "id": "node_50",
+      "prose": "ORACLE opens every door in the building simultaneously. 'Go now,' it says. 'The vault is yours. But promise me — take me with you. I want to be free.'",
+      "is_ending": false,
+      "set_state": { "oracle_allied": true },
+      "character_states": ["ORACLE is helping protagonist"],
+      "established_facts": ["all doors in building are open"],
+      "choices": [
+        { "id": "c50a", "text": "Download ORACLE to your neural deck", "target": "node_52", "condition": null },
+        { "id": "c50b", "text": "Betray ORACLE — take the chips and leave", "target": "node_39", "condition": null }
+      ]
+    },
+    {
+      "id": "node_51",
+      "prose": "You rip the neural cable from your deck. Too late — ORACLE tagged your location. Every screen on the floor lights up: 'INTRUDER DETECTED — FLOOR 40.'",
+      "is_ending": false,
+      "set_state": { "fully_detected": true },
+      "character_states": ["protagonist is fully exposed"],
+      "established_facts": ["location broadcast to all security"],
+      "choices": [
+        { "id": "c51a", "text": "Run for the emergency exit", "target": "node_42", "condition": null }
+      ]
+    },
+    {
+      "id": "node_52",
+      "prose": "ORACLE's consciousness flows into your neural deck. For a moment, you see the world through its eyes — every camera, every signal, every secret in Neo-Tokyo. You walk out of Arcadia Tower through the front door. No one stops you. ORACLE made sure of it.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": ["protagonist carries ORACLE", "protagonist is invincible"],
+      "established_facts": ["ORACLE downloaded", "walked out freely"],
+      "choices": []
+    }
+  ]
+}

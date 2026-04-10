@@ -1,5 +1,5 @@
 {
-  "title": "Journey Under the Sea",
+  "title": "Death Note: The Complete Saga",
   "version": "1.0",
   "start_node": "node_1",
   "nodes": [
@@ -10,13 +10,13 @@
       "choices": [
         {
           "id": "c1a",
-          "text": "Dive into the cave",
+          "text": "Pick up the notebook after class",
           "target": "node_2",
           "condition": null
         },
         {
           "id": "c1b",
-          "text": "Surface for air",
+          "text": "Ignore it — it's probably a prank",
           "target": "node_3",
           "condition": null
         }
@@ -26,80 +26,68 @@
       "id": "node_2",
       "is_ending": false,
       "set_state": {
-        "has_torch": true
+        "has_death_note": true
       },
       "choices": [
         {
           "id": "c2a",
-          "text": "Go deeper",
-          "target": "node_5",
+          "text": "Test it on a criminal from the news",
+          "target": "node_4",
           "condition": null
         },
         {
           "id": "c2b",
-          "text": "Use torch",
-          "target": "node_6",
-          "condition": "has_torch == true"
+          "text": "Destroy the notebook — this is too dangerous",
+          "target": "node_5",
+          "condition": null
         }
       ]
     },
     {
       "id": "node_3",
-      "is_ending": false,
-      "set_state": {
-        "met_volkov": true
-      },
-      "choices": [
-        {
-          "id": "c3a",
-          "text": "Dive back down",
-          "target": "node_9",
-          "condition": null
-        }
-      ]
-    },
-    {
-      "id": "node_4",
-      "is_ending": false,
+      "is_ending": true,
       "set_state": {},
       "choices": []
     },
     {
-      "id": "node_5",
+      "id": "node_4",
       "is_ending": false,
       "set_state": {
-        "found_ruins": true
+        "first_kill": true
       },
       "choices": [
         {
-          "id": "c5a",
-          "text": "Explore ruins",
-          "target": "node_10",
+          "id": "c4a",
+          "text": "This power can change the world — become Kira",
+          "target": "node_6",
           "condition": null
         },
         {
-          "id": "c5b",
-          "text": "Get swept away",
-          "target": "node_4",
+          "id": "c4b",
+          "text": "This is murder. Never use it again.",
+          "target": "node_7",
           "condition": null
         }
       ]
     },
     {
+      "id": "node_5",
+      "is_ending": true,
+      "set_state": {},
+      "choices": []
+    },
+    {
       "id": "node_6",
       "is_ending": false,
-      "set_state": {},
+      "set_state": {
+        "criminals_killed": true,
+        "is_kira": true
+      },
       "choices": [
         {
           "id": "c6a",
-          "text": "Touch the carvings",
-          "target": "node_12",
-          "condition": null
-        },
-        {
-          "id": "c6b",
-          "text": "Swim back",
-          "target": "node_5",
+          "text": "Continue the killings — the world needs Kira",
+          "target": "node_8",
           "condition": null
         }
       ]
@@ -107,12 +95,20 @@
     {
       "id": "node_7",
       "is_ending": false,
-      "set_state": {},
+      "set_state": {
+        "ryuk_appeared": true
+      },
       "choices": [
         {
           "id": "c7a",
-          "text": "Take the gold",
-          "target": "node_8",
+          "text": "Ask Ryuk to take the notebook back",
+          "target": "node_5",
+          "condition": null
+        },
+        {
+          "id": "c7b",
+          "text": "Reluctantly accept fate — use the notebook carefully",
+          "target": "node_6",
           "condition": null
         }
       ]
@@ -120,12 +116,20 @@
     {
       "id": "node_8",
       "is_ending": false,
-      "set_state": {},
+      "set_state": {
+        "ryuk_appeared": true
+      },
       "choices": [
         {
           "id": "c8a",
-          "text": "Try to drop it",
-          "target": "node_7",
+          "text": "Accept the Shinigami Eyes",
+          "target": "node_9",
+          "condition": null
+        },
+        {
+          "id": "c8b",
+          "text": "Refuse — half my lifespan is too high a price",
+          "target": "node_10",
           "condition": null
         }
       ]
@@ -133,31 +137,48 @@
     {
       "id": "node_9",
       "is_ending": false,
-      "set_state": {},
+      "set_state": {
+        "has_shinigami_eyes": true
+      },
       "choices": [
         {
           "id": "c9a",
-          "text": "Escape",
-          "target": "node_10",
+          "text": "Use the Eyes to accelerate Kira's mission",
+          "target": "node_11",
           "condition": null
         }
       ]
     },
     {
       "id": "node_10",
-      "is_ending": true,
-      "set_state": {},
-      "choices": []
-    },
-    {
-      "id": "node_11",
       "is_ending": false,
       "set_state": {},
       "choices": [
         {
+          "id": "c10a",
+          "text": "Continue as Kira without the Eyes",
+          "target": "node_11",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_11",
+      "is_ending": false,
+      "set_state": {
+        "l_appeared": true
+      },
+      "choices": [
+        {
           "id": "c11a",
-          "text": "Go to node 8",
-          "target": "node_8",
+          "text": "Write 'Lind L. Tailor' in the Death Note",
+          "target": "node_12",
+          "condition": null
+        },
+        {
+          "id": "c11b",
+          "text": "Resist the provocation — it could be a trap",
+          "target": "node_13",
           "condition": null
         }
       ]
@@ -165,12 +186,14 @@
     {
       "id": "node_12",
       "is_ending": false,
-      "set_state": {},
+      "set_state": {
+        "l_knows_kanto": true
+      },
       "choices": [
         {
           "id": "c12a",
-          "text": "Flee in terror",
-          "target": "node_10",
+          "text": "Swear to find L's real name and kill him",
+          "target": "node_14",
           "condition": null
         }
       ]
@@ -178,31 +201,559 @@
     {
       "id": "node_13",
       "is_ending": false,
-      "set_state": {},
+      "set_state": {
+        "outsmarted_l_broadcast": true
+      },
       "choices": [
         {
           "id": "c13a",
-          "text": "Open door",
+          "text": "Continue eliminating criminals carefully",
           "target": "node_14",
-          "condition": "has_keycard == true"
+          "condition": null
         }
       ]
     },
     {
       "id": "node_14",
       "is_ending": false,
-      "set_state": {},
+      "set_state": {
+        "fbi_investigating": true
+      },
       "choices": [
         {
           "id": "c14a",
-          "text": "Leave",
-          "target": "node_10",
+          "text": "Manipulate Raye Penber to reveal all FBI agents",
+          "target": "node_15",
+          "condition": null
+        },
+        {
+          "id": "c14b",
+          "text": "Lay low and act completely innocent",
+          "target": "node_16",
           "condition": null
         }
       ]
     },
     {
       "id": "node_15",
+      "is_ending": false,
+      "set_state": {
+        "fbi_eliminated": true
+      },
+      "choices": [
+        {
+          "id": "c15a",
+          "text": "Continue — no one can stop Kira now",
+          "target": "node_17",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_16",
+      "is_ending": false,
+      "set_state": {
+        "fbi_withdrawn": true
+      },
+      "choices": [
+        {
+          "id": "c16a",
+          "text": "Resume killings once the FBI leaves",
+          "target": "node_17",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_17",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c17a",
+          "text": "Trick Naomi into revealing her real name",
+          "target": "node_18",
+          "condition": null
+        },
+        {
+          "id": "c17b",
+          "text": "Avoid her — too risky to engage",
+          "target": "node_19",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_18",
+      "is_ending": false,
+      "set_state": {
+        "naomi_dead": true
+      },
+      "choices": [
+        {
+          "id": "c18a",
+          "text": "Push forward — L is the only threat left",
+          "target": "node_20",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_19",
+      "is_ending": false,
+      "set_state": {
+        "l_has_evidence": true
+      },
+      "choices": [
+        {
+          "id": "c19a",
+          "text": "Face L's suspicion and try to clear your name",
+          "target": "node_20",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_20",
+      "is_ending": false,
+      "set_state": {
+        "met_l": true
+      },
+      "choices": [
+        {
+          "id": "c20a",
+          "text": "Join the Kira investigation task force to monitor L",
+          "target": "node_21",
+          "condition": null
+        },
+        {
+          "id": "c20b",
+          "text": "Distance yourself from L entirely",
+          "target": "node_22",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_21",
+      "is_ending": false,
+      "set_state": {
+        "on_task_force": true
+      },
+      "choices": [
+        {
+          "id": "c21a",
+          "text": "Continue killing using a hidden method",
+          "target": "node_23",
+          "condition": null
+        },
+        {
+          "id": "c21b",
+          "text": "Stop all killings to prove innocence",
+          "target": "node_24",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_22",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c22a",
+          "text": "Try to discover L's real name independently",
+          "target": "node_25",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_23",
+      "is_ending": false,
+      "set_state": {
+        "misa_joined": true,
+        "second_death_note": true
+      },
+      "choices": [
+        {
+          "id": "c23a",
+          "text": "Use Misa to discover L's real name",
+          "target": "node_25",
+          "condition": null
+        },
+        {
+          "id": "c23b",
+          "text": "Reject Misa — she's too reckless",
+          "target": "node_26",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_24",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c24a",
+          "text": "Allow yourself to be confined — execute the master plan",
+          "target": "node_27",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_25",
+      "is_ending": false,
+      "set_state": {
+        "knows_l_name": true
+      },
+      "choices": [
+        {
+          "id": "c25a",
+          "text": "Write L's name immediately",
+          "target": "node_28",
+          "condition": null
+        },
+        {
+          "id": "c25b",
+          "text": "Wait — killing L now would expose Kira instantly",
+          "target": "node_27",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_26",
+      "is_ending": false,
+      "set_state": {
+        "rem_hostile": true
+      },
+      "choices": [
+        {
+          "id": "c26a",
+          "text": "Reluctantly ally with Misa to appease Rem",
+          "target": "node_25",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_27",
+      "is_ending": false,
+      "set_state": {
+        "light_confined": true,
+        "memories_erased": true
+      },
+      "choices": [
+        {
+          "id": "c27a",
+          "text": "The Yotsuba Kira emerges — killings continue",
+          "target": "node_29",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_28",
+      "is_ending": false,
+      "set_state": {
+        "l_dead_early": true
+      },
+      "choices": [
+        {
+          "id": "c28a",
+          "text": "Rule as Kira unopposed",
+          "target": "node_30",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_29",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c29a",
+          "text": "Help L capture Higuchi",
+          "target": "node_31",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_30",
+      "is_ending": false,
+      "set_state": {
+        "near_appeared": true,
+        "mello_appeared": true
+      },
+      "choices": [
+        {
+          "id": "c30a",
+          "text": "Deal with Near and Mello simultaneously",
+          "target": "node_37",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_31",
+      "is_ending": false,
+      "set_state": {
+        "has_death_note": true,
+        "memories_restored": true
+      },
+      "choices": [
+        {
+          "id": "c31a",
+          "text": "Execute the plan to kill L using Rem",
+          "target": "node_32",
+          "condition": null
+        },
+        {
+          "id": "c31b",
+          "text": "Continue pretending to be L's friend",
+          "target": "node_33",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_32",
+      "is_ending": false,
+      "set_state": {
+        "l_dead": true,
+        "rem_dead": true
+      },
+      "choices": [
+        {
+          "id": "c32a",
+          "text": "Assume L's identity and rule as both Kira and L",
+          "target": "node_34",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_33",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c33a",
+          "text": "Deny everything — force L to find proof",
+          "target": "node_32",
+          "condition": null
+        },
+        {
+          "id": "c33b",
+          "text": "Confess to L and try to convince him Kira is justice",
+          "target": "node_35",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_34",
+      "is_ending": false,
+      "set_state": {
+        "mello_appeared": true,
+        "mikami_involved": true,
+        "near_appeared": true
+      },
+      "choices": [
+        {
+          "id": "c34a",
+          "text": "Confront Near's investigation head-on",
+          "target": "node_37",
+          "condition": null
+        },
+        {
+          "id": "c34b",
+          "text": "Use Mikami to do all killing — keep hands clean",
+          "target": "node_38",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_35",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c35a",
+          "text": "Surrender the Death Note to L",
+          "target": "node_36",
+          "condition": null
+        },
+        {
+          "id": "c35b",
+          "text": "Kill L before the 24 hours expire",
+          "target": "node_28",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_36",
+      "is_ending": true,
+      "set_state": {},
+      "choices": []
+    },
+    {
+      "id": "node_37",
+      "is_ending": false,
+      "set_state": {
+        "warehouse_confrontation": true
+      },
+      "choices": [
+        {
+          "id": "c37a",
+          "text": "Signal Mikami to write everyone's names",
+          "target": "node_39",
+          "condition": null
+        },
+        {
+          "id": "c37b",
+          "text": "Wait to see Near's proof first",
+          "target": "node_40",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_38",
+      "is_ending": false,
+      "set_state": {
+        "notebook_compromised": true
+      },
+      "choices": [
+        {
+          "id": "c38a",
+          "text": "Proceed to the warehouse showdown anyway",
+          "target": "node_37",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_39",
+      "is_ending": false,
+      "set_state": {
+        "plan_failed": true
+      },
+      "choices": [
+        {
+          "id": "c39a",
+          "text": "Try to use the hidden piece of Death Note in your watch",
+          "target": "node_41",
+          "condition": null
+        },
+        {
+          "id": "c39b",
+          "text": "Confess and argue that Kira was right",
+          "target": "node_42",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_40",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c40a",
+          "text": "Deny everything and demand a lawyer",
+          "target": "node_42",
+          "condition": null
+        },
+        {
+          "id": "c40b",
+          "text": "Try the hidden Death Note piece in your watch",
+          "target": "node_41",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_41",
+      "is_ending": false,
+      "set_state": {
+        "light_shot": true
+      },
+      "choices": [
+        {
+          "id": "c41a",
+          "text": "Crawl away, bleeding, and beg Ryuk for help",
+          "target": "node_43",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_42",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c42a",
+          "text": "Try the hidden Death Note as a last resort",
+          "target": "node_41",
+          "condition": null
+        },
+        {
+          "id": "c42b",
+          "text": "Accept defeat",
+          "target": "node_43",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_43",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c43a",
+          "text": "Beg Ryuk to save you",
+          "target": "node_44",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_44",
+      "is_ending": true,
+      "set_state": {},
+      "choices": []
+    },
+    {
+      "id": "node_45",
+      "is_ending": false,
+      "set_state": {},
+      "choices": [
+        {
+          "id": "c45a",
+          "text": "Sidoh drops another notebook to the human world",
+          "target": "node_46",
+          "condition": null
+        }
+      ]
+    },
+    {
+      "id": "node_46",
+      "is_ending": true,
+      "set_state": {},
+      "choices": []
+    },
+    {
+      "id": "node_47",
       "is_ending": true,
       "set_state": {},
       "choices": []

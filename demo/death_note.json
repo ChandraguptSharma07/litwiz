@@ -1,0 +1,539 @@
+{
+  "title": "Death Note: The Complete Saga",
+  "version": "1.0",
+  "world_rules": [
+    "The Death Note is a supernatural notebook — any human whose name is written in it will die.",
+    "The writer must know the face and name of the person to kill them.",
+    "Shinigami Eyes allow the user to see any person's real name and remaining lifespan, but cost half the user's remaining lifespan.",
+    "If a Death Note owner gives up ownership, they lose all memories of using it.",
+    "A shinigami who uses the Death Note to extend a human's life will die."
+  ],
+  "start_node": "node_1",
+  "nodes": [
+    {
+      "id": "node_1",
+      "prose": "Light Yagami, top student in Japan, sits bored in class. Through the window, he watches a black notebook fall from the sky and land in the school courtyard. Written on the cover: 'Death Note.'",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["Light is a normal high school student", "Light is bored and disillusioned with the world"],
+      "established_facts": ["Death Note fell from the sky", "Light is at school"],
+      "choices": [
+        { "id": "c1a", "text": "Pick up the notebook after class", "target": "node_2", "condition": null },
+        { "id": "c1b", "text": "Ignore it — it's probably a prank", "target": "node_3", "condition": null }
+      ]
+    },
+    {
+      "id": "node_2",
+      "prose": "Light picks up the notebook and reads the rules inside. 'The human whose name is written in this note shall die.' He scoffs — it has to be a sick joke. But that night, alone in his room, curiosity overwhelms him.",
+      "is_ending": false,
+      "set_state": { "has_death_note": true },
+      "character_states": ["Light possesses the Death Note", "Light is skeptical"],
+      "established_facts": ["Light read the rules", "Light took the notebook home"],
+      "choices": [
+        { "id": "c2a", "text": "Test it on a criminal from the news", "target": "node_4", "condition": null },
+        { "id": "c2b", "text": "Destroy the notebook — this is too dangerous", "target": "node_5", "condition": null }
+      ]
+    },
+    {
+      "id": "node_3",
+      "prose": "Light walks past the notebook. Later that evening, another student — a quiet, troubled boy named Teru Mikami — picks it up instead. Within weeks, criminals begin dying of heart attacks across Japan. Light watches the news, unaware of what he almost held in his hands.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": ["Light never touched the Death Note", "Mikami becomes Kira"],
+      "established_facts": ["Light's life continues normally", "someone else became Kira"],
+      "choices": []
+    },
+    {
+      "id": "node_4",
+      "prose": "A hostage situation plays live on TV. Light writes the criminal's name: Kurou Otoharada. He waits. 40 seconds later, the man collapses — dead of a heart attack. Light's hands tremble. The notebook is real.",
+      "is_ending": false,
+      "set_state": { "first_kill": true },
+      "character_states": ["Light killed for the first time", "Light is in shock"],
+      "established_facts": ["Death Note works", "Kurou Otoharada is dead", "cause of death = heart attack"],
+      "choices": [
+        { "id": "c4a", "text": "This power can change the world — become Kira", "target": "node_6", "condition": null },
+        { "id": "c4b", "text": "This is murder. Never use it again.", "target": "node_7", "condition": null }
+      ]
+    },
+    {
+      "id": "node_5",
+      "prose": "Light burns the Death Note in his backyard. The pages curl and blacken. A shadowy figure — the shinigami Ryuk — watches from above, amused. 'Humans are so interesting,' he mutters, and returns to the Shinigami Realm to drop another notebook somewhere else.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": ["Light destroyed the notebook"],
+      "established_facts": ["Death Note is destroyed", "Ryuk returns to Shinigami Realm"],
+      "choices": []
+    },
+    {
+      "id": "node_6",
+      "prose": "Over the next days, Light systematically writes the names of violent criminals. Dozens die of heart attacks. The public notices. The media gives the unknown killer a name: 'Kira.' Some worship him as a god of justice. Others call him a monster.",
+      "is_ending": false,
+      "set_state": { "is_kira": true, "criminals_killed": true },
+      "character_states": ["Light has become Kira", "Light believes he is justice"],
+      "established_facts": ["criminals dying worldwide", "public calls the killer 'Kira'", "Kira has worshippers and critics"],
+      "choices": [
+        { "id": "c6a", "text": "Continue the killings — the world needs Kira", "target": "node_8", "condition": null }
+      ]
+    },
+    {
+      "id": "node_7",
+      "prose": "Light hides the Death Note in a locked drawer and tries to forget. But at night, he can still see Otoharada's face collapsing on the TV screen. The guilt eats at him. Five days later, a grotesque shinigami named Ryuk appears in his bedroom, grinning.",
+      "is_ending": false,
+      "set_state": { "ryuk_appeared": true },
+      "character_states": ["Light is guilt-ridden", "Ryuk is present"],
+      "established_facts": ["Ryuk followed the notebook to Light"],
+      "choices": [
+        { "id": "c7a", "text": "Ask Ryuk to take the notebook back", "target": "node_5", "condition": null },
+        { "id": "c7b", "text": "Reluctantly accept fate — use the notebook carefully", "target": "node_6", "condition": null }
+      ]
+    },
+    {
+      "id": "node_8",
+      "prose": "Ryuk, the shinigami, finally reveals himself to Light. His skeletal grin fills the room. 'I dropped that notebook because I was bored,' he says. 'I'm not on your side or anyone's. I'm just here to watch.' He offers Light a deal: Shinigami Eyes — the ability to see anyone's real name just by looking at them.",
+      "is_ending": false,
+      "set_state": { "ryuk_appeared": true },
+      "character_states": ["Ryuk has appeared", "Light knows about Shinigami Eyes"],
+      "established_facts": ["Shinigami Eyes cost half remaining lifespan", "Ryuk is neutral"],
+      "choices": [
+        { "id": "c8a", "text": "Accept the Shinigami Eyes", "target": "node_9", "condition": null },
+        { "id": "c8b", "text": "Refuse — half my lifespan is too high a price", "target": "node_10", "condition": null }
+      ]
+    },
+    {
+      "id": "node_9",
+      "prose": "Light's eyes glow red for a brief moment. Now, above every person he sees, their true name and remaining lifespan float in crimson text. The power is intoxicating — no one can hide their identity from him. But he's already sacrificed half his life.",
+      "is_ending": false,
+      "set_state": { "has_shinigami_eyes": true },
+      "character_states": ["Light has Shinigami Eyes", "Light's lifespan is halved"],
+      "established_facts": ["Light can see anyone's real name"],
+      "choices": [
+        { "id": "c9a", "text": "Use the Eyes to accelerate Kira's mission", "target": "node_11", "condition": null }
+      ]
+    },
+    {
+      "id": "node_10",
+      "prose": "Light refuses the deal. 'I'll find people's names my own way,' he tells Ryuk. The shinigami shrugs. 'Suit yourself. This is getting interesting either way.' Meanwhile, across the world, someone notices the pattern of deaths. The world's greatest detective has taken the case.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["Light refused the Eyes"],
+      "established_facts": ["a detective is investigating Kira"],
+      "choices": [
+        { "id": "c10a", "text": "Continue as Kira without the Eyes", "target": "node_11", "condition": null }
+      ]
+    },
+    {
+      "id": "node_11",
+      "prose": "A worldwide broadcast interrupts every channel. A man calling himself 'L' directly challenges Kira: 'Kira, I know you're in Japan. And I will find you.' But it's a trap — the man on screen is Lind L. Tailor, a condemned criminal used as L's decoy.",
+      "is_ending": false,
+      "set_state": { "l_appeared": true },
+      "character_states": ["L has publicly challenged Kira", "Light is enraged"],
+      "established_facts": ["L is investigating Kira", "broadcast targets Kanto region of Japan"],
+      "choices": [
+        { "id": "c11a", "text": "Write 'Lind L. Tailor' in the Death Note", "target": "node_12", "condition": null },
+        { "id": "c11b", "text": "Resist the provocation — it could be a trap", "target": "node_13", "condition": null }
+      ]
+    },
+    {
+      "id": "node_12",
+      "prose": "Tailor clutches his chest and dies on live television. Then the REAL L's voice speaks through a distorted filter: 'I had Tailor say that — he was a criminal sentenced to die today. You just proved Kira exists, that you're in Kanto, and that you need a face and a name to kill. Thank you, Kira.'",
+      "is_ending": false,
+      "set_state": { "l_knows_kanto": true },
+      "character_states": ["Light fell into L's trap", "L knows Kira is in Kanto"],
+      "established_facts": ["L confirmed Kira's method", "Kira needs a name and face", "Kira is in Kanto region"],
+      "choices": [
+        { "id": "c12a", "text": "Swear to find L's real name and kill him", "target": "node_14", "condition": null }
+      ]
+    },
+    {
+      "id": "node_13",
+      "prose": "Light holds back. He suspects a trap. When Tailor finishes speaking and nothing happens, L's voice comes through: 'Interesting. Perhaps Kira is smarter than I thought.' Without confirming the killing method, L has fewer leads. The investigation stalls.",
+      "is_ending": false,
+      "set_state": { "outsmarted_l_broadcast": true },
+      "character_states": ["Light outsmarted L's trap"],
+      "established_facts": ["L has less information about Kira"],
+      "choices": [
+        { "id": "c13a", "text": "Continue eliminating criminals carefully", "target": "node_14", "condition": null }
+      ]
+    },
+    {
+      "id": "node_14",
+      "prose": "L dispatches 12 FBI agents to Japan to shadow potential Kira suspects. One of them — Raye Penber — is assigned to follow Light Yagami. Light notices the tail within days.",
+      "is_ending": false,
+      "set_state": { "fbi_investigating": true },
+      "character_states": ["Light is being followed by FBI", "Raye Penber is tailing Light"],
+      "established_facts": ["12 FBI agents are in Japan", "Raye Penber assigned to Light"],
+      "choices": [
+        { "id": "c14a", "text": "Manipulate Raye Penber to reveal all FBI agents", "target": "node_15", "condition": null },
+        { "id": "c14b", "text": "Lay low and act completely innocent", "target": "node_16", "condition": null }
+      ]
+    },
+    {
+      "id": "node_15",
+      "prose": "Light orchestrates a bus hijacking to force Raye Penber to show his FBI ID. Then, using that name, Light manipulates Penber into writing the names of all 12 FBI agents on pages from the Death Note. Penber dies on a train, watching Light's smiling face as the doors close.",
+      "is_ending": false,
+      "set_state": { "fbi_eliminated": true },
+      "character_states": ["all 12 FBI agents are dead", "Light is ruthless"],
+      "established_facts": ["Raye Penber is dead", "all FBI agents died of heart attacks", "Light killed innocent people"],
+      "choices": [
+        { "id": "c15a", "text": "Continue — no one can stop Kira now", "target": "node_17", "condition": null }
+      ]
+    },
+    {
+      "id": "node_16",
+      "prose": "Light acts like a perfect student. He attends cram school, helps his father with police work, and never touches the Death Note while being watched. Weeks pass. The FBI finds nothing and withdraws from Japan. But L remains suspicious — the one person who was too perfect.",
+      "is_ending": false,
+      "set_state": { "fbi_withdrawn": true },
+      "character_states": ["Light appeared innocent", "L is still suspicious"],
+      "established_facts": ["FBI withdrew from Japan", "L suspects Light is too clean"],
+      "choices": [
+        { "id": "c16a", "text": "Resume killings once the FBI leaves", "target": "node_17", "condition": null }
+      ]
+    },
+    {
+      "id": "node_17",
+      "prose": "Naomi Misora, Raye Penber's fiancée and a brilliant former FBI agent, begins investigating on her own. She deduces that Kira was on the bus with Penber. She walks into the NPA headquarters to share her findings — and runs directly into Light Yagami in the lobby.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["Naomi Misora is investigating", "Light encounters Naomi"],
+      "established_facts": ["Naomi deduced Kira was on the bus"],
+      "choices": [
+        { "id": "c17a", "text": "Trick Naomi into revealing her real name", "target": "node_18", "condition": null },
+        { "id": "c17b", "text": "Avoid her — too risky to engage", "target": "node_19", "condition": null }
+      ]
+    },
+    {
+      "id": "node_18",
+      "prose": "Light pretends to be a fellow investigator. Through careful conversation, he manipulates Naomi into revealing her real name. He writes it in the Death Note hidden in his jacket. She walks away — and never arrives at the police station. Her body is never found. She was programmed to die by suicide in a location where she won't be discovered.",
+      "is_ending": false,
+      "set_state": { "naomi_dead": true },
+      "character_states": ["Naomi Misora is dead", "Light's manipulation is escalating"],
+      "established_facts": ["Light killed an innocent woman", "Naomi's evidence died with her"],
+      "choices": [
+        { "id": "c18a", "text": "Push forward — L is the only threat left", "target": "node_20", "condition": null }
+      ]
+    },
+    {
+      "id": "node_19",
+      "prose": "Light avoids Naomi, but she successfully delivers her findings to L. L now knows Kira was on the Spaceland bus with Raye Penber. The list of suspects narrows dramatically — and Light Yagami is at the top.",
+      "is_ending": false,
+      "set_state": { "l_has_evidence": true },
+      "character_states": ["L has strong evidence", "Light is primary suspect"],
+      "established_facts": ["Naomi's evidence reached L", "Light is top suspect"],
+      "choices": [
+        { "id": "c19a", "text": "Face L's suspicion and try to clear your name", "target": "node_20", "condition": null }
+      ]
+    },
+    {
+      "id": "node_20",
+      "prose": "L introduces himself to Light directly — at university, under the alias 'Ryuzaki.' He says he's working with the police on the Kira case. Light realizes this is L testing him face to face. Both geniuses smile at each other, each hiding everything.",
+      "is_ending": false,
+      "set_state": { "met_l": true },
+      "character_states": ["Light and L have met", "both are playing mind games"],
+      "established_facts": ["L uses alias Ryuzaki", "L suspects Light", "Light suspects Ryuzaki is L"],
+      "choices": [
+        { "id": "c20a", "text": "Join the Kira investigation task force to monitor L", "target": "node_21", "condition": null },
+        { "id": "c20b", "text": "Distance yourself from L entirely", "target": "node_22", "condition": null }
+      ]
+    },
+    {
+      "id": "node_21",
+      "prose": "Light joins the task force alongside his own father, Soichiro Yagami. He now has access to everything L knows. But L has cameras in Light's bedroom. Every move is watched. The cat-and-mouse game intensifies to unbearable levels.",
+      "is_ending": false,
+      "set_state": { "on_task_force": true },
+      "character_states": ["Light is on the task force", "L has cameras in Light's room"],
+      "established_facts": ["Light's room is under surveillance", "Light must hide the Death Note"],
+      "choices": [
+        { "id": "c21a", "text": "Continue killing using a hidden method", "target": "node_23", "condition": null },
+        { "id": "c21b", "text": "Stop all killings to prove innocence", "target": "node_24", "condition": null }
+      ]
+    },
+    {
+      "id": "node_22",
+      "prose": "Light avoids the task force. Without inside information, he can't predict L's moves. L, meanwhile, deploys surveillance everywhere. Light becomes increasingly paranoid, working alone against the world's greatest detective without any advantage.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["Light is isolated", "L has the advantage"],
+      "established_facts": ["Light has no inside information on L"],
+      "choices": [
+        { "id": "c22a", "text": "Try to discover L's real name independently", "target": "node_25", "condition": null }
+      ]
+    },
+    {
+      "id": "node_23",
+      "prose": "Misa Amane — a famous model and Second Kira — appears. She gained a Death Note from the shinigami Rem and made the Shinigami Eyes deal. She can see L's real name. Obsessed with Kira for killing the man who murdered her family, she tracks Light down and offers herself as his weapon.",
+      "is_ending": false,
+      "set_state": { "misa_joined": true, "second_death_note": true },
+      "character_states": ["Misa has Shinigami Eyes", "Misa is devoted to Light", "Rem protects Misa"],
+      "established_facts": ["Misa is the Second Kira", "Misa has Shinigami Eyes", "shinigami Rem will kill anyone who threatens Misa"],
+      "choices": [
+        { "id": "c23a", "text": "Use Misa to discover L's real name", "target": "node_25", "condition": null },
+        { "id": "c23b", "text": "Reject Misa — she's too reckless", "target": "node_26", "condition": null }
+      ]
+    },
+    {
+      "id": "node_24",
+      "prose": "Light stops all killings. For weeks, no criminals die. But then — criminals start dying again while Light is under 24/7 surveillance. Someone else has a Death Note. L is confused. Light proposes a radical plan: imprison me. If killings continue while I'm locked up, I'm innocent.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["Light is willing to be confined", "another Kira exists"],
+      "established_facts": ["killings continued without Light", "evidence points to a corporate group"],
+      "choices": [
+        { "id": "c24a", "text": "Allow yourself to be confined — execute the master plan", "target": "node_27", "condition": null }
+      ]
+    },
+    {
+      "id": "node_25",
+      "prose": "Misa sees L's face and reads the name floating above his head: L Lawliet. She whispers it to Light. For the first time, Light holds L's fate in his hands. He could write it right now and end everything.",
+      "is_ending": false,
+      "set_state": { "knows_l_name": true },
+      "character_states": ["Light knows L's real name"],
+      "established_facts": ["L's real name is L Lawliet"],
+      "choices": [
+        { "id": "c25a", "text": "Write L's name immediately", "target": "node_28", "condition": null },
+        { "id": "c25b", "text": "Wait — killing L now would expose Kira instantly", "target": "node_27", "condition": null }
+      ]
+    },
+    {
+      "id": "node_26",
+      "prose": "Light pushes Misa away. She's devastated but the shinigami Rem grows hostile. Rem threatens Light: 'If you make Misa unhappy, I will write YOUR name in my Death Note.' Light now has an enemy he literally cannot outmaneuver — a god of death.",
+      "is_ending": false,
+      "set_state": { "rem_hostile": true },
+      "character_states": ["Rem is threatening Light"],
+      "established_facts": ["Rem will kill Light if Misa is unhappy"],
+      "choices": [
+        { "id": "c26a", "text": "Reluctantly ally with Misa to appease Rem", "target": "node_25", "condition": null }
+      ]
+    },
+    {
+      "id": "node_27",
+      "prose": "Light voluntarily surrenders to L and is locked in a cell. Before confinement, he secretly gives up ownership of the Death Note — erasing all his memories of being Kira. In his cell, Light genuinely believes he is innocent. He IS innocent. The old Light is gone.",
+      "is_ending": false,
+      "set_state": { "light_confined": true, "memories_erased": true },
+      "character_states": ["Light has no memory of being Kira", "Light is genuinely innocent"],
+      "established_facts": ["Death Note ownership relinquished", "Light's memories are erased"],
+      "choices": [
+        { "id": "c27a", "text": "The Yotsuba Kira emerges — killings continue", "target": "node_29", "condition": null }
+      ]
+    },
+    {
+      "id": "node_28",
+      "prose": "Light writes 'L Lawliet' in the Death Note. 40 seconds pass. Somewhere in the investigation headquarters, L clutches his chest. His eyes widen. He falls from his chair. The world's greatest detective is dead. But without L, someone worse will come.",
+      "is_ending": false,
+      "set_state": { "l_dead_early": true },
+      "character_states": ["L is dead", "Light killed L directly"],
+      "established_facts": ["L Lawliet is dead", "investigation collapses"],
+      "choices": [
+        { "id": "c28a", "text": "Rule as Kira unopposed", "target": "node_30", "condition": null }
+      ]
+    },
+    {
+      "id": "node_29",
+      "prose": "Higuchi, a Yotsuba Group executive, uses the Death Note to kill business rivals. Light — now memory-wiped and genuinely innocent — works with L to catch this new Kira. They're allies for the first time, truly. L even admits: 'You're my first friend, Light.'",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["Light and L are genuine friends", "Higuchi is the new Kira"],
+      "established_facts": ["Yotsuba Kira is Higuchi", "Light is helping L sincerely"],
+      "choices": [
+        { "id": "c29a", "text": "Help L capture Higuchi", "target": "node_31", "condition": null }
+      ]
+    },
+    {
+      "id": "node_30",
+      "prose": "With L dead, Light reigns as Kira for five years. Crime drops 70%. Wars end. The world worships and fears him equally. But two orphans from Wammy's House — Near and Mello — have inherited L's legacy. They're coming for Kira.",
+      "is_ending": false,
+      "set_state": { "near_appeared": true, "mello_appeared": true },
+      "character_states": ["Light has ruled for 5 years", "Near and Mello are investigating"],
+      "established_facts": ["crime dropped 70%", "Near leads SPK", "Mello works with the mafia"],
+      "choices": [
+        { "id": "c30a", "text": "Deal with Near and Mello simultaneously", "target": "node_37", "condition": null }
+      ]
+    },
+    {
+      "id": "node_31",
+      "prose": "The task force corners Higuchi in a car chase. He's captured. But when Light touches the Death Note recovered from Higuchi — his memories return in a flood. Every death. Every manipulation. Every lie. Light Yagami remembers he is Kira. The mask goes back on. No one notices.",
+      "is_ending": false,
+      "set_state": { "memories_restored": true, "has_death_note": true },
+      "character_states": ["Light's memories are restored", "Light is Kira again", "no one suspects"],
+      "established_facts": ["touching the Death Note restored Light's memories"],
+      "choices": [
+        { "id": "c31a", "text": "Execute the plan to kill L using Rem", "target": "node_32", "condition": null },
+        { "id": "c31b", "text": "Continue pretending to be L's friend", "target": "node_33", "condition": null }
+      ]
+    },
+    {
+      "id": "node_32",
+      "prose": "Light manipulates events so that L's investigation threatens Misa's life. Rem, bound by her love for Misa, has no choice — she writes L's name and Watari's name in her Death Note. L collapses. His last sight is Light standing over him, smiling. 'I win, L.' Rem crumbles to dust — a shinigami who killed to save a human dies.",
+      "is_ending": false,
+      "set_state": { "l_dead": true, "rem_dead": true },
+      "character_states": ["L is dead", "Rem is dead", "Light has won"],
+      "established_facts": ["L died on November 5", "Rem sacrificed herself", "Light takes over as the new L"],
+      "choices": [
+        { "id": "c32a", "text": "Assume L's identity and rule as both Kira and L", "target": "node_34", "condition": null }
+      ]
+    },
+    {
+      "id": "node_33",
+      "prose": "Light continues working alongside L, biding his time. But L is too perceptive. During a quiet moment on the rooftop in the rain, L says: 'Light... I know you're Kira. I've always known. But I could never prove it.' The rain falls between them.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["L has confronted Light privately"],
+      "established_facts": ["L believes Light is Kira but has no proof"],
+      "choices": [
+        { "id": "c33a", "text": "Deny everything — force L to find proof", "target": "node_32", "condition": null },
+        { "id": "c33b", "text": "Confess to L and try to convince him Kira is justice", "target": "node_35", "condition": null }
+      ]
+    },
+    {
+      "id": "node_34",
+      "prose": "Light operates as both Kira and the new 'L' for five years. Crime plummets. He builds a new world order with Misa and a devoted follower named Teru Mikami handling the killings. But L left successors: Near, a cold logical genius, and Mello, an emotional wildcard. They know 'L' died years ago.",
+      "is_ending": false,
+      "set_state": { "near_appeared": true, "mello_appeared": true, "mikami_involved": true },
+      "character_states": ["Light is both Kira and L", "Near is investigating", "Mello is investigating", "Mikami is Light's proxy"],
+      "established_facts": ["5 years have passed", "Near leads the SPK", "Mello kidnapped Sayu Yagami"],
+      "choices": [
+        { "id": "c34a", "text": "Confront Near's investigation head-on", "target": "node_37", "condition": null },
+        { "id": "c34b", "text": "Use Mikami to do all killing — keep hands clean", "target": "node_38", "condition": null }
+      ]
+    },
+    {
+      "id": "node_35",
+      "prose": "Light tells L everything. About the Death Note. About Ryuk. About his vision for a crime-free world. L listens in silence. Then: 'You're the most brilliant, most dangerous person I've ever met. And you're my only friend. I'll give you 24 hours to stop — or I'll arrest you.'",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["L gave Light an ultimatum"],
+      "established_facts": ["L knows everything", "24 hour deadline"],
+      "choices": [
+        { "id": "c35a", "text": "Surrender the Death Note to L", "target": "node_36", "condition": null },
+        { "id": "c35b", "text": "Kill L before the 24 hours expire", "target": "node_28", "condition": null }
+      ]
+    },
+    {
+      "id": "node_36",
+      "prose": "Light hands the Death Note to L. His memories fade like a dying dream. He forgets Kira, forgets the killings, forgets everything. And so Light Yagami lives as an ordinary man — brilliant, bored, ordinary. L locks the Death Note away forever. The killings stop. The world moves on.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": ["Light is normal again", "L has the Death Note"],
+      "established_facts": ["Kira is gone", "world returns to normal"],
+      "choices": []
+    },
+    {
+      "id": "node_37",
+      "prose": "Near arranges a final confrontation at the Yellow Box warehouse. He claims to have proof that Light is Kira. Light is confident — Mikami has the notebook and will write everyone's name at his signal. Everything has been planned to the second.",
+      "is_ending": false,
+      "set_state": { "warehouse_confrontation": true },
+      "character_states": ["Near and Light face off", "Mikami has the notebook"],
+      "established_facts": ["meeting at Yellow Box warehouse", "Near claims to have proof"],
+      "choices": [
+        { "id": "c37a", "text": "Signal Mikami to write everyone's names", "target": "node_39", "condition": null },
+        { "id": "c37b", "text": "Wait to see Near's proof first", "target": "node_40", "condition": null }
+      ]
+    },
+    {
+      "id": "node_38",
+      "prose": "Light relies entirely on Mikami. But Mikami is too devoted — he acts independently, visiting the bank where the real Death Note is hidden. Mello's mafia contacts notice. They photograph Mikami at the bank. Near now knows where the real notebook is.",
+      "is_ending": false,
+      "set_state": { "notebook_compromised": true },
+      "character_states": ["Mikami exposed the real notebook's location"],
+      "established_facts": ["Near knows about the real notebook", "Mello's sacrifice led to this"],
+      "choices": [
+        { "id": "c38a", "text": "Proceed to the warehouse showdown anyway", "target": "node_37", "condition": null }
+      ]
+    },
+    {
+      "id": "node_39",
+      "prose": "Light screams: 'Mikami! Write their names! NOW!' Mikami pulls out the notebook and writes frantically. 40 seconds pass. Nobody dies. Near smiles coldly. 'We replaced the notebook pages. This is a fake.' Mikami breaks down: 'God... why isn't it working?!'",
+      "is_ending": false,
+      "set_state": { "plan_failed": true },
+      "character_states": ["Light's plan has failed", "notebook was swapped"],
+      "established_facts": ["Near replaced the notebook pages", "Light exposed himself as Kira"],
+      "choices": [
+        { "id": "c39a", "text": "Try to use the hidden piece of Death Note in your watch", "target": "node_41", "condition": null },
+        { "id": "c39b", "text": "Confess and argue that Kira was right", "target": "node_42", "condition": null }
+      ]
+    },
+    {
+      "id": "node_40",
+      "prose": "Near opens the notebook and reads the names inside. Every name matches a criminal Kira killed. Then he reveals the writing analysis: Teru Mikami's handwriting. And embedded in the pages — Light Yagami's fingerprints from when he originally owned it.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["Light is exposed"],
+      "established_facts": ["fingerprint evidence links Light to Death Note"],
+      "choices": [
+        { "id": "c40a", "text": "Deny everything and demand a lawyer", "target": "node_42", "condition": null },
+        { "id": "c40b", "text": "Try the hidden Death Note piece in your watch", "target": "node_41", "condition": null }
+      ]
+    },
+    {
+      "id": "node_41",
+      "prose": "Light pulls a tiny scrap of Death Note from his hidden watch compartment. He pricks his finger and starts writing Near's name in blood. Matsuda sees it. 'LIGHT!' A gunshot rings out. The bullet tears through Light's hand. The paper falls. Matsuda fires again. And again.",
+      "is_ending": false,
+      "set_state": { "light_shot": true },
+      "character_states": ["Light is shot multiple times", "Matsuda shot Light"],
+      "established_facts": ["Light tried to use hidden Death Note scrap", "Matsuda shot him"],
+      "choices": [
+        { "id": "c41a", "text": "Crawl away, bleeding, and beg Ryuk for help", "target": "node_43", "condition": null }
+      ]
+    },
+    {
+      "id": "node_42",
+      "prose": "Light breaks. All the composure, all the masks, all the calculations — gone. He screams at everyone in the warehouse: 'I AM KIRA! And? What's wrong with that? I've been cleansing this world! I'm the god of the new world!' The task force stares at the boy they once trusted. His father's legacy in ruins.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["Light has fully confessed", "everyone is horrified"],
+      "established_facts": ["Light admitted to being Kira publicly"],
+      "choices": [
+        { "id": "c42a", "text": "Try the hidden Death Note as a last resort", "target": "node_41", "condition": null },
+        { "id": "c42b", "text": "Accept defeat", "target": "node_43", "condition": null }
+      ]
+    },
+    {
+      "id": "node_43",
+      "prose": "Light staggers out of the warehouse, bleeding. He collapses on a metal staircase in an abandoned building. Ryuk hovers above him. 'Well, Light, it's been fun. But this is where it ends.' Light looks up in horror. 'Ryuk... you wouldn't...'",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["Light is dying", "Ryuk is hovering above"],
+      "established_facts": ["Light escaped the warehouse", "Light is fatally wounded"],
+      "choices": [
+        { "id": "c43a", "text": "Beg Ryuk to save you", "target": "node_44", "condition": null }
+      ]
+    },
+    {
+      "id": "node_44",
+      "prose": "Ryuk grins his skeletal grin one final time. 'I told you from the very beginning, Light — I would be the one to write your name.' He opens his shinigami notebook. In elegant script, he writes: Light Yagami. 40 seconds. Light's eyes go wide. His heart stops. The genius who tried to become a god dies alone on a cold staircase. Kira is dead.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": ["Light Yagami is dead"],
+      "established_facts": ["Ryuk wrote Light's name", "Kira is dead", "the Death Note saga ends"],
+      "choices": []
+    },
+    {
+      "id": "node_45",
+      "prose": "In the Shinigami Realm, far above the human world, other death gods discuss what happened. A shinigami named Sidoh complains that his notebook was stolen years ago — the very notebook Mello used. The cycle of death continues, even without Kira.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": [],
+      "established_facts": [],
+      "choices": [
+        { "id": "c45a", "text": "Sidoh drops another notebook to the human world", "target": "node_46", "condition": null }
+      ]
+    },
+    {
+      "id": "node_46",
+      "prose": "Another Death Note falls from the sky. It lands in a schoolyard in New York City. A young girl picks it up. She reads the cover. She smiles. The cycle begins again.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": [],
+      "established_facts": ["a new Kira may be born"],
+      "choices": []
+    },
+    {
+      "id": "node_47",
+      "prose": "In an alternate timeline, Light and L set aside their differences. L agrees: the justice system is broken. Together, they use the Death Note surgically — only targeting verified serial killers and war criminals. The world changes, slowly, carefully. Two geniuses working together instead of against each other.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": ["Light and L are partners"],
+      "established_facts": ["Light and L work together"],
+      "choices": []
+    }
+  ]
+}

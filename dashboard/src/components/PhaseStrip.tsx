@@ -2,94 +2,121 @@ import type { ValidationPhase } from '../lib/types'
 
 interface Props {
   phase: ValidationPhase
+  nodeCount: number
   structuralFaultCount: number
   semanticFaultCount: number
 }
 
-export default function PhaseStrip({ phase, structuralFaultCount, semanticFaultCount }: Props) {
+export default function PhaseStrip({ phase, nodeCount, structuralFaultCount, semanticFaultCount }: Props) {
+  const ingestDone = !['idle', 'ingesting'].includes(phase)
   const structuralDone = ['structural-done', 'semantic-running', 'semantic-done'].includes(phase)
-  const semanticActive = ['semantic-running', 'semantic-done'].includes(phase)
   const semanticDone = phase === 'semantic-done'
 
   return (
     <div
-      className="flex items-center gap-4 px-5 shrink-0"
+      className="flex items-center gap-3 px-5 shrink-0"
       style={{
         height: 36,
         background: 'var(--bg-panel)',
         borderTop: '1px solid var(--border)',
         fontSize: 10,
+        overflowX: 'auto',
       }}
     >
-      {/* Phase 1 pill */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 6,
-          padding: '3px 10px',
-          borderRadius: 4,
-          border: `1px solid ${structuralDone ? '#16a34a50' : '#3b82f650'}`,
-          background: structuralDone ? '#16a34a14' : '#3b82f614',
-          color: structuralDone ? '#4ade80' : '#60a5fa',
-          transition: 'all 0.4s ease',
-        }}
-      >
-        <span style={{ opacity: 0.6 }}>⬡</span>
-        <span>PHASE 1: STRUCTURAL · Rust Engine</span>
-        {structuralDone && (
-          <span style={{ marginLeft: 4 }}>
-            · ✓ {structuralFaultCount} {structuralFaultCount === 1 ? 'error' : 'errors'} found
-          </span>
-        )}
-        {phase === 'structural-running' && (
-          <span style={{ marginLeft: 4, opacity: 0.6 }}>· Running...</span>
-        )}
-        {phase === 'idle' && (
-          <span style={{ marginLeft: 4, opacity: 0.4 }}>· Waiting</span>
-        )}
-      </div>
+      {/* Phase 0 — Ingest */}
+      <Pill
+        icon="✦"
+        label="INGEST"
+        sub="Claude AI"
+        detail={ingestDone ? `· ✓ ${nodeCount} nodes extracted` : phase === 'ingesting' ? '· Parsing...' : '· Waiting'}
+        active={phase === 'ingesting'}
+        done={ingestDone}
+        doneColor="#60a5fa"
+        activeColor="#3b82f6"
+      />
 
-      {/* Arrow — slides right when transitioning */}
-      <span
-        style={{
-          fontSize: 12,
-          opacity: structuralDone ? 1 : 0.3,
-          transform: semanticActive ? 'translateX(4px)' : 'none',
-          transition: 'transform 0.6s ease, opacity 0.4s ease',
-        }}
-      >
-        →
-      </span>
+      <Arrow lit={ingestDone} />
 
-      {/* Phase 2 pill */}
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: 6,
-          padding: '3px 10px',
-          borderRadius: 4,
-          border: `1px solid ${semanticActive ? '#7c3aed50' : '#3f3f4650'}`,
-          background: semanticActive ? '#7c3aed14' : 'transparent',
-          color: semanticActive ? '#c084fc' : '#52525b',
-          transition: 'all 0.4s ease',
-        }}
-      >
-        <span style={{ opacity: 0.6 }}>◈</span>
-        <span>PHASE 2: SEMANTIC · Hindsight</span>
-        {semanticDone && (
-          <span style={{ marginLeft: 4 }}>
-            · ✓ {semanticFaultCount} {semanticFaultCount === 1 ? 'warning' : 'warnings'} found
-          </span>
-        )}
-        {phase === 'semantic-running' && (
-          <span style={{ marginLeft: 4, opacity: 0.6 }}>· Running...</span>
-        )}
-        {!semanticActive && (
-          <span style={{ marginLeft: 4, opacity: 0.4 }}>· Waiting...</span>
-        )}
-      </div>
+      {/* Phase 1 — Structural */}
+      <Pill
+        icon="⬡"
+        label="STRUCTURAL"
+        sub="Rust Engine"
+        detail={structuralDone ? `· ✓ ${structuralFaultCount} ${structuralFaultCount === 1 ? 'error' : 'errors'}` : phase === 'structural-running' ? '· Running...' : '· Waiting...'}
+        active={phase === 'structural-running'}
+        done={structuralDone}
+        doneColor="#4ade80"
+        activeColor="#22c55e"
+      />
+
+      <Arrow lit={structuralDone} />
+
+      {/* Phase 2 — Semantic */}
+      <Pill
+        icon="◈"
+        label="SEMANTIC"
+        sub="Hindsight"
+        detail={semanticDone ? `· ✓ ${semanticFaultCount} ${semanticFaultCount === 1 ? 'warning' : 'warnings'}` : phase === 'semantic-running' ? '· Running...' : '· Waiting...'}
+        active={phase === 'semantic-running'}
+        done={semanticDone}
+        doneColor="#c084fc"
+        activeColor="#a855f7"
+      />
     </div>
+  )
+}
+
+function Pill({
+  icon, label, sub, detail, active, done, doneColor, activeColor,
+}: {
+  icon: string
+  label: string
+  sub: string
+  detail: string
+  active: boolean
+  done: boolean
+  doneColor: string
+  activeColor: string
+}) {
+  const color = done ? doneColor : active ? activeColor : '#52525b'
+  const bg = done ? `${doneColor}14` : active ? `${activeColor}14` : 'transparent'
+  const border = done ? `${doneColor}40` : active ? `${activeColor}40` : '#3f3f4650'
+
+  return (
+    <div
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: 5,
+        padding: '3px 10px',
+        borderRadius: 4,
+        border: `1px solid ${border}`,
+        background: bg,
+        color,
+        whiteSpace: 'nowrap',
+        transition: 'all 0.4s ease',
+        flexShrink: 0,
+      }}
+    >
+      <span style={{ opacity: 0.7 }}>{icon}</span>
+      <span style={{ fontWeight: 500 }}>{label}</span>
+      <span style={{ opacity: 0.5 }}>· {sub}</span>
+      <span style={{ opacity: 0.8 }}>{detail}</span>
+    </div>
+  )
+}
+
+function Arrow({ lit }: { lit: boolean }) {
+  return (
+    <span
+      style={{
+        fontSize: 12,
+        opacity: lit ? 0.7 : 0.2,
+        flexShrink: 0,
+        transition: 'opacity 0.4s ease',
+      }}
+    >
+      →
+    </span>
   )
 }

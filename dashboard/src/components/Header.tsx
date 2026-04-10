@@ -23,8 +23,9 @@ export default function Header({
   onRunHindsight,
   onToggleView,
 }: Props) {
-  const structuralDone = phase === 'structural-done' || phase === 'semantic-running' || phase === 'semantic-done'
+  const structuralDone = ['structural-done', 'semantic-running', 'semantic-done'].includes(phase)
   const structuralRunning = phase === 'structural-running'
+  const structuralEnabled = ['ingest-done', 'structural-done', 'semantic-running', 'semantic-done'].includes(phase)
   const hindsightEnabled = structuralDone
   const hindsightRunning = phase === 'semantic-running'
 
@@ -88,26 +89,27 @@ export default function Header({
             fontSize: 11,
             padding: '4px 10px',
             borderRadius: 4,
-            border: '1px solid var(--border)',
-            background: 'transparent',
-            color: '#a1a1aa',
+            border: '1px solid #3b82f650',
+            background: '#3b82f610',
+            color: '#93c5fd',
             cursor: 'pointer',
           }}
         >
-          Load Narrative
+          ✦ Load Literature
         </button>
 
         <button
           onClick={onRunStructural}
-          disabled={structuralRunning}
+          disabled={!structuralEnabled || structuralRunning}
+          title={structuralEnabled ? undefined : 'Load a narrative first'}
           style={{
             fontSize: 11,
             padding: '4px 10px',
             borderRadius: 4,
             border: 'none',
-            background: structuralRunning ? '#1d4ed8' : '#2563eb',
-            color: '#fff',
-            cursor: structuralRunning ? 'default' : 'pointer',
+            background: !structuralEnabled ? '#27272a' : structuralRunning ? '#1d4ed8' : '#2563eb',
+            color: !structuralEnabled ? '#52525b' : '#fff',
+            cursor: !structuralEnabled || structuralRunning ? 'default' : 'pointer',
             opacity: structuralRunning ? 0.7 : 1,
           }}
         >

@@ -100,6 +100,13 @@ export interface FaultPayload {
 // ──────────────────────────────────────────────────────────────
 // App-level state shape
 
-export type ValidationPhase = 'idle' | 'structural-running' | 'structural-done' | 'semantic-running' | 'semantic-done'
+export type ValidationPhase =
+  | 'idle'
+  | 'ingesting'
+  | 'ingest-done'
+  | 'structural-running'
+  | 'structural-done'
+  | 'semantic-running'
+  | 'semantic-done'
 
 export type SidebarTab = 'errors' | 'detail'

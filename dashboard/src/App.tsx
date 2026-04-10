@@ -1,10 +1,13 @@
-import { useState, useRef, useCallback } from 'react'
+import { useState, useCallback } from 'react'
 
 import Header from './components/Header'
 import PhaseStrip from './components/PhaseStrip'
 import Sidebar from './components/Sidebar'
 import GraphCanvas2D from './components/GraphCanvas2D'
 import GraphCanvas3D from './components/GraphCanvas3D'
+import LiteratureInput from './components/LiteratureInput'
+
+import { ingest, validateStructural, validateSemantic } from './lib/api'
 
 import type {
   NormalizedGraph,
@@ -18,127 +21,151 @@ import type {
 
 import mockGraph from './data/mock_normalized_graph.json'
 import mockText from './data/mock_text_dictionary.json'
-import mockFaults from './data/mock_fault_payload.json'
 import mockPaths from './data/mock_valid_paths.json'
 
 export default function App() {
   // ── Narrative data ────────────────────────────────────────────
-  const [graph, setGraph] = useState<NormalizedGraph>(mockGraph as NormalizedGraph)
-  const [textDict, setTextDict] = useState<TextDictionary>(mockText as TextDictionary)
+  const [graph, setGraph] = useState<NormalizedGraph | null>(null)
+  const [textDict, setTextDict] = useState<TextDictionary | null>(null)
   const [faultPayload, setFaultPayload] = useState<FaultPayload | null>(null)
-  const [validPaths, setValidPaths] = useState<ValidPathsFile>(mockPaths as ValidPathsFile)
+  const [validPaths, setValidPaths] = useState<ValidPathsFile | null>(null)
 
   // ── UI state ──────────────────────────────────────────────────
   const [phase, setPhase] = useState<ValidationPhase>('idle')
   const [viewMode, setViewMode] = useState<'2d' | '3d'>('2d')
   const [sidebarTab, setSidebarTab] = useState<SidebarTab>('errors')
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null)
+  const [showInput, setShowInput] = useState(true)
 
   // ── Animation flags ───────────────────────────────────────────
   const [sweeping, setSweeping] = useState(false)
+  const [sweepLeft, setSweepLeft] = useState(0)
   const [hindsightActive, setHindsightActive] = useState(false)
   const [activePath, setActivePath] = useState<ValidPath | null>(null)
   const [playthroughRunning, setPlaythroughRunning] = useState(false)
 
-  // Sweep line position (0–100% across graph canvas)
-  const [sweepLeft, setSweepLeft] = useState(0)
+  // ── Error state ───────────────────────────────────────────────
+  const [ingestError, setIngestError] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null)
 
-  const fileInputRef = useRef<HTMLInputElement>(null)
+  // ── Derived ───────────────────────────────────────────────────
+  const edgeCount = graph?.nodes.reduce((sum, n) => sum + n.choices.length, 0) ?? 0
+  const structuralFaultCount = faultPayload?.structural_faults.length ?? 0
+  const semanticFaultCount = faultPayload?.semantic_faults.length ?? 0
 
-  // ── Edge count helper ─────────────────────────────────────────
-  const edgeCount = graph.nodes.reduce((sum, n) => sum + n.choices.length, 0)
-
-  // ── File loading ──────────────────────────────────────────────
-  const handleLoadFile = useCallback(() => {
-    fileInputRef.current?.click()
+  // ── Load demo narrative ───────────────────────────────────────
+  const loadDemo = useCallback(() => {
+    setGraph(mockGraph as NormalizedGraph)
+    setTextDict(mockText as TextDictionary)
+    setFaultPayload(null)
+    setValidPaths(mockPaths as ValidPathsFile)
+    setPhase('ingest-done')
+    setHindsightActive(false)
+    setSelectedNodeId(null)
+    setShowInput(false)
+    setIngestError(null)
+    setError(null)
   }, [])
 
-  const handleFileChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      const file = e.target.files?.[0]
-      if (!file) return
+  // ── Ingest raw literature ─────────────────────────────────────
+  const handleIngest = useCallback(async (text: string, title: string) => {
+    setIngestError(null)
+    setPhase('ingesting')
+    try {
+      const result = await ingest(text, title || undefined)
+      setGraph(result.normalized_graph)
+      setTextDict(result.text_dictionary)
+      setFaultPayload(null)
+      setValidPaths(null)
+      setHindsightActive(false)
+      setSelectedNodeId(null)
+      setPhase('ingest-done')
+      setShowInput(false)
+    } catch (err) {
+      setPhase('idle')
+      setIngestError((err as Error).message)
+    }
+  }, [])
 
-      const reader = new FileReader()
-      reader.onload = (evt) => {
-        try {
-          const parsed = JSON.parse(evt.target?.result as string)
-          // Detect which contract file it is by shape
-          if ('start_node' in parsed) {
-            setGraph(parsed as NormalizedGraph)
-          } else if ('structural_faults' in parsed) {
-            setFaultPayload(parsed as FaultPayload)
-          } else if ('valid_paths' in parsed) {
-            setValidPaths(parsed as ValidPathsFile)
-          } else if ('world_rules' in parsed) {
-            setTextDict(parsed as TextDictionary)
-          }
-        } catch {
-          alert('Could not parse file. Make sure it is valid JSON.')
-        }
-      }
-      reader.readAsText(file)
-      // Reset so the same file can be reloaded
-      e.target.value = ''
-    },
-    [],
-  )
-
-  // ── Structural validation sweep ───────────────────────────────
-  const handleRunStructural = useCallback(() => {
-    if (phase !== 'idle') return
-
+  // ── Structural validation ─────────────────────────────────────
+  const handleRunStructural = useCallback(async () => {
+    if (!graph || phase === 'structural-running') return
+    setError(null)
     setPhase('structural-running')
+
+    // Sweep line animation — purely visual, runs in parallel with the fetch
     setSweeping(true)
     setSweepLeft(0)
-
-    // Animate sweep line left → right over 1.8s
     const startTime = performance.now()
-    const duration = 1800
-    const tick = (now: number) => {
-      const t = Math.min((now - startTime) / duration, 1)
+    const animate = (now: number) => {
+      const t = Math.min((now - startTime) / 1800, 1)
       setSweepLeft(t * 100)
-      if (t < 1) {
-        requestAnimationFrame(tick)
-      } else {
-        // Sweep done — load fault data and settle
-        setTimeout(() => {
-          setSweeping(false)
-          setFaultPayload(mockFaults as unknown as FaultPayload)
-          setPhase('structural-done')
-        }, 150)
-      }
+      if (t < 1) requestAnimationFrame(animate)
     }
-    requestAnimationFrame(tick)
-  }, [phase])
+    requestAnimationFrame(animate)
 
-  // ── Hindsight ink spread ──────────────────────────────────────
-  const handleRunHindsight = useCallback(() => {
-    if (phase !== 'structural-done') return
+    try {
+      const result = await validateStructural(graph)
 
+      setSweeping(false)
+
+      // Merge into the fault payload shape the dashboard expects
+      setFaultPayload({
+        narrative_title: result.narrative_title,
+        validated_at: result.validated_at,
+        structural_faults: result.structural_faults,
+        semantic_faults: [],
+        valid_endings: result.valid_endings,
+      })
+      setValidPaths(result.valid_paths)
+      setPhase('structural-done')
+    } catch (err) {
+      setSweeping(false)
+      setPhase('ingest-done')
+      setError(`Structural validation failed: ${(err as Error).message}`)
+    }
+  }, [graph, phase])
+
+  // ── Semantic validation ───────────────────────────────────────
+  const handleRunHindsight = useCallback(async () => {
+    if (!textDict || !validPaths || phase !== 'structural-done') return
+    setError(null)
     setPhase('semantic-running')
 
-    // 2s ink spread, then done
-    setTimeout(() => {
+    try {
+      const result = await validateSemantic(textDict, validPaths)
+
+      setFaultPayload((prev) =>
+        prev
+          ? { ...prev, semantic_faults: result.semantic_faults }
+          : {
+              narrative_title: result.narrative_title,
+              validated_at: result.validated_at,
+              structural_faults: [],
+              semantic_faults: result.semantic_faults,
+              valid_endings: [],
+            },
+      )
       setHindsightActive(true)
       setPhase('semantic-done')
-    }, 2000)
-  }, [phase])
+    } catch (err) {
+      setPhase('structural-done')
+      setError(`Semantic validation failed: ${(err as Error).message}`)
+    }
+  }, [textDict, validPaths, phase])
 
   // ── Simulate playthrough ──────────────────────────────────────
   const handleSimulatePlaythrough = useCallback(() => {
-    if (playthroughRunning || validPaths.valid_paths.length === 0) return
+    if (!validPaths || playthroughRunning || validPaths.valid_paths.length === 0) return
 
-    // Use the first valid path for the demo
     const path = validPaths.valid_paths[0]
     setActivePath(path)
     setPlaythroughRunning(true)
 
-    // Step through each node with a delay, like a traveling dot
     path.node_sequence.forEach((nodeId, i) => {
       setTimeout(() => {
         setSelectedNodeId(nodeId)
         if (i === path.node_sequence.length - 1) {
-          // Finished
           setTimeout(() => {
             setPlaythroughRunning(false)
             setActivePath(null)
@@ -146,7 +173,7 @@ export default function App() {
         }
       }, i * 600)
     })
-  }, [playthroughRunning, validPaths])
+  }, [validPaths, playthroughRunning])
 
   // ── Node selection ────────────────────────────────────────────
   const handleNodeClick = useCallback((nodeId: string) => {
@@ -161,27 +188,27 @@ export default function App() {
 
   // ── Render ────────────────────────────────────────────────────
 
-  const structuralFaultCount = faultPayload?.structural_faults.length ?? 0
-  const semanticFaultCount = faultPayload?.semantic_faults.length ?? 0
+  const displayGraph: NormalizedGraph = graph ?? (mockGraph as NormalizedGraph)
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      {/* Hidden file input */}
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".json"
-        onChange={handleFileChange}
-        style={{ display: 'none' }}
-      />
+      {/* Literature input modal */}
+      {showInput && (
+        <LiteratureInput
+          onIngest={handleIngest}
+          onLoadDemo={loadDemo}
+          isLoading={phase === 'ingesting'}
+          error={ingestError}
+        />
+      )}
 
       <Header
-        title={graph.title}
-        nodeCount={graph.nodes.length}
+        title={graph?.title ?? ''}
+        nodeCount={graph?.nodes.length ?? 0}
         edgeCount={edgeCount}
         phase={phase}
         viewMode={viewMode}
-        onLoadFile={handleLoadFile}
+        onLoadFile={() => { setShowInput(true); setIngestError(null) }}
         onRunStructural={handleRunStructural}
         onRunHindsight={handleRunHindsight}
         onToggleView={() => setViewMode((v) => (v === '2d' ? '3d' : '2d'))}
@@ -189,9 +216,38 @@ export default function App() {
 
       {/* Main body */}
       <div style={{ flex: 1, display: 'flex', overflow: 'hidden' }}>
-        {/* Graph canvas — 70% */}
+        {/* Graph canvas */}
         <div style={{ flex: 1, position: 'relative', overflow: 'hidden' }}>
-          {/* Validation sweep overlay */}
+          {/* Error banner */}
+          {error && (
+            <div
+              style={{
+                position: 'absolute',
+                top: 12,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                zIndex: 30,
+                padding: '8px 16px',
+                background: '#ef444420',
+                border: '1px solid #ef444450',
+                borderRadius: 4,
+                color: '#f87171',
+                fontSize: 11,
+                maxWidth: 500,
+                textAlign: 'center',
+              }}
+            >
+              {error}
+              <button
+                onClick={() => setError(null)}
+                style={{ marginLeft: 10, background: 'none', border: 'none', color: '#f87171', cursor: 'pointer', fontSize: 12 }}
+              >
+                ✕
+              </button>
+            </div>
+          )}
+
+          {/* Validation sweep line */}
           {sweeping && (
             <div
               style={{
@@ -208,7 +264,7 @@ export default function App() {
             />
           )}
 
-          {/* Hindsight ink overlay — fades in over semantic nodes */}
+          {/* Hindsight ink spread overlay */}
           {hindsightActive && (
             <div
               style={{
@@ -222,30 +278,60 @@ export default function App() {
             />
           )}
 
-          {/* Simulate Playthrough button — bottom left of canvas */}
-          <button
-            onClick={handleSimulatePlaythrough}
-            disabled={playthroughRunning || validPaths.valid_paths.length === 0}
-            style={{
-              position: 'absolute',
-              bottom: 12,
-              left: 12,
-              zIndex: 20,
-              fontSize: 10,
-              padding: '4px 10px',
-              borderRadius: 4,
-              border: '1px solid var(--border)',
-              background: playthroughRunning ? '#1c1c1e' : '#18181b',
-              color: playthroughRunning ? '#52525b' : '#a1a1aa',
-              cursor: playthroughRunning ? 'default' : 'pointer',
-            }}
-          >
-            {playthroughRunning ? '⬤ Playing...' : '▷ Simulate Playthrough'}
-          </button>
+          {/* Simulate Playthrough button */}
+          {validPaths && (
+            <button
+              onClick={handleSimulatePlaythrough}
+              disabled={playthroughRunning}
+              style={{
+                position: 'absolute',
+                bottom: 12,
+                left: 12,
+                zIndex: 20,
+                fontSize: 10,
+                padding: '4px 10px',
+                borderRadius: 4,
+                border: '1px solid var(--border)',
+                background: playthroughRunning ? '#1c1c1e' : '#18181b',
+                color: playthroughRunning ? '#52525b' : '#a1a1aa',
+                cursor: playthroughRunning ? 'default' : 'pointer',
+              }}
+            >
+              {playthroughRunning ? '⬤ Playing...' : '▷ Simulate Playthrough'}
+            </button>
+          )}
+
+          {/* Empty state — shown before any narrative is loaded */}
+          {!graph && (
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: 16,
+                color: '#3f3f46',
+                pointerEvents: 'none',
+              }}
+            >
+              <svg width="48" height="48" viewBox="0 0 48 48" fill="none" opacity={0.3}>
+                <circle cx="8" cy="24" r="6" fill="#3b82f6" />
+                <circle cx="40" cy="10" r="6" fill="#22c55e" />
+                <circle cx="40" cy="38" r="6" fill="#a855f7" />
+                <line x1="14" y1="22" x2="34" y2="12" stroke="white" strokeWidth="1.5" opacity="0.4" />
+                <line x1="14" y1="26" x2="34" y2="36" stroke="white" strokeWidth="1.5" opacity="0.4" />
+              </svg>
+              <span style={{ fontSize: 13, fontFamily: 'var(--font-display)', fontStyle: 'italic' }}>
+                Load any piece of literature to begin
+              </span>
+            </div>
+          )}
 
           {viewMode === '2d' ? (
             <GraphCanvas2D
-              graph={graph}
+              graph={displayGraph}
               faults={faultPayload}
               activePath={activePath}
               sweeping={sweeping}
@@ -255,7 +341,7 @@ export default function App() {
             />
           ) : (
             <GraphCanvas3D
-              graph={graph}
+              graph={displayGraph}
               faults={faultPayload}
               hindsightActive={hindsightActive}
               selectedNodeId={selectedNodeId}
@@ -264,12 +350,12 @@ export default function App() {
           )}
         </div>
 
-        {/* Sidebar — 30% */}
+        {/* Sidebar */}
         <Sidebar
           tab={sidebarTab}
           onTabChange={setSidebarTab}
           faults={faultPayload}
-          graph={graph}
+          graph={displayGraph}
           textDict={textDict}
           selectedNodeId={selectedNodeId}
           hindsightActive={hindsightActive}
@@ -279,6 +365,7 @@ export default function App() {
 
       <PhaseStrip
         phase={phase}
+        nodeCount={graph?.nodes.length ?? 0}
         structuralFaultCount={structuralFaultCount}
         semanticFaultCount={semanticFaultCount}
       />

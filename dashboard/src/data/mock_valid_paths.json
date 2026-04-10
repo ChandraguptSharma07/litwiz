@@ -1,0 +1,66 @@
+{
+  "metadata": {
+    "total_nodes": 15,
+    "total_edges": 16,
+    "valid_path_count": 4,
+    "structural_fault_count": 3
+  },
+  "valid_paths": [
+    {
+      "path_id": "path_1",
+      "node_sequence": ["node_1", "node_2", "node_5", "node_9", "node_10"],
+      "state_at_each_node": [
+        { "node_id": "node_1", "state": {} },
+        { "node_id": "node_2", "state": { "has_torch": true } },
+        { "node_id": "node_5", "state": { "has_torch": true } },
+        { "node_id": "node_9", "state": { "has_torch": true } },
+        { "node_id": "node_10", "state": { "has_torch": true } }
+      ],
+      "ending_node": "node_10",
+      "is_valid": true
+    },
+    {
+      "path_id": "path_2",
+      "node_sequence": ["node_1", "node_3", "node_6", "node_9", "node_10"],
+      "state_at_each_node": [
+        { "node_id": "node_1", "state": {} },
+        { "node_id": "node_3", "state": { "volkov_dead": true } },
+        { "node_id": "node_6", "state": { "volkov_dead": true } },
+        { "node_id": "node_9", "state": { "volkov_dead": true } },
+        { "node_id": "node_10", "state": { "volkov_dead": true } }
+      ],
+      "ending_node": "node_10",
+      "is_valid": true
+    },
+    {
+      "path_id": "path_3",
+      "node_sequence": ["node_1", "node_3", "node_6", "node_11", "node_13", "node_14", "node_10"],
+      "state_at_each_node": [
+        { "node_id": "node_1", "state": {} },
+        { "node_id": "node_3", "state": { "volkov_dead": true } },
+        { "node_id": "node_6", "state": { "volkov_dead": true } },
+        { "node_id": "node_11", "state": { "volkov_dead": true } },
+        { "node_id": "node_13", "state": { "volkov_dead": true } },
+        { "node_id": "node_14", "state": { "volkov_dead": true } },
+        { "node_id": "node_10", "state": { "volkov_dead": true } }
+      ],
+      "ending_node": "node_10",
+      "is_valid": true
+    },
+    {
+      "path_id": "path_4",
+      "node_sequence": ["node_1", "node_3", "node_6", "node_11", "node_13", "node_14", "node_15"],
+      "state_at_each_node": [
+        { "node_id": "node_1", "state": {} },
+        { "node_id": "node_3", "state": { "volkov_dead": true } },
+        { "node_id": "node_6", "state": { "volkov_dead": true } },
+        { "node_id": "node_11", "state": { "volkov_dead": true } },
+        { "node_id": "node_13", "state": { "volkov_dead": true } },
+        { "node_id": "node_14", "state": { "volkov_dead": true } },
+        { "node_id": "node_15", "state": { "volkov_dead": true } }
+      ],
+      "ending_node": "node_15",
+      "is_valid": true
+    }
+  ]
+}

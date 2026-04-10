@@ -78,7 +78,6 @@ function ErrorsTab({
             type={fault.type}
             nodeId={fault.node_id}
             message={fault.message}
-            severity={fault.severity}
             accent={fault.severity === 'error' ? '#ef4444' : '#f59e0b'}
             icon="●"
             onJump={() => onJumpToNode(fault.node_id)}
@@ -101,7 +100,6 @@ function ErrorsTab({
               type={fault.type}
               nodeId={fault.node_id}
               message={fault.message}
-              severity={fault.severity}
               accent="#a855f7"
               icon="◈"
               confidence={fault.hindsight_confidence}
@@ -350,7 +348,6 @@ function FaultRow({
   type,
   nodeId,
   message,
-  severity,
   accent,
   icon,
   confidence,
@@ -360,7 +357,6 @@ function FaultRow({
   type: string
   nodeId: string
   message: string
-  severity: string
   accent: string
   icon: string
   confidence?: number
@@ -464,8 +460,8 @@ export default function Sidebar({
       <div
         style={{
           display: 'flex',
+          flexShrink: 0,
           borderBottom: '1px solid var(--border)',
-          shrink: 0,
         }}
       >
         {(['errors', 'detail'] as SidebarTab[]).map((t) => (

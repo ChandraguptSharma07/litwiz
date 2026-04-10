@@ -127,13 +127,13 @@ export default function GraphCanvas2D({
     if (selectedNodeId) {
       const connected = new Set<string>()
       const sel = cy.$(`#${selectedNodeId}`)
-      sel.connectedEdges().forEach((e) => connected.add(e.id()))
+      sel.connectedEdges().forEach((e) => { connected.add(e.id()) })
 
       cy.edges().forEach((edge) => {
-        edge.style('opacity', connected.has(edge.id()) ? 1 : 0.05)
+        edge.style('opacity', connected.has(edge.id()) ? '1' : '0.05')
       })
     } else {
-      cy.edges().style('opacity', 1)
+      cy.edges().style('opacity', '1')
     }
   }, [graph, faults, activePath, sweeping, hindsightActive, selectedNodeId])
 
@@ -175,7 +175,8 @@ function buildElements(graph: NormalizedGraph) {
   return [...nodes, ...edges]
 }
 
-function buildStyle(): cytoscape.Stylesheet[] {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function buildStyle(): any[] {
   return [
     {
       selector: 'node',

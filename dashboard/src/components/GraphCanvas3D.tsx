@@ -1,5 +1,5 @@
 import { useEffect, useRef } from 'react'
-import ForceGraph3D from '3d-force-graph'
+import ForceGraph3DLib from '3d-force-graph'
 import * as THREE from 'three'
 import type { NormalizedGraph, FaultPayload } from '../lib/types'
 
@@ -69,6 +69,8 @@ export default function GraphCanvas3D({
       n.choices.map((c) => ({ source: n.id, target: c.target })),
     )
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const ForceGraph3D = (ForceGraph3DLib as any).default ?? ForceGraph3DLib
     const g = ForceGraph3D()(containerRef.current)
       .backgroundColor('#09090b')
       .graphData({ nodes, links })

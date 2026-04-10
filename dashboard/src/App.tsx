@@ -16,10 +16,10 @@ import type {
   SidebarTab,
 } from './lib/types'
 
-import mockGraph from '../../../contracts/mock_normalized_graph.json'
-import mockText from '../../../contracts/mock_text_dictionary.json'
-import mockFaults from '../../../contracts/mock_fault_payload.json'
-import mockPaths from '../../../contracts/mock_valid_paths.json'
+import mockGraph from './data/mock_normalized_graph.json'
+import mockText from './data/mock_text_dictionary.json'
+import mockFaults from './data/mock_fault_payload.json'
+import mockPaths from './data/mock_valid_paths.json'
 
 export default function App() {
   // ── Narrative data ────────────────────────────────────────────

@@ -1,0 +1,174 @@
+{
+  "title": "Journey Under the Sea",
+  "version": "1.0",
+  "world_rules": [
+    "This is a realistic underwater thriller. No magic or supernatural elements.",
+    "The story is set in 1962 during the Cold War."
+  ],
+  "start_node": "node_1",
+  "nodes": [
+    {
+      "id": "node_1",
+      "prose": "You stand at the mouth of the underwater cave. Your oxygen tank reads 45 minutes. The darkness ahead is absolute.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist is alone", "protagonist has oxygen tank"],
+      "established_facts": ["oxygen = 45 minutes remaining", "location = cave entrance"],
+      "choices": [
+        { "id": "c1a", "text": "Dive into the cave", "target": "node_2", "condition": null },
+        { "id": "c1b", "text": "Surface for air", "target": "node_3", "condition": null }
+      ]
+    },
+    {
+      "id": "node_2",
+      "prose": "Inside the cave you find an old Soviet research station, abandoned since the 1950s. A torch still hangs on the wall.",
+      "is_ending": false,
+      "set_state": { "has_torch": true },
+      "character_states": ["protagonist has torch"],
+      "established_facts": ["location = Soviet station", "torch = obtained", "station = abandoned since 1950s"],
+      "choices": [
+        { "id": "c2a", "text": "Go deeper", "target": "node_5", "condition": null },
+        { "id": "c2b", "text": "Use torch", "target": "node_6", "condition": "has_torch == true" }
+      ]
+    },
+    {
+      "id": "node_3",
+      "prose": "You surface and meet Captain Volkov. Unfortunately, a sudden explosion rips through the boat. Volkov perishes in the blast.",
+      "is_ending": false,
+      "set_state": { "met_volkov": true },
+      "character_states": ["Volkov is dead"],
+      "established_facts": ["boat exploded", "Volkov died"],
+      "choices": [
+        { "id": "c3a", "text": "Dive back down", "target": "node_9", "condition": null }
+      ]
+    },
+    {
+      "id": "node_4",
+      "prose": "The current pulls you into a deeper chamber. You find an air pocket and rest, but there is no way forward.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": [],
+      "established_facts": [],
+      "choices": []
+    },
+    {
+      "id": "node_5",
+      "prose": "The water grows freezing cold. You enter a strange glowing chamber. You input the station's access code.",
+      "is_ending": false,
+      "set_state": { "found_ruins": true },
+      "character_states": [],
+      "established_facts": ["chamber is glowing", "entered access code"],
+      "choices": [
+        { "id": "c5a", "text": "Explore ruins", "target": "node_10", "condition": null },
+        { "id": "c5b", "text": "Get swept away", "target": "node_4", "condition": null }
+      ]
+    },
+    {
+      "id": "node_6",
+      "prose": "The torch reveals ancient carvings on the wall, not of human origin.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": [],
+      "established_facts": ["saw ancient carvings"],
+      "choices": [
+        { "id": "c6a", "text": "Touch the carvings", "target": "node_12", "condition": null },
+        { "id": "c6b", "text": "Swim back", "target": "node_5", "condition": null }
+      ]
+    },
+    {
+      "id": "node_7",
+      "prose": "You find a hidden cache of Soviet gold.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["found gold"],
+      "established_facts": ["gold cache located"],
+      "choices": [
+        { "id": "c7a", "text": "Take the gold", "target": "node_8", "condition": null }
+      ]
+    },
+    {
+      "id": "node_8",
+      "prose": "The gold is too heavy. You are trapped in the cache.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": [],
+      "established_facts": [],
+      "choices": [
+        { "id": "c8a", "text": "Try to drop it", "target": "node_7", "condition": null }
+      ]
+    },
+    {
+      "id": "node_9",
+      "prose": "Captain Volkov greets you warmly underwater and offers you tea from his submarine.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["protagonist met Volkov again"],
+      "established_facts": ["Volkov is alive and friendly"],
+      "choices": [
+        { "id": "c9a", "text": "Escape", "target": "node_10", "condition": null }
+      ]
+    },
+    {
+      "id": "node_10",
+      "prose": "You finally find a clear path to the surface, escaping the perilous depths.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": [],
+      "established_facts": ["escaped to surface"],
+      "choices": []
+    },
+    {
+      "id": "node_11",
+      "prose": "This node loops back to node_8, making an unreachable cycle.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": [],
+      "established_facts": [],
+      "choices": [
+        { "id": "c11a", "text": "Go to node 8", "target": "node_8", "condition": null }
+      ]
+    },
+    {
+      "id": "node_12",
+      "prose": "As you touch the carvings, a telepathic warning echoes in your mind, sent from a ghostly apparition of an ancient sea king.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": ["heard telepathic warning"],
+      "established_facts": ["encountered supernatural sea king"],
+      "choices": [
+        { "id": "c12a", "text": "Flee in terror", "target": "node_10", "condition": null }
+      ]
+    },
+    {
+      "id": "node_13",
+      "prose": "You find a locked blast door that requires a keycard you never found.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": [],
+      "established_facts": [],
+      "choices": [
+        { "id": "c13a", "text": "Open door", "target": "node_14", "condition": "has_keycard == true" }
+      ]
+    },
+    {
+      "id": "node_14",
+      "prose": "You enter the blast door chamber.",
+      "is_ending": false,
+      "set_state": {},
+      "character_states": [],
+      "established_facts": [],
+      "choices": [
+        { "id": "c14a", "text": "Leave", "target": "node_10", "condition": null }
+      ]
+    },
+    {
+      "id": "node_15",
+      "prose": "The ruins become your permanent home.",
+      "is_ending": true,
+      "set_state": {},
+      "character_states": [],
+      "established_facts": [],
+      "choices": []
+    }
+  ]
+}

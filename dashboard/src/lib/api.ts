@@ -44,16 +44,34 @@ export interface StructuralResult {
 export async function validateStructural(
   normalizedGraph: NormalizedGraph,
 ): Promise<StructuralResult> {
-  const res = await fetch(`${BASE}/validate/structural`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ normalized_graph: normalizedGraph }),
-  })
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({ error: res.statusText }))
-    throw new Error(err.error ?? `Server error ${res.status}`)
+  // Use the new WebAssembly module compiled directly from our core-engine
+  const { wasm_validate } = await import('../wasm/nve_validate.js');
+  
+  const resultJsonString = wasm_validate(JSON.stringify(normalizedGraph));
+  const result = JSON.parse(resultJsonString);
+
+  if (result.error) {
+    throw new Error(result.error);
   }
-  return res.json()
+
+  // Generate mock ValidPathsFile required by the rest of the application
+  const valid_paths: ValidPathsFile = {
+    metadata: {
+      total_nodes: normalizedGraph.nodes.length,
+      total_edges: normalizedGraph.nodes.reduce((sum, n) => sum + n.choices.length, 0),
+      valid_path_count: 0, // Unused by dashboard
+      structural_fault_count: result.structural_faults.length
+    },
+    valid_paths: [] 
+  };
+
+  return {
+    narrative_title: result.narrative_title,
+    validated_at: new Date().toISOString(),
+    structural_faults: result.structural_faults,
+    valid_endings: result.valid_endings,
+    valid_paths: valid_paths
+  };
 }
 
 // ── POST /api/validate/semantic ───────────────────────────────

@@ -42,7 +42,15 @@ pub struct GraphData {
 /// `start_node` doesn't match any node ID.
 pub fn parse_graph(path: &str) -> Result<NormalizedGraph, Box<dyn Error>> {
     let content = fs::read_to_string(path)?;
-    let graph: NormalizedGraph = serde_json::from_str(&content)?;
+    parse_graph_from_str(&content)
+}
+
+/// Parse a `normalized_graph` JSON string into a typed [`NormalizedGraph`].
+///
+/// Performs the same basic validation as `parse_graph` but operates entirely
+/// in-memory without filesystem access constraints. Useful for WASM environments.
+pub fn parse_graph_from_str(content: &str) -> Result<NormalizedGraph, Box<dyn Error>> {
+    let graph: NormalizedGraph = serde_json::from_str(content)?;
 
     // Validate start_node exists
     let node_ids: Vec<&str> = graph.nodes.iter().map(|n| n.id.as_str()).collect();

@@ -44,10 +44,15 @@ import type {
   SidebarTab,
 } from './lib/types'
 
-import mockGraph from './data/mock_normalized_graph.json'
-import mockText from './data/mock_text_dictionary.json'
-import mockPaths from './data/mock_valid_paths.json'
-import mockFaults from './data/mock_fault_payload.json'
+import mockGraphJson from './data/mock_normalized_graph.json'
+import mockTextJson from './data/mock_text_dictionary.json'
+import mockPathsJson from './data/mock_valid_paths.json'
+import mockFaultsJson from './data/mock_fault_payload.json'
+
+const mockGraph: NormalizedGraph = mockGraphJson as unknown as NormalizedGraph
+const mockText: TextDictionary = mockTextJson as unknown as TextDictionary
+const mockPaths: ValidPathsFile = mockPathsJson as unknown as ValidPathsFile
+const mockFaults: FaultPayload = mockFaultsJson as unknown as FaultPayload
 
 /**
  * Root application component — orchestrates the NVE validation pipeline.
@@ -91,10 +96,10 @@ export default function App() {
 
   // ── Load demo narrative ───────────────────────────────────────
   const loadDemo = useCallback(() => {
-    setGraph(mockGraph as unknown as NormalizedGraph)
-    setTextDict(mockText as unknown as TextDictionary)
-    setFaultPayload(mockFaults as unknown as FaultPayload)
-    setValidPaths(mockPaths as unknown as ValidPathsFile)
+    setGraph(mockGraph)
+    setTextDict(mockText)
+    setFaultPayload(mockFaults)
+    setValidPaths(mockPaths)
     setPhase('structural-done')
     setHindsightActive(false)
     setSelectedNodeId(null)
@@ -225,7 +230,7 @@ export default function App() {
 
   // ── Render ────────────────────────────────────────────────────
 
-  const displayGraph: NormalizedGraph = graph ?? (mockGraph as unknown as NormalizedGraph)
+  const displayGraph: NormalizedGraph = graph ?? mockGraph
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>

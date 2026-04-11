@@ -1,22 +1,58 @@
+// ──────────────────────────────────────────────────────────────
+//  LiteratureInput.tsx — Literature loading modal
+//
+//  Full-screen modal that lets the user provide raw literature
+//  text via paste or file upload, then sends it to the server's
+//  /api/ingest endpoint for AI-powered narrative extraction.
+//
+//  Features:
+//    - Paste tab with live word/char count and 12k char warning
+//    - Upload tab accepting .txt, .md, .fountain, .fdx files
+//    - "Use Demo Narrative" shortcut for pre-loaded sample data
+//    - Loading spinner during AI processing
+// ──────────────────────────────────────────────────────────────
+
 import { useState, useRef } from 'react'
 
+/** Props for the LiteratureInput modal component. */
 interface Props {
+  /** Callback fired when the user submits text for ingestion. */
   onIngest: (text: string, title: string) => void
+  /** Callback to load the pre-built demo narrative instead. */
   onLoadDemo: () => void
+  /** Whether the ingestion request is currently in progress. */
   isLoading: boolean
+  /** Error message from the last failed ingestion attempt, or `null`. */
   error: string | null
 }
 
+/**
+ * Full-screen literature input modal with tabs for paste and file upload.
+ *
+ * Supports two input modes:
+ * 1. **Paste** — Direct text entry with live word/character count and
+ *    a warning when the input exceeds the 12k character LLM limit.
+ * 2. **Upload** — File picker for .txt, .md, .fountain, and .fdx files.
+ *    Auto-populates the title from the filename.
+ */
 export default function LiteratureInput({ onIngest, onLoadDemo, isLoading, error }: Props) {
   const [title, setTitle] = useState('')
   const [text, setText] = useState('')
   const [tab, setTab] = useState<'paste' | 'upload'>('paste')
   const fileRef = useRef<HTMLInputElement>(null)
 
+  /** Live word count of the current text input. */
   const wordCount = text.trim() ? text.trim().split(/\s+/).length : 0
+  /** Live character count of the current text input. */
   const charCount = text.length
+  /** Whether the input exceeds the 12k character truncation threshold. */
   const overLimit = charCount > 12000
 
+  /**
+   * Handle file selection from the upload tab.
+   * Reads the file as text, populates the text area, and auto-fills
+   * the title from the filename (minus extension) if not already set.
+   */
   function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
@@ -30,6 +66,10 @@ export default function LiteratureInput({ onIngest, onLoadDemo, isLoading, error
     e.target.value = ''
   }
 
+  /**
+   * Submit the current text for AI ingestion.
+   * Guards against empty input and concurrent submissions.
+   */
   function handleSubmit() {
     if (!text.trim() || isLoading) return
     onIngest(text.trim(), title.trim())

@@ -1,3 +1,28 @@
+// ──────────────────────────────────────────────────────────────
+//  App.tsx — Root orchestrator component
+//
+//  Manages all top-level application state and coordinates the
+//  three-phase validation pipeline:
+//
+//    1. Ingestion  — Send raw literature to /api/ingest (Groq LLM)
+//    2. Structural — Run 5 graph algorithms via /api/validate/structural
+//    3. Semantic   — Run Hindsight analysis via /api/validate/semantic
+//
+//  State ownership:
+//    - Narrative data (graph, textDict, faults, validPaths)
+//    - UI state       (phase, viewMode, sidebarTab, selectedNode)
+//    - Animation      (sweeping, activePath, playthroughRunning)
+//    - Errors         (ingestError, error)
+//
+//  Components:
+//    Header         — Top bar with action buttons
+//    LiteratureInput — Modal for loading narrative text
+//    GraphCanvas2D  — D3-based 2D graph view (default)
+//    GraphCanvas3D  — Three.js-based 3D graph view
+//    PhaseStrip     — Pipeline progress indicator
+//    Sidebar        — Fault list + node detail inspector
+// ──────────────────────────────────────────────────────────────
+
 import { useState, useCallback } from 'react'
 
 import Header from './components/Header'
@@ -24,6 +49,16 @@ import mockText from './data/mock_text_dictionary.json'
 import mockPaths from './data/mock_valid_paths.json'
 import mockFaults from './data/mock_fault_payload.json'
 
+/**
+ * Root application component — orchestrates the NVE validation pipeline.
+ *
+ * Manages all top-level state and coordinates API calls through the
+ * three-phase pipeline. Each phase transitions the `ValidationPhase`
+ * state machine which drives the UI (button states, phase strip, etc.).
+ *
+ * Also provides a "demo mode" that loads mock data from `/data/` for
+ * development and demonstration without needing a running server.
+ */
 export default function App() {
   // ── Narrative data ────────────────────────────────────────────
   const [graph, setGraph] = useState<NormalizedGraph | null>(null)
@@ -140,12 +175,12 @@ export default function App() {
         prev
           ? { ...prev, semantic_faults: result.semantic_faults }
           : {
-              narrative_title: result.narrative_title,
-              validated_at: result.validated_at,
-              structural_faults: [],
-              semantic_faults: result.semantic_faults,
-              valid_endings: [],
-            },
+            narrative_title: result.narrative_title,
+            validated_at: result.validated_at,
+            structural_faults: [],
+            semantic_faults: result.semantic_faults,
+            valid_endings: [],
+          },
       )
       setHindsightActive(true)
       setPhase('semantic-done')

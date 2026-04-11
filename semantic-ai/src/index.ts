@@ -1,46 +1,87 @@
-// ============================================================
-// index.ts — NVE Semantic AI Entry Point
+// ──────────────────────────────────────────────────────────────
+//  index.ts — NVE Semantic AI entry point (CLI)
 //
-// Usage:
-//   npx ts-node src/index.ts
-//   npx ts-node src/index.ts --text-dict ../contracts/mock_text_dictionary.json
-//                            --valid-paths ../contracts/mock_valid_paths.json
-//                            --output ../contracts/semantic_faults.json
-// ============================================================
+//  Standalone CLI tool that reads the text dictionary and valid
+//  paths contracts from disk, runs the Hindsight semantic validation
+//  loop, and writes the results to `semantic_faults.json`.
+//
+//  Usage:
+//    npx ts-node src/index.ts
+//    npx ts-node src/index.ts \
+//      --text-dict  ../contracts/mock_text_dictionary.json \
+//      --valid-paths ../contracts/mock_valid_paths.json \
+//      --output      ../contracts/semantic_faults.json
+//
+//  Exit codes:
+//    0 — Always. Semantic errors are warnings for the orchestrator,
+//        not hard blockers. The orchestrator uses core-engine's
+//        exit code to gate.
+//    1 — Fatal error (missing input files, uncaught exception).
+// ──────────────────────────────────────────────────────────────
 
 import fs from 'fs';
 import path from 'path';
 import { validateNarrative } from './validate';
 import { TextDictionary, ValidPathsContract, SemanticFaultPayload } from './types';
 
-// ---- Argument parsing (minimal, no external lib needed) ----
+// ═══════════════════════════════════════════════════════════════
+//  Argument Parsing (minimal, no external lib)
+// ═══════════════════════════════════════════════════════════════
 
+/**
+ * Extract a CLI flag's value from `process.argv`.
+ *
+ * # Arguments
+ * * `flag` — The flag name (e.g. `"--text-dict"`).
+ * * `fallback` — Default value if the flag is not present.
+ *
+ * # Returns
+ * The value following the flag, or the fallback.
+ */
 function getArg(flag: string, fallback: string): string {
     const idx = process.argv.indexOf(flag);
     return idx !== -1 && process.argv[idx + 1] ? process.argv[idx + 1] : fallback;
 }
 
+/** Path to the text dictionary JSON file. */
 const TEXT_DICT_PATH = getArg(
     '--text-dict',
     path.resolve(__dirname, '../../contracts/mock_text_dictionary.json')
 );
+
+/** Path to the valid paths JSON file from structural validation. */
 const VALID_PATHS_PATH = getArg(
     '--valid-paths',
     path.resolve(__dirname, '../../contracts/mock_valid_paths.json')
 );
+
+/** Path to write the semantic faults output JSON file. */
 const OUTPUT_PATH = getArg(
     '--output',
     path.resolve(__dirname, '../../contracts/semantic_faults.json')
 );
 
-// ---- Main --------------------------------------------------
+// ═══════════════════════════════════════════════════════════════
+//  Main
+// ═══════════════════════════════════════════════════════════════
 
+/**
+ * CLI entry point — loads contracts, runs semantic validation,
+ * writes results, and prints a summary to stdout.
+ *
+ * Steps:
+ * 1. Validate that input files exist
+ * 2. Parse `TextDictionary` and `ValidPathsContract` from JSON
+ * 3. Call `validateNarrative()` to run the Hindsight analysis loop
+ * 4. Build the `SemanticFaultPayload` and write to disk
+ * 5. Print a summary table of detected faults
+ */
 async function main(): Promise<void> {
     console.log('╔══════════════════════════════════════════╗');
     console.log('║  NVE Semantic AI — Hindsight Validator   ║');
     console.log('╚══════════════════════════════════════════╝\n');
 
-    // Load inputs
+    // Validate inputs exist
     if (!fs.existsSync(TEXT_DICT_PATH)) {
         console.error(`[error] text_dictionary not found: ${TEXT_DICT_PATH}`);
         process.exit(1);
@@ -50,6 +91,7 @@ async function main(): Promise<void> {
         process.exit(1);
     }
 
+    // Parse input contracts
     const textDict: TextDictionary = JSON.parse(fs.readFileSync(TEXT_DICT_PATH, 'utf-8'));
     const validPaths: ValidPathsContract = JSON.parse(fs.readFileSync(VALID_PATHS_PATH, 'utf-8'));
 

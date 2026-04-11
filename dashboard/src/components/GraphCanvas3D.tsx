@@ -1,16 +1,53 @@
+// ──────────────────────────────────────────────────────────────
+//  GraphCanvas3D.tsx — 3D narrative graph visualization
+//
+//  Renders the narrative graph as an interactive 3D force-directed
+//  graph using the `3d-force-graph` library (powered by Three.js).
+//
+//  Visual encoding:
+//    - Node shape:  Sphere (default), Icosahedron (ending),
+//                   Octahedron (dead end), Tetrahedron (unreachable)
+//    - Node color:  Blue (default), Green (ending), Red (dead end),
+//                   Amber (unreachable), Purple (semantic fault)
+//    - Semantic fault nodes get a slow rotation animation
+//    - Dead-end / unreachable nodes emit colored point lights
+//    - Camera auto-zooms to selected nodes via lerp
+// ──────────────────────────────────────────────────────────────
+
 import { useEffect, useRef } from 'react'
 import ForceGraph3DLib from '3d-force-graph'
 import * as THREE from 'three'
 import type { NormalizedGraph, FaultPayload } from '../lib/types'
 
+/** Props for the GraphCanvas3D component. */
 interface Props {
+  /** The loaded normalized narrative graph. */
   graph: NormalizedGraph
+  /** Combined fault payload, or `null` if validation hasn't run. */
   faults: FaultPayload | null
+  /** Whether Hindsight semantic validation is active. */
   hindsightActive: boolean
+  /** The ID of the currently selected node, or `null`. */
   selectedNodeId: string | null
+  /** Callback fired when a 3D node is clicked. */
   onNodeClick: (nodeId: string) => void
 }
 
+/**
+ * Determine the color for a node based on its fault state.
+ *
+ * Priority: Dead end (red) > Unreachable (amber) > Semantic (purple)
+ *           > Ending (green) > Start (light blue) > Default (blue).
+ *
+ * # Arguments
+ * * `nodeId` — The node ID to color.
+ * * `graph` — The normalized graph (for start/ending checks).
+ * * `faults` — The fault payload (for fault checks).
+ * * `hindsightActive` — Whether semantic faults should be shown.
+ *
+ * # Returns
+ * A CSS hex color string.
+ */
 function getNodeColor(
   nodeId: string,
   graph: NormalizedGraph,
@@ -34,6 +71,23 @@ function getNodeColor(
   return '#3b82f6'
 }
 
+/**
+ * Build a Three.js geometry for a node based on its fault/ending state.
+ *
+ * Shape encoding:
+ * - Dead end → Octahedron (angular, sharp — signals danger)
+ * - Unreachable → Tetrahedron (isolated pyramid shape)
+ * - Ending → Icosahedron (smooth, gem-like — signals resolution)
+ * - Default → Sphere (neutral)
+ *
+ * # Arguments
+ * * `nodeId` — The node ID.
+ * * `graph` — The normalized graph.
+ * * `faults` — The fault payload.
+ *
+ * # Returns
+ * A Three.js `BufferGeometry` instance.
+ */
 function buildGeometry(
   nodeId: string,
   graph: NormalizedGraph,
@@ -50,6 +104,17 @@ function buildGeometry(
   return new THREE.SphereGeometry(5, 16, 16)
 }
 
+/**
+ * 3D narrative graph visualization using Three.js force-directed layout.
+ *
+ * Initializes a `3d-force-graph` instance inside the container div,
+ * configures node rendering with custom Three.js meshes, and sets up
+ * camera animations. Rebuilds the entire graph when data changes.
+ *
+ * Camera behavior:
+ * - On load: dolly-zoom from z=300 over 2.5s
+ * - On node selection: lerp camera to the selected node over 800ms
+ */
 export default function GraphCanvas3D({
   graph,
   faults,

@@ -1,33 +1,77 @@
+// ──────────────────────────────────────────────────────────────
+//  GraphCanvas2D.tsx — 2D narrative graph visualization
+//
+//  Renders the narrative graph as an interactive 2D force-directed
+//  graph using D3.js. This is the default view mode and the more
+//  performant option for large graphs.
+//
+//  Visual encoding:
+//    - Node shape:  Circle (default), Diamond (start), Triangle (dead end),
+//                   Cross (unreachable), Square (ending), Star (semantic)
+//    - Node color:  Periwinkle (default), Sky blue (start), Gold (ending),
+//                   Pink (dead end), Gray (unreachable), Violet (semantic)
+//    - Node size:   Scales with connection count
+//    - Edge style:  Solid (unconditional), Dashed (conditional)
+//    - Active path edges glow white with increased opacity
+//    - Selected node pulse animation via stroke
+//    - Edge labels show choice text on hover
+// ──────────────────────────────────────────────────────────────
+
 import { useEffect, useRef, useState } from 'react'
 import * as d3 from 'd3'
 import type { NormalizedGraph, FaultPayload, ValidPath, TextDictionary } from '../lib/types'
 
+/** Props for the GraphCanvas2D component. */
 interface Props {
+  /** The loaded normalized narrative graph. */
   graph: NormalizedGraph
+  /** Combined fault payload, or `null` if validation hasn't run. */
   faults: FaultPayload | null
+  /** The currently highlighted valid path, or `null`. */
   activePath: ValidPath | null
+  /** Whether the path sweep animation is currently playing. */
   sweeping: boolean
+  /** Whether Hindsight semantic validation is active. */
   hindsightActive: boolean
+  /** The ID of the currently selected node, or `null`. */
   selectedNodeId: string | null
+  /** Text dictionary for prose-based node labels, or `null`. */
   textDict: TextDictionary | null
+  /** Callback fired when a node is clicked. */
   onNodeClick: (nodeId: string) => void
 }
 
-// ── Color palette (no red/green) ────────────────────────────────
+// ── Color palette (accessibility-friendly: no red/green) ────────
 
+/**
+ * Color constants for node types. Avoids red/green color blindness
+ * conflicts by using pink/gold instead.
+ */
 const COLORS = {
-  start:       '#4fc3f7', // electric sky blue
-  normal:      '#7c8cf8', // periwinkle / slate blue
-  ending:      '#ffd54f', // warm gold
-  deadEnd:     '#ff6b9d', // hot pink
+  start: '#4fc3f7', // electric sky blue
+  normal: '#7c8cf8', // periwinkle / slate blue
+  ending: '#ffd54f', // warm gold
+  deadEnd: '#ff6b9d', // hot pink
   unreachable: '#8e8ea0', // muted gray-lavender
-  semantic:    '#c77dff', // vivid violet
-  onPath:      '#ffffff',
-  selected:    '#ffffff',
+  semantic: '#c77dff', // vivid violet
+  onPath: '#ffffff',
+  selected: '#ffffff',
 }
 
 // ── Node label from prose ───────────────────────────────────────
 
+/**
+ * Generate a short label for a node from its prose text.
+ * Shows the first sentence, truncated to 28 characters.
+ * Falls back to the node ID if no prose is available.
+ *
+ * # Arguments
+ * * `nodeId` — The node ID.
+ * * `textDict` — Text dictionary for prose lookup.
+ *
+ * # Returns
+ * A short label string (max 28 chars).
+ */
 function nodeLabel(nodeId: string, textDict: TextDictionary | null): string {
   if (!textDict?.nodes[nodeId]) return nodeId
   const prose = textDict.nodes[nodeId].prose
@@ -38,17 +82,43 @@ function nodeLabel(nodeId: string, textDict: TextDictionary | null): string {
 
 // ── Node classification ─────────────────────────────────────────
 
+/**
+ * Metadata about a node's visual classification.
+ * Used by the rendering functions to determine shape, color, and size.
+ */
 interface NodeMeta {
+  /** Whether this is the narrative's start node. */
   isStart: boolean
+  /** Whether this node is a valid story ending. */
   isEnding: boolean
+  /** Whether this node is a dead-end fault. */
   isDeadEnd: boolean
+  /** Whether this node is unreachable from the start. */
   isUnreachable: boolean
+  /** Whether this node has a semantic (Hindsight) fault. */
   isSemantic: boolean
+  /** Whether this node is on the currently highlighted path. */
   isOnPath: boolean
+  /** Whether this node is currently selected by the user. */
   isSelected: boolean
+  /** Total incoming + outgoing edge count (drives node size). */
   connectionCount: number
 }
 
+/**
+ * Classify a node into its visual categories based on graph data and faults.
+ *
+ * # Arguments
+ * * `nodeId` — The node ID to classify.
+ * * `graph` — The normalized graph.
+ * * `faults` — The fault payload.
+ * * `activePath` — The currently highlighted path.
+ * * `hindsightActive` — Whether semantic faults are visible.
+ * * `selectedNodeId` — The currently selected node ID.
+ *
+ * # Returns
+ * A `NodeMeta` object describing the node's visual state.
+ */
 function classify(
   nodeId: string,
   graph: NormalizedGraph,
@@ -76,6 +146,10 @@ function classify(
   }
 }
 
+/**
+ * Determine the fill color for a node based on its classification.
+ * Priority: Dead end > Unreachable > Semantic > Ending > Start > Default.
+ */
 function nodeColor(m: NodeMeta): string {
   if (m.isDeadEnd) return COLORS.deadEnd
   if (m.isUnreachable) return COLORS.unreachable
@@ -85,6 +159,10 @@ function nodeColor(m: NodeMeta): string {
   return COLORS.normal
 }
 
+/**
+ * Calculate the area for a D3 symbol based on node connectivity.
+ * More connections → larger node. Start and selected nodes get a bonus.
+ */
 function nodeSize(m: NodeMeta): number {
   const base = 180 + Math.min(m.connectionCount * 40, 200)
   if (m.isStart) return base + 80
@@ -92,7 +170,17 @@ function nodeSize(m: NodeMeta): number {
   return base
 }
 
-// D3 symbol for each node type — different shapes!
+/**
+ * Select the D3 symbol type for a node based on its classification.
+ *
+ * Shape encoding:
+ * - Diamond `◆` = start node
+ * - Triangle `▲` = dead end
+ * - Cross `✚` = unreachable
+ * - Square `■` = ending
+ * - Star `★` = semantic fault
+ * - Circle `●` = default scene
+ */
 function nodeSymbol(m: NodeMeta): d3.SymbolType {
   if (m.isStart) return d3.symbolDiamond     // ◆ diamond = start
   if (m.isDeadEnd) return d3.symbolTriangle   // ▲ triangle = danger/dead-end
@@ -107,20 +195,44 @@ type AnySelection = d3.Selection<any, any, any, any>
 
 // ── Simulation data types ───────────────────────────────────────
 
+/** D3 simulation node with narrative metadata attached. */
 interface SimNode extends d3.SimulationNodeDatum {
+  /** The node ID from the normalized graph. */
   id: string
+  /** Pre-computed visual classification for this node. */
   meta: NodeMeta
 }
 
+/** D3 simulation link with edge metadata attached. */
 interface SimLink extends d3.SimulationLinkDatum<SimNode> {
+  /** Source node ID (before D3 resolves to object reference). */
   sourceId: string
+  /** Target node ID (before D3 resolves to object reference). */
   targetId: string
+  /** Choice text displayed as edge label on hover. */
   label: string
+  /** Whether this edge has a condition gate. */
   conditional: boolean
 }
 
 // ── Component ───────────────────────────────────────────────────
 
+/**
+ * 2D narrative graph visualization using D3.js force-directed layout.
+ *
+ * Manages a D3 force simulation with SVG rendering. The simulation
+ * is rebuilt when graph data or text dictionary changes. Visual
+ * properties (colors, sizes, shapes) update reactively when faults
+ * or the active path change.
+ *
+ * Supports:
+ * - Pan and zoom via D3 zoom behavior
+ * - Node dragging via D3 drag behavior
+ * - Animated path highlighting with edge glow
+ * - Node selection with pulse stroke animation
+ * - Curved directed edges with arrowhead markers
+ * - Prose-based node labels (first sentence, max 28 chars)
+ */
 export default function GraphCanvas2D({
   graph,
   faults,

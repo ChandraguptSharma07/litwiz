@@ -1,7 +1,18 @@
-// TypeScript implementation of the 5 structural validation algorithms.
-// These mirror the Rust core-engine exactly — same logic, same output schema.
-// Having them here means the web server is self-contained and doesn't need
-// the Rust binary to be compiled or present.
+// ──────────────────────────────────────────────────────────────
+//  structural.ts — TypeScript implementation of the 5 structural
+//                  validation algorithms
+//
+//  These mirror the Rust core-engine exactly — same logic, same
+//  output schema. Having them here means the web server is
+//  self-contained and doesn't need the Rust binary compiled.
+//
+//  Algorithms:
+//    1. Dead End Detection
+//    2. Unreachable Node Detection  (BFS)
+//    3. Infinite Loop Detection     (DFS + coloring)
+//    4. Locked Condition Detection  (DFS + state simulation)
+//    5. Valid Path Generation       (DFS + state tracking)
+// ──────────────────────────────────────────────────────────────
 
 import type {
   NormalizedGraph,
@@ -13,13 +24,33 @@ import type {
   StructuralResult,
 } from './types'
 
+/** Narrative game state — maps variable names to booleans or strings. */
 type State = Record<string, boolean | string>
 
-// ── Algorithm 1 — Dead End Detection ──────────────────────────
+// ═══════════════════════════════════════════════════════════════
+//  ALGORITHM 1 — Dead End Detection
+// ═══════════════════════════════════════════════════════════════
 //
-// A node with no choices that isn't marked as an ending traps
-// the reader with no way to proceed and no narrative resolution.
+//  For each node N:
+//    if choices.length == 0 AND is_ending == false:
+//      FAULT: DEAD_END on N
+//
+//  A dead-end traps the reader — they reach a node with no
+//  choices and no narrative conclusion.
+// ───────────────────────────────────────────────────────────────
 
+/**
+ * Detect dead-end nodes in the narrative graph (Algorithm 1).
+ *
+ * A dead end is any node where `choices.length === 0` but `is_ending === false`.
+ * These nodes trap the reader with no choices and no narrative conclusion.
+ *
+ * # Arguments
+ * * `nodes` — Array of all graph nodes to inspect.
+ *
+ * # Returns
+ * Array of `StructuralFault` with severity `"error"` for each dead end.
+ */
 function detectDeadEnds(nodes: GraphNode[]): StructuralFault[] {
   return nodes
     .filter((n) => n.choices.length === 0 && !n.is_ending)
@@ -34,11 +65,30 @@ function detectDeadEnds(nodes: GraphNode[]): StructuralFault[] {
     }))
 }
 
-// ── Algorithm 2 — Unreachable Node Detection ──────────────────
+// ═══════════════════════════════════════════════════════════════
+//  ALGORITHM 2 — Unreachable Node Detection
+// ═══════════════════════════════════════════════════════════════
 //
-// BFS from start_node. Anything not visited is unreachable —
-// a reader can never reach it regardless of their choices.
+//  BFS from start_node.
+//  For each node N not visited: FAULT: UNREACHABLE on N.
+//
+//  Unreachable nodes are wasted content — no reader can ever
+//  reach them regardless of their choices.
+// ───────────────────────────────────────────────────────────────
 
+/**
+ * Detect unreachable nodes in the narrative graph (Algorithm 2).
+ *
+ * Runs BFS from the `start_node`. Any node not visited is unreachable —
+ * wasted content that no reader can ever see. For each unreachable node,
+ * the fault includes its isolated cluster size.
+ *
+ * # Arguments
+ * * `graph` — The full normalized graph with `start_node` and `nodes`.
+ *
+ * # Returns
+ * Array of `StructuralFault` with severity `"warning"` for each orphan.
+ */
 function detectUnreachable(graph: NormalizedGraph): StructuralFault[] {
   const visited = new Set<string>()
   const queue = [graph.start_node]
@@ -84,12 +134,32 @@ function detectUnreachable(graph: NormalizedGraph): StructuralFault[] {
   return faults
 }
 
-// ── Algorithm 3 — Infinite Loop Detection ────────────────────
+// ═══════════════════════════════════════════════════════════════
+//  ALGORITHM 3 — Infinite Loop Detection
+// ═══════════════════════════════════════════════════════════════
 //
-// DFS cycle detection. A cycle that has no outgoing edge to a
-// node outside the cycle, and contains no ending node, traps
-// the reader forever.
+//  DFS cycle detection with white/grey/black coloring.
+//  A cycle is a fault if:
+//    - No node in the cycle has an outgoing edge outside it, AND
+//    - No node in the cycle is marked as an ending.
+//
+//  An inescapable cycle traps the reader in an infinite loop
+//  with no way to reach an ending.
+// ───────────────────────────────────────────────────────────────
 
+/**
+ * Detect inescapable infinite loops in the narrative graph (Algorithm 3).
+ *
+ * Uses DFS with white/grey/black coloring to find cycles. A cycle
+ * is reported as a fault only if it has no exit edge to any node
+ * outside the cycle AND contains no ending node.
+ *
+ * # Arguments
+ * * `graph` — The full normalized graph.
+ *
+ * # Returns
+ * Array of `StructuralFault` with severity `"error"` for each inescapable cycle.
+ */
 function detectInfiniteLoops(graph: NormalizedGraph): StructuralFault[] {
   const nodeMap = new Map(graph.nodes.map((n) => [n.id, n]))
   const faults: StructuralFault[] = []
@@ -98,6 +168,14 @@ function detectInfiniteLoops(graph: NormalizedGraph): StructuralFault[] {
   const colors = new Map<string, 'white' | 'grey' | 'black'>()
   for (const n of graph.nodes) colors.set(n.id, 'white')
 
+  /**
+   * Recursive DFS visitor for cycle detection.
+   * Grey nodes on the current DFS stack indicate a back-edge (cycle).
+   *
+   * # Arguments
+   * * `id` — Current node ID being visited.
+   * * `path` — The current DFS stack of node IDs.
+   */
   function dfs(id: string, path: string[]): void {
     colors.set(id, 'grey')
     path.push(id)
@@ -154,12 +232,38 @@ function detectInfiniteLoops(graph: NormalizedGraph): StructuralFault[] {
   return faults
 }
 
-// ── Algorithm 4 — Locked Condition Detection ─────────────────
+// ═══════════════════════════════════════════════════════════════
+//  ALGORITHM 4 — Locked Condition Detection
+// ═══════════════════════════════════════════════════════════════
 //
-// For each conditional edge, check whether any path from start
-// to its source node can accumulate the state that satisfies
-// the condition. If not, that choice can never be made.
+//  For each edge E with condition C:
+//    Trace all paths from start_node to E's source
+//    Simulate state accumulation along each path
+//    If NO path produces a state that satisfies C:
+//      FAULT: LOCKED_CONDITION on E's target
+//
+//  A locked condition means a reader can see the choice text
+//  but can never select it — the required state is impossible.
+// ───────────────────────────────────────────────────────────────
 
+/**
+ * Evaluate a condition string against the current narrative state.
+ *
+ * Supports the format `"key operator value"` where:
+ * - `key` is a state variable name (e.g. `"has_torch"`)
+ * - `operator` is `==` or `!=`
+ * - `value` is `true`, `false`, or a string
+ *
+ * Returns `true` if the condition is satisfied, or if the condition
+ * string is unparseable (fail-open for safety).
+ *
+ * # Arguments
+ * * `condition` — The condition expression string.
+ * * `state` — The current accumulated state map.
+ *
+ * # Returns
+ * `true` if the condition is met or unparseable; `false` otherwise.
+ */
 function evaluateCondition(condition: string, state: State): boolean {
   const parts = condition.trim().split(/\s+/)
   if (parts.length !== 3) return true // unparseable — fail open
@@ -174,6 +278,20 @@ function evaluateCondition(condition: string, state: State): boolean {
   return true
 }
 
+/**
+ * Compute all possible accumulated states at a target node via DFS.
+ *
+ * Explores every path from `start_node` to `targetId`, collecting
+ * the accumulated state map at each arrival. Used by Algorithm 4 to
+ * determine whether any path can satisfy a locked condition.
+ *
+ * # Arguments
+ * * `graph` — The full normalized graph.
+ * * `targetId` — The node ID to reach.
+ *
+ * # Returns
+ * Array of all possible states at the target node.
+ */
 function allStatesAt(
   graph: NormalizedGraph,
   targetId: string,
@@ -182,6 +300,15 @@ function allStatesAt(
   const results: State[] = []
   const visited = new Set<string>()
 
+  /**
+   * Recursive DFS helper for state accumulation.
+   * Walks from `id` toward `targetId`, applying set_state at each node.
+   * Uses backtracking to explore all paths.
+   *
+   * # Arguments
+   * * `id` — Current node ID.
+   * * `state` — Accumulated state at this point.
+   */
   function dfs(id: string, state: State): void {
     if (visited.has(id)) return
     visited.add(id)
@@ -211,6 +338,22 @@ function allStatesAt(
   return results
 }
 
+/**
+ * Detect locked conditions — choices that can never be selected (Algorithm 4).
+ *
+ * For each edge with a condition, traces all possible paths from `start_node`
+ * to the edge's source node, simulating state accumulation. If no path
+ * produces a state that satisfies the condition, the choice is permanently
+ * locked — the reader sees the text but can never click it.
+ *
+ * Skips unreachable nodes (already flagged by Algorithm 2).
+ *
+ * # Arguments
+ * * `graph` — The full normalized graph.
+ *
+ * # Returns
+ * Array of `StructuralFault` with severity `"error"` for each locked choice.
+ */
 function detectLockedConditions(graph: NormalizedGraph): StructuralFault[] {
   const reachable = new Set<string>()
   const q = [graph.start_node]
@@ -252,16 +395,54 @@ function detectLockedConditions(graph: NormalizedGraph): StructuralFault[] {
   return faults
 }
 
-// ── Algorithm 5 — Valid Path Generation ──────────────────────
+// ═══════════════════════════════════════════════════════════════
+//  ALGORITHM 5 — Valid Path Generation
+// ═══════════════════════════════════════════════════════════════
 //
-// DFS from start_node collecting all root-to-ending paths,
-// recording the full state snapshot at each node.
+//  DFS from start_node, collecting all paths that reach an
+//  is_ending node. Each path records the state snapshot at
+//  every node traversed.
+//
+//  Output: valid_paths array consumed by semantic-ai module
+//  (one reflect() call per path).
+// ───────────────────────────────────────────────────────────────
 
+/**
+ * Generate all valid end-to-end paths through the narrative (Algorithm 5).
+ *
+ * Performs exhaustive DFS from `start_node`, respecting condition gates,
+ * and collecting every path that reaches an `is_ending` node. Each path
+ * records the full state snapshot at every node visited.
+ *
+ * Output is consumed by the Hindsight semantic-AI module for continuity
+ * analysis (one `reflect()` call per path).
+ *
+ * # Arguments
+ * * `graph` — The full normalized graph.
+ *
+ * # Returns
+ * Array of `ValidPath` with sequential IDs (`path_1`, `path_2`, ...).
+ */
 function generateValidPaths(graph: NormalizedGraph): ValidPath[] {
   const nodeMap = new Map(graph.nodes.map((n) => [n.id, n]))
   const paths: ValidPath[] = []
   const visited = new Set<string>()
 
+  /**
+   * Recursive DFS helper that builds valid paths from the current node to any ending.
+   *
+   * Tracks visited nodes to prevent infinite loops. At each node, applies
+   * `set_state` mutations to the running state, then explores each choice
+   * whose condition is satisfied. When an ending node is reached, the
+   * accumulated path is recorded. Uses backtracking to allow the same
+   * node to appear in multiple distinct paths.
+   *
+   * # Arguments
+   * * `id` — Current node ID.
+   * * `state` — Accumulated state at the current node.
+   * * `sequence` — Ordered list of node IDs visited so far.
+   * * `snapshots` — State snapshots parallel to `sequence`.
+   */
   function dfs(
     id: string,
     state: State,
@@ -306,8 +487,25 @@ function generateValidPaths(graph: NormalizedGraph): ValidPath[] {
   return paths
 }
 
-// ── Public API ────────────────────────────────────────────────
+// ═══════════════════════════════════════════════════════════════
+//  PUBLIC API — runStructuralValidation
+// ═══════════════════════════════════════════════════════════════
 
+/**
+ * Run all five structural validation algorithms on a normalized graph.
+ *
+ * Executes algorithms 1–4 (fault detection) and algorithm 5 (path generation)
+ * in sequence, assigns sequential fault IDs (`sf_001`, `sf_002`, ...),
+ * collects valid endings, and returns the complete structural result.
+ *
+ * This is the main export consumed by the Express route handler.
+ *
+ * # Arguments
+ * * `graph` — The normalized graph to validate.
+ *
+ * # Returns
+ * A `StructuralResult` containing faults, valid endings, and valid paths.
+ */
 export function runStructuralValidation(graph: NormalizedGraph): StructuralResult {
   const deadEnds = detectDeadEnds(graph.nodes)
   const unreachable = detectUnreachable(graph)

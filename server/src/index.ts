@@ -1,3 +1,16 @@
+/**
+ * @module index
+ * @description Express server entry point for the NVE (Narrative Validation Engine).
+ *
+ * Configures and starts the Express HTTP server with three main API routes:
+ * - `POST /api/ingest` — LLM-powered narrative structure extraction
+ * - `POST /api/validate/structural` — Five-algorithm structural graph validation
+ * - `POST /api/validate/semantic` — Hindsight AI-powered semantic continuity analysis
+ *
+ * The server uses Groq for LLM ingestion (free tier) and optionally connects
+ * to a Hindsight Docker container for semantic validation.
+ */
+
 import 'dotenv/config'
 import express, { type Request, type Response, type NextFunction } from 'express'
 import cors from 'cors'
@@ -6,7 +19,10 @@ import { runStructuralValidation } from './structural'
 import { runSemanticValidation } from './semantic'
 import type { NormalizedGraph, TextDictionary, ValidPathsOutput } from './types'
 
+/** Express application instance. */
 const app = express()
+
+/** Server port — defaults to 3001 if `PORT` env var is not set. */
 const PORT = process.env.PORT ?? 3001
 
 app.use(cors())
@@ -19,6 +35,19 @@ app.use(express.json({ limit: '2mb' }))
 //
 // Body: { text: string, title?: string }
 
+/**
+ * Ingestion endpoint — accepts raw literature text and extracts a narrative graph.
+ *
+ * Validates that the input text is at least 50 characters, then sends it to
+ * the Groq LLM (llama-3.3-70b) to extract the narrative structure. Returns
+ * both the `normalized_graph` (structural skeleton) and `text_dictionary`
+ * (prose and facts per node).
+ *
+ * @route POST /api/ingest
+ * @param req.body.text - Raw literature text to analyze (min 50 chars).
+ * @param req.body.title - Optional title for the narrative.
+ * @returns {{ normalized_graph: NormalizedGraph, text_dictionary: TextDictionary }}
+ */
 app.post('/api/ingest', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { text, title } = req.body as { text?: string; title?: string }
@@ -47,6 +76,20 @@ app.post('/api/ingest', async (req: Request, res: Response, next: NextFunction) 
 //
 // Body: { normalized_graph: NormalizedGraph }
 
+/**
+ * Structural validation endpoint — runs five graph algorithms on a normalized graph.
+ *
+ * Algorithms executed:
+ * 1. Dead End Detection — nodes with no choices and not marked as endings
+ * 2. Unreachable Node Detection — BFS from start node
+ * 3. Infinite Loop Detection — DFS cycle detection for inescapable loops
+ * 4. Locked Condition Detection — edges with unsatisfiable conditions
+ * 5. Valid Path Generation — all start-to-ending paths with state snapshots
+ *
+ * @route POST /api/validate/structural
+ * @param req.body.normalized_graph - The narrative graph to validate.
+ * @returns {StructuralResult} Faults, valid endings, and valid paths.
+ */
 app.post('/api/validate/structural', (req: Request, res: Response, next: NextFunction) => {
   try {
     const { normalized_graph } = req.body as { normalized_graph?: NormalizedGraph }
@@ -75,6 +118,23 @@ app.post('/api/validate/structural', (req: Request, res: Response, next: NextFun
 //
 // Body: { text_dictionary: TextDictionary, valid_paths: ValidPathsOutput }
 
+/**
+ * Semantic validation endpoint — runs Hindsight AI analysis on all valid paths.
+ *
+ * For each valid path:
+ * 1. Creates a fresh Hindsight memory bank
+ * 2. Retains world rules into the bank
+ * 3. Retains each node's prose and facts in sequence
+ * 4. Calls reflect() to detect narrative continuity errors
+ * 5. Cleans up the memory bank
+ *
+ * Returns gracefully with empty faults if Hindsight is unreachable.
+ *
+ * @route POST /api/validate/semantic
+ * @param req.body.text_dictionary - The text dictionary with prose and facts.
+ * @param req.body.valid_paths - The valid paths to analyze.
+ * @returns {SemanticResult} Semantic faults with confidence scores.
+ */
 app.post('/api/validate/semantic', async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { text_dictionary, valid_paths } = req.body as {
@@ -101,17 +161,32 @@ app.post('/api/validate/semantic', async (req: Request, res: Response, next: Nex
 
 // ── Health check ──────────────────────────────────────────────
 
+/**
+ * Health check endpoint — returns server status and port.
+ * Used by monitoring tools and the dashboard to verify the server is running.
+ *
+ * @route GET /api/health
+ * @returns {{ status: "ok", port: number | string }}
+ */
 app.get('/api/health', (_req: Request, res: Response) => {
   res.json({ status: 'ok', port: PORT })
 })
 
 // ── Error handler ─────────────────────────────────────────────
 
+/**
+ * Global error handler middleware.
+ * Catches all unhandled errors from route handlers, logs them,
+ * and returns a structured JSON error response with a 500 status code.
+ */
 app.use((err: Error, _req: Request, res: Response, _next: NextFunction) => {
   console.error('[server error]', err.message)
   res.status(500).json({ error: err.message })
 })
 
+/**
+ * Start the Express server and print a banner with available routes.
+ */
 app.listen(PORT, () => {
   console.log()
   console.log('╔══════════════════════════════════════════════╗')

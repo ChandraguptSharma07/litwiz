@@ -1,17 +1,45 @@
+// ──────────────────────────────────────────────────────────────
+//  Header.tsx — Top navigation bar
+//
+//  Displays the NVE logo, narrative title/stats, and action
+//  buttons for load, structural validation, semantic validation,
+//  and 2D/3D view toggling. Button states are driven by the
+//  current `ValidationPhase`.
+// ──────────────────────────────────────────────────────────────
+
 import type { ValidationPhase } from '../lib/types'
 
+/** Props for the Header component. */
 interface Props {
+  /** Title of the currently loaded narrative (or empty). */
   title: string
+  /** Total number of nodes in the loaded graph. */
   nodeCount: number
+  /** Total number of edges (choices) in the loaded graph. */
   edgeCount: number
+  /** Current phase of the validation pipeline. */
   phase: ValidationPhase
+  /** Active graph rendering mode — `"2d"` (D3) or `"3d"` (Three.js). */
   viewMode: '2d' | '3d'
+  /** Callback to open the literature input modal. */
   onLoadFile: () => void
+  /** Callback to start structural validation. */
   onRunStructural: () => void
+  /** Callback to start semantic (Hindsight) validation. */
   onRunHindsight: () => void
+  /** Callback to toggle between 2D and 3D view modes. */
   onToggleView: () => void
 }
 
+/**
+ * Top navigation bar with logo, narrative info, and action controls.
+ *
+ * Button enable/disable logic:
+ * - "Load Literature" is always enabled
+ * - "Run Structural" requires a loaded narrative (phase ≥ ingest-done)
+ * - "Run Hindsight" requires structural validation to be complete
+ * - View toggle is always available
+ */
 export default function Header({
   title,
   nodeCount,

@@ -1,0 +1,16 @@
+{
+  "name": "nve-validate",
+  "type": "module",
+  "description": "NVE Core Engine — Structural graph validator for branching narratives",
+  "version": "0.1.0",
+  "files": [
+    "nve_validate_bg.wasm",
+    "nve_validate.js",
+    "nve_validate.d.ts"
+  ],
+  "main": "nve_validate.js",
+  "types": "nve_validate.d.ts",
+  "sideEffects": [
+    "./snippets/*"
+  ]
+}

@@ -25,7 +25,19 @@ const app = express()
 /** Server port — defaults to 3001 if `PORT` env var is not set. */
 const PORT = process.env.PORT ?? 3001
 
-app.use(cors())
+/**
+ * Allowed CORS origins — localhost for dev, Vercel for production.
+ * Override with CORS_ORIGIN env var for custom domains.
+ */
+app.use(cors({
+  origin: process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',')
+    : [
+      'http://localhost:5173',
+      'http://localhost:4173',
+      /\.vercel\.app$/,
+    ],
+}))
 app.use(express.json({ limit: '2mb' }))
 
 // ── POST /api/ingest ──────────────────────────────────────────

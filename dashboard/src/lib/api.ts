@@ -23,7 +23,7 @@ import type {
  * Defaults to `/api` which is proxied by Vite in development.
  * In production, set VITE_API_URL to the deployed server origin.
  */
-const BASE = '/api'
+const BASE = import.meta.env.VITE_API_URL || '/api'
 
 // ═══════════════════════════════════════════════════════════════
 //  POST /api/ingest — LLM-powered narrative extraction

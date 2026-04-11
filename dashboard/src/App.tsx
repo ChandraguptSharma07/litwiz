@@ -91,10 +91,10 @@ export default function App() {
 
   // ── Load demo narrative ───────────────────────────────────────
   const loadDemo = useCallback(() => {
-    setGraph(mockGraph as NormalizedGraph)
-    setTextDict(mockText as TextDictionary)
-    setFaultPayload(mockFaults as FaultPayload)
-    setValidPaths(mockPaths as ValidPathsFile)
+    setGraph(mockGraph as unknown as NormalizedGraph)
+    setTextDict(mockText as unknown as TextDictionary)
+    setFaultPayload(mockFaults as unknown as FaultPayload)
+    setValidPaths(mockPaths as unknown as ValidPathsFile)
     setPhase('structural-done')
     setHindsightActive(false)
     setSelectedNodeId(null)
@@ -171,17 +171,18 @@ export default function App() {
     try {
       const result = await validateSemantic(textDict, validPaths)
 
-      setFaultPayload((prev) =>
-        prev
-          ? { ...prev, semantic_faults: result.semantic_faults }
-          : {
-            narrative_title: result.narrative_title,
-            validated_at: result.validated_at,
-            structural_faults: [],
-            semantic_faults: result.semantic_faults,
-            valid_endings: [],
-          },
-      )
+      setFaultPayload((prev): FaultPayload => {
+        if (prev) {
+          return { ...prev, semantic_faults: result.semantic_faults } as FaultPayload
+        }
+        return {
+          narrative_title: result.narrative_title,
+          validated_at: result.validated_at,
+          structural_faults: [],
+          semantic_faults: result.semantic_faults,
+          valid_endings: [],
+        } as FaultPayload
+      })
       setHindsightActive(true)
       setPhase('semantic-done')
     } catch (err) {
@@ -224,7 +225,7 @@ export default function App() {
 
   // ── Render ────────────────────────────────────────────────────
 
-  const displayGraph: NormalizedGraph = graph ?? (mockGraph as NormalizedGraph)
+  const displayGraph: NormalizedGraph = graph ?? (mockGraph as unknown as NormalizedGraph)
 
   return (
     <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>

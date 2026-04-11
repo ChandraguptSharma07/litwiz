@@ -29,20 +29,32 @@ use crate::types::*;
 //  choices and no narrative conclusion.
 // ───────────────────────────────────────────────────────────────
 
+/// Detect dead-end nodes in the narrative graph (Algorithm 1).
+///
+/// A dead end is any node where `out_degree == 0` but `is_ending == false`.
+/// These nodes trap the reader with no choices and no narrative conclusion.
+/// Fault messages include truncated prose for easy identification.
+///
+/// # Arguments
+/// * `graph_data` — The parsed petgraph representation of the narrative.
+///
+/// # Returns
+/// A sorted `Vec<StructuralFault>` with severity `"error"` for each dead end.
 pub fn detect_dead_ends(graph_data: &GraphData) -> Vec<StructuralFault> {
     let mut faults = Vec::new();
 
     for node in graph_data.node_map.values() {
         if node.choices.is_empty() && !node.is_ending {
+            let prose_preview = truncate_prose(&node.prose, 120);
             faults.push(StructuralFault {
                 fault_id: String::new(), // assigned later
                 fault_type: "DEAD_END".to_string(),
                 severity: "error".to_string(),
                 node_id: node.id.clone(),
                 message: format!(
-                    "Node has no outgoing choices and is not marked as an ending. \
+                    "Dead end: \"{}\" — This node has no outgoing choices and is not marked as an ending. \
                      A reader who reaches {} is permanently stuck.",
-                    node.id
+                    prose_preview, node.id
                 ),
                 affected_nodes: vec![node.id.clone()],
                 affected_paths: vec![],
@@ -66,6 +78,19 @@ pub fn detect_dead_ends(graph_data: &GraphData) -> Vec<StructuralFault> {
 //  reach them regardless of their choices.
 // ───────────────────────────────────────────────────────────────
 
+/// Detect unreachable nodes in the narrative graph (Algorithm 2).
+///
+/// Runs BFS from the `start_node`. Any node not visited is unreachable —
+/// wasted content that no reader can ever see, regardless of their choices.
+/// For each unreachable node, the fault includes its isolated cluster size
+/// and truncated prose for identification.
+///
+/// # Arguments
+/// * `graph_data` — The parsed petgraph representation.
+/// * `start_node` — The ID of the starting node for BFS.
+///
+/// # Returns
+/// A sorted `Vec<StructuralFault>` with severity `"warning"` for each orphan.
 pub fn detect_unreachable(
     graph_data: &GraphData,
     start_node: &str,
@@ -111,17 +136,22 @@ pub fn detect_unreachable(
         cluster.sort();
         cluster.dedup();
 
+        let prose_preview = graph_data
+            .node_map
+            .get(node_id.as_str())
+            .map(|n| truncate_prose(&n.prose, 120))
+            .unwrap_or_default();
+
         faults.push(StructuralFault {
             fault_id: String::new(),
             fault_type: "UNREACHABLE".to_string(),
             severity: "warning".to_string(),
             node_id: node_id.clone(),
             message: format!(
-                "No path from the start node reaches {}. \
+                "Orphaned: \"{}\" — No path from the start node reaches {}. \
                  It forms an isolated cluster with {} node(s) \
                  but has no incoming edges from the main graph.",
-                node_id,
-                cluster.len()
+                prose_preview, node_id, cluster.len()
             ),
             affected_nodes: cluster,
             affected_paths: vec![],
@@ -143,6 +173,21 @@ pub fn detect_unreachable(
 //  with no way to reach an ending.
 // ───────────────────────────────────────────────────────────────
 
+/// Detect inescapable infinite loops in the narrative graph (Algorithm 3).
+///
+/// Uses Tarjan's algorithm to find strongly connected components (SCCs).
+/// An SCC is a fault if:
+/// - It has more than one node (or a single node with a self-loop), AND
+/// - No node in the SCC has an outgoing edge to any node outside it, AND
+/// - No node in the SCC is marked as an ending.
+///
+/// Such cycles trap the reader in an infinite loop with no escape.
+///
+/// # Arguments
+/// * `graph_data` — The parsed petgraph representation.
+///
+/// # Returns
+/// A `Vec<StructuralFault>` with severity `"error"` for each inescapable cycle.
 pub fn detect_infinite_loops(graph_data: &GraphData) -> Vec<StructuralFault> {
     let sccs = tarjan_scc(&graph_data.graph);
     let mut faults = Vec::new();
@@ -214,6 +259,20 @@ pub fn detect_infinite_loops(graph_data: &GraphData) -> Vec<StructuralFault> {
     faults
 }
 
+/// Truncate prose to a maximum character count, breaking at word boundaries.
+fn truncate_prose(prose: &str, max_chars: usize) -> String {
+    if prose.len() <= max_chars {
+        return prose.to_string();
+    }
+    let truncated = &prose[..max_chars];
+    // Try to break at the last space
+    if let Some(last_space) = truncated.rfind(' ') {
+        format!("{}…", &prose[..last_space])
+    } else {
+        format!("{}…", truncated)
+    }
+}
+
 // ═══════════════════════════════════════════════════════════════
 //  ALGORITHM 4 — Locked Condition Detection
 // ═══════════════════════════════════════════════════════════════
@@ -228,6 +287,21 @@ pub fn detect_infinite_loops(graph_data: &GraphData) -> Vec<StructuralFault> {
 //  but can never select it — the required state is impossible.
 // ───────────────────────────────────────────────────────────────
 
+/// Detect locked conditions — choices that can never be selected (Algorithm 4).
+///
+/// For each edge with a condition, traces all possible paths from `start_node`
+/// to the edge's source node, simulating state accumulation. If no path
+/// produces a state that satisfies the condition, the choice is permanently
+/// locked — the reader sees the text but can never click it.
+///
+/// Skips unreachable nodes (already flagged by Algorithm 2).
+///
+/// # Arguments
+/// * `normalized` — The parsed normalized graph (for node iteration).
+/// * `graph_data` — The petgraph representation (for DFS).
+///
+/// # Returns
+/// A sorted `Vec<StructuralFault>` with severity `"error"` for each locked choice.
 pub fn detect_locked_conditions(
     normalized: &NormalizedGraph,
     graph_data: &GraphData,
@@ -292,6 +366,21 @@ pub fn detect_locked_conditions(
 //  (one reflect() call per path).
 // ───────────────────────────────────────────────────────────────
 
+/// Generate all valid end-to-end paths through the narrative (Algorithm 5).
+///
+/// Performs exhaustive DFS from `start_node`, respecting condition gates,
+/// and collecting every path that reaches an `is_ending` node. Each path
+/// records the full state snapshot at every node visited.
+///
+/// Output is consumed by the Hindsight semantic-AI module for continuity
+/// analysis (one `reflect()` call per path).
+///
+/// # Arguments
+/// * `normalized` — The parsed normalized graph.
+/// * `graph_data` — The petgraph representation.
+///
+/// # Returns
+/// A `Vec<ValidPath>` with sequential IDs (`path_1`, `path_2`, ...).
 pub fn generate_valid_paths(
     normalized: &NormalizedGraph,
     graph_data: &GraphData,
@@ -317,7 +406,15 @@ pub fn generate_valid_paths(
     paths
 }
 
-/// Recursive DFS that builds valid paths from current node to any ending.
+/// Recursive DFS helper that builds valid paths from the current node to any ending.
+///
+/// Tracks visited nodes to prevent infinite loops. At each node, applies
+/// `set_state` mutations to the running state, then explores each choice
+/// whose condition is satisfied (or unconditional). When an ending node is
+/// reached, the accumulated path is recorded.
+///
+/// Uses backtracking: visited state is restored after each recursive call
+/// to allow the same node to appear in multiple distinct paths.
 fn dfs_paths(
     current_id: &str,
     incoming_state: &State,
@@ -393,9 +490,20 @@ fn dfs_paths(
 //  HELPER — Condition Evaluator
 // ═══════════════════════════════════════════════════════════════
 
-/// Evaluate a condition string like "has_torch == true" against
-/// the current game state. Supports == and != operators.
-/// Returns true if there's no parseable condition (fail-open).
+/// Evaluate a condition string against the current narrative state.
+///
+/// Supports the format `"key operator value"` where:
+/// - `key` is a state variable name (e.g. `"has_torch"`)
+/// - `operator` is `==` or `!=`
+/// - `value` is `true`, `false`, a number, or a string
+///
+/// Returns `true` if:
+/// - The condition is satisfied, OR
+/// - The condition string is unparseable (fail-open for safety).
+///
+/// # Arguments
+/// * `condition` — The condition expression string.
+/// * `state` — The current accumulated state map.
 fn evaluate_condition(condition: &str, state: &State) -> bool {
     let parts: Vec<&str> = condition.split_whitespace().collect();
 
@@ -444,7 +552,17 @@ fn evaluate_condition(condition: &str, state: &State) -> bool {
 //  HELPER — Reachable Set (for filtering Algorithm 4)
 // ═══════════════════════════════════════════════════════════════
 
-/// BFS from start_node, returns set of all reachable node IDs.
+/// Compute the set of all node IDs reachable from the start node via BFS.
+///
+/// Used by Algorithm 4 (Locked Conditions) to skip unreachable nodes,
+/// which are already flagged by Algorithm 2.
+///
+/// # Arguments
+/// * `graph_data` — The petgraph representation.
+/// * `start_node` — The starting node ID.
+///
+/// # Returns
+/// A `HashSet<String>` of all reachable node IDs.
 fn compute_reachable_set(graph_data: &GraphData, start_node: &str) -> HashSet<String> {
     let mut reachable = HashSet::new();
 
@@ -462,9 +580,19 @@ fn compute_reachable_set(graph_data: &GraphData, start_node: &str) -> HashSet<St
 //  HELPER — All Possible States at a Node (for Algorithm 4)
 // ═══════════════════════════════════════════════════════════════
 
-/// DFS from start_node to target_node, collecting all possible
-/// accumulated states at the target. Used to check condition
-/// satisfiability.
+/// Compute all possible accumulated states at a target node via DFS.
+///
+/// Explores every path from `start_node` to `target_node_id`, collecting
+/// the accumulated state map at each arrival. Used by Algorithm 4 to
+/// determine if any path can satisfy a locked condition.
+///
+/// # Arguments
+/// * `normalized` — The parsed normalized graph.
+/// * `graph_data` — The petgraph representation.
+/// * `target_node_id` — The node ID to reach.
+///
+/// # Returns
+/// A `Vec<State>` of all possible states at the target node.
 fn compute_all_states_at(
     normalized: &NormalizedGraph,
     graph_data: &GraphData,
@@ -485,7 +613,11 @@ fn compute_all_states_at(
     results
 }
 
-/// Recursive DFS for state accumulation.
+/// Recursive DFS helper for state accumulation.
+///
+/// Walks from `current_id` toward `target_id`, accumulating state
+/// mutations at each node. When the target is reached, the current
+/// state is recorded. Uses backtracking to explore all paths.
 fn dfs_states(
     current_id: &str,
     target_id: &str,

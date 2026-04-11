@@ -50,7 +50,7 @@ export default function LiteratureInput({ onIngest, onLoadDemo, isLoading, error
     >
       <div
         style={{
-          width: 680,
+          width: 760,
           maxWidth: '95vw',
           maxHeight: '90vh',
           background: 'var(--bg-panel)',
@@ -71,14 +71,14 @@ export default function LiteratureInput({ onIngest, onLoadDemo, isLoading, error
           <div
             style={{
               fontFamily: 'var(--font-display)',
-              fontStyle: 'italic',
-              fontSize: 20,
-              marginBottom: 4,
+              fontSize: 28,
+              fontWeight: 600,
+              marginBottom: 8,
             }}
           >
             Load Literature
           </div>
-          <div style={{ fontSize: 11, color: '#71717a', lineHeight: 1.5 }}>
+          <div style={{ fontSize: 17, color: 'var(--text-secondary)', lineHeight: 1.6, fontFamily: 'var(--font-body)' }}>
             Paste any excerpt from a novel, screenplay, play, or game script. Claude will extract
             the narrative structure and build the graph. Works with linear stories and branching
             narratives alike.
@@ -92,8 +92,8 @@ export default function LiteratureInput({ onIngest, onLoadDemo, isLoading, error
               key={t}
               onClick={() => setTab(t)}
               style={{
-                padding: '8px 20px',
-                fontSize: 11,
+                padding: '12px 26px',
+                fontSize: 17,
                 textTransform: 'uppercase',
                 letterSpacing: '0.06em',
                 border: 'none',
@@ -112,7 +112,7 @@ export default function LiteratureInput({ onIngest, onLoadDemo, isLoading, error
         <div style={{ flex: 1, padding: '16px 24px', overflowY: 'auto', display: 'flex', flexDirection: 'column', gap: 12 }}>
           {/* Title field */}
           <div>
-            <label style={{ fontSize: 10, color: '#71717a', letterSpacing: '0.06em', display: 'block', marginBottom: 4 }}>
+            <label style={{ fontSize: 15, color: 'var(--text-muted)', letterSpacing: '0.05em', display: 'block', marginBottom: 6, fontWeight: 500 }}>
               TITLE (optional — Claude will infer it if left blank)
             </label>
             <input
@@ -126,8 +126,8 @@ export default function LiteratureInput({ onIngest, onLoadDemo, isLoading, error
                 border: '1px solid var(--border)',
                 borderRadius: 4,
                 color: '#e4e4e7',
-                fontSize: 12,
-                fontFamily: 'var(--font-mono)',
+                fontSize: 15,
+                fontFamily: 'var(--font-body)',
                 outline: 'none',
               }}
             />
@@ -135,12 +135,13 @@ export default function LiteratureInput({ onIngest, onLoadDemo, isLoading, error
 
           {tab === 'paste' ? (
             <div style={{ flex: 1, display: 'flex', flexDirection: 'column' }}>
-              <label style={{ fontSize: 10, color: '#71717a', letterSpacing: '0.06em', display: 'block', marginBottom: 4 }}>
+              <label style={{ fontSize: 15, color: 'var(--text-muted)', letterSpacing: '0.05em', display: 'block', marginBottom: 6, fontWeight: 500 }}>
                 TEXT
               </label>
               <textarea
                 value={text}
                 onChange={(e) => setText(e.target.value)}
+                className="placeholder:text-[14px] placeholder:font-body placeholder:leading-normal"
                 placeholder={`Paste any passage here — a chapter, a scene, an act, a section of a script. The more narrative structure (characters, scenes, decisions), the better the graph.
 
 Example types that work well:
@@ -152,19 +153,20 @@ Example types that work well:
                 style={{
                   flex: 1,
                   minHeight: 260,
-                  padding: '10px',
+                  padding: '24px 32px',
                   background: '#0f0f10',
                   border: `1px solid ${overLimit ? '#ef4444' : 'var(--border)'}`,
-                  borderRadius: 4,
-                  color: '#e4e4e7',
-                  fontSize: 11,
-                  fontFamily: 'var(--font-mono)',
-                  lineHeight: 1.6,
+                  borderRadius: 6,
+                  color: 'var(--text-primary)',
+                  fontSize: 18,
+                  fontFamily: 'var(--font-display)',
+                  lineHeight: 1.85,
                   resize: 'vertical',
                   outline: 'none',
+                  boxShadow: 'inset 0 2px 10px rgba(0,0,0,0.2)',
                 }}
               />
-              <div style={{ fontSize: 10, color: overLimit ? '#f87171' : '#52525b', marginTop: 4, textAlign: 'right' }}>
+              <div style={{ fontSize: 15, color: overLimit ? '#f87171' : 'var(--text-muted)', marginTop: 6, textAlign: 'right', fontFamily: 'var(--font-mono)' }}>
                 {wordCount.toLocaleString()} words · {charCount.toLocaleString()} chars
                 {overLimit && ' — text will be truncated to 12,000 chars'}
               </div>
@@ -179,15 +181,15 @@ Example types that work well:
                   borderRadius: 4,
                   border: '1px dashed var(--border)',
                   background: 'transparent',
-                  color: '#a1a1aa',
-                  fontSize: 12,
+                  color: 'var(--text-secondary)',
+                  fontSize: 17,
                   cursor: 'pointer',
                 }}
               >
                 Choose .txt · .md · .fountain · .fdx
               </button>
               {text && (
-                <div style={{ fontSize: 10, color: '#4ade80' }}>
+                <div style={{ fontSize: 16, color: '#4ade80' }}>
                   ✓ File loaded — {wordCount.toLocaleString()} words
                 </div>
               )}
@@ -226,9 +228,9 @@ Example types that work well:
             onClick={onLoadDemo}
             disabled={isLoading}
             style={{
-              fontSize: 11,
-              padding: '6px 14px',
-              borderRadius: 4,
+              fontSize: 17,
+              padding: '9px 20px',
+              borderRadius: 6,
               border: '1px solid var(--border)',
               background: 'transparent',
               color: '#71717a',
@@ -242,9 +244,9 @@ Example types that work well:
             onClick={handleSubmit}
             disabled={!text.trim() || isLoading}
             style={{
-              fontSize: 11,
-              padding: '8px 20px',
-              borderRadius: 4,
+              fontSize: 17,
+              padding: '11px 26px',
+              borderRadius: 6,
               border: 'none',
               background: !text.trim() || isLoading ? '#27272a' : '#2563eb',
               color: !text.trim() || isLoading ? '#52525b' : '#fff',

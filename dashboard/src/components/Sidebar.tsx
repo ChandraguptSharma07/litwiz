@@ -56,7 +56,7 @@ function ErrorsTab({
 
   if (!faults) {
     return (
-      <div style={{ padding: 16, color: '#52525b', fontSize: 11 }}>
+      <div style={{ padding: 16, color: 'var(--text-muted)', fontSize: 13 }}>
         Run structural validation to see results.
       </div>
     )
@@ -118,7 +118,7 @@ function ErrorsTab({
               className="slide-in"
               onClick={() => onJumpToNode(ending.node_id)}
               style={{
-                padding: '7px 12px',
+                padding: '12px 16px',
                 borderBottom: '1px solid var(--border)',
                 cursor: 'pointer',
                 display: 'flex',
@@ -128,11 +128,11 @@ function ErrorsTab({
             >
               <span style={{ color: '#22c55e', marginTop: 1 }}>✓</span>
               <div>
-                <div style={{ fontSize: 10, color: '#a1a1aa', fontWeight: 500 }}>
+                <div style={{ fontSize: 13, color: '#a1a1aa', fontWeight: 500, fontFamily: 'var(--font-mono)' }}>
                   {ending.node_id}
                 </div>
-                <div style={{ fontSize: 10, color: '#71717a', marginTop: 2, lineHeight: 1.4 }}>
-                  "{ending.prose_preview.slice(0, 60)}..."
+                <div style={{ fontSize: 15, color: 'var(--text-secondary)', marginTop: 6, lineHeight: 1.7, fontFamily: 'var(--font-display)' }}>
+                  "{ending.prose_preview.slice(0, 140)}..."
                 </div>
               </div>
             </div>
@@ -160,7 +160,7 @@ function DetailTab({
 }) {
   if (!nodeId) {
     return (
-      <div style={{ padding: 16, color: '#52525b', fontSize: 11 }}>
+      <div style={{ padding: 16, color: 'var(--text-muted)', fontSize: 13 }}>
         Click a node in the graph to inspect it.
       </div>
     )
@@ -196,18 +196,18 @@ function DetailTab({
     : null
 
   return (
-    <div style={{ overflowY: 'auto', flex: 1, fontSize: 11 }}>
+    <div style={{ overflowY: 'auto', flex: 1, fontSize: 14 }}>
       {/* Node header */}
       <div style={{ padding: '12px 12px 8px', borderBottom: '1px solid var(--border)' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontWeight: 600, fontSize: 12, color: '#e4e4e7' }}>
+          <span style={{ fontWeight: 600, fontSize: 16, color: 'var(--text-primary)' }}>
             NODE  {nodeId}
           </span>
           {nodeLabel && (
             <span
               style={{
-                fontSize: 9,
-                padding: '2px 6px',
+                fontSize: 11,
+                padding: '3px 8px',
                 borderRadius: 3,
                 background:
                   nodeLabel.startsWith('✓')
@@ -232,7 +232,7 @@ function DetailTab({
       {/* Scene text */}
       {text && (
         <DetailSection label="SCENE TEXT">
-          <p style={{ color: '#a1a1aa', lineHeight: 1.6, margin: 0 }}>
+          <p style={{ color: 'var(--text-primary)', lineHeight: 1.8, margin: 0, fontSize: 16 }}>
             "{text.prose}"
           </p>
         </DetailSection>
@@ -324,9 +324,9 @@ function Section({
     <div>
       <div
         style={{
-          padding: '8px 12px',
-          fontSize: 9,
-          letterSpacing: '0.08em',
+          padding: '14px 16px',
+          fontSize: 12,
+          letterSpacing: '0.06em',
           color: accent,
           borderBottom: '1px solid var(--border)',
           display: 'flex',
@@ -366,7 +366,7 @@ function FaultRow({
     <div
       className="slide-in"
       style={{
-        padding: '8px 12px',
+        padding: '14px 16px',
         borderBottom: '1px solid var(--border)',
         animationDelay: `${index * 60}ms`,
         display: 'flex',
@@ -377,16 +377,16 @@ function FaultRow({
       <span style={{ color: accent, marginTop: 1 }}>{icon}</span>
       <div style={{ flex: 1 }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <span style={{ fontSize: 9, fontWeight: 600, color: accent }}>
+          <span style={{ fontSize: 12, fontWeight: 600, color: accent }}>
             {type}
           </span>
-          <span style={{ fontSize: 9, color: '#52525b' }}>{nodeId}</span>
+          <span style={{ fontSize: 13, color: 'var(--text-muted)', fontFamily: 'var(--font-mono)' }}>{nodeId}</span>
         </div>
-        <div style={{ fontSize: 10, color: '#71717a', marginTop: 3, lineHeight: 1.5 }}>
-          "{message.slice(0, 90)}{message.length > 90 ? '...' : ''}"
+        <div style={{ fontSize: 15, color: 'var(--text-secondary)', marginTop: 6, lineHeight: 1.7, fontFamily: 'var(--font-display)' }}>
+          "{message.slice(0, 140)}{message.length > 140 ? '...' : ''}"
         </div>
         {confidence !== undefined && (
-          <div style={{ fontSize: 9, color: '#7c3aed', marginTop: 3 }}>
+          <div style={{ fontSize: 10, color: '#7c3aed', marginTop: 3 }}>
             confidence {Math.round(confidence * 100)}%
           </div>
         )}
@@ -394,8 +394,8 @@ function FaultRow({
       <button
         onClick={onJump}
         style={{
-          fontSize: 9,
-          padding: '2px 6px',
+          fontSize: 12,
+          padding: '4px 10px',
           borderRadius: 3,
           border: '1px solid var(--border)',
           background: 'transparent',
@@ -413,8 +413,8 @@ function FaultRow({
 
 function DetailSection({ label, children }: { label: string; children: React.ReactNode }) {
   return (
-    <div style={{ padding: '10px 12px', borderBottom: '1px solid var(--border)' }}>
-      <div style={{ fontSize: 9, letterSpacing: '0.08em', color: '#52525b', marginBottom: 6 }}>
+    <div style={{ padding: '14px 16px', borderBottom: '1px solid var(--border)' }}>
+      <div style={{ fontSize: 12, letterSpacing: '0.06em', color: 'var(--text-muted)', marginBottom: 8, fontWeight: 600 }}>
         {label}
       </div>
       {children}
@@ -446,9 +446,9 @@ export default function Sidebar({
   return (
     <div
       style={{
-        width: '30%',
-        minWidth: 260,
-        maxWidth: 380,
+        width: '32%',
+        minWidth: 320,
+        maxWidth: 440,
         display: 'flex',
         flexDirection: 'column',
         borderLeft: '1px solid var(--border)',
@@ -470,9 +470,9 @@ export default function Sidebar({
             onClick={() => onTabChange(t)}
             style={{
               flex: 1,
-              padding: '8px 0',
-              fontSize: 10,
-              letterSpacing: '0.06em',
+              padding: '10px 0',
+              fontSize: 12,
+              letterSpacing: '0.04em',
               textTransform: 'uppercase',
               border: 'none',
               borderBottom: tab === t ? '2px solid #3b82f6' : '2px solid transparent',

@@ -13,18 +13,33 @@ use petgraph::graph::{DiGraph, NodeIndex};
 
 use crate::types::*;
 
-/// Holds the petgraph representation plus lookup maps needed by
-/// every validation algorithm.
+/// Holds the petgraph representation of the narrative graph plus
+/// lookup maps needed by every validation algorithm.
+///
+/// Built by [`build_petgraph`] from a parsed [`NormalizedGraph`].
 pub struct GraphData {
-    /// Directed graph: node weight = node ID string, edge weight = ChoiceEdge.
+    /// Directed graph where node weights are node ID strings and
+    /// edge weights are [`ChoiceEdge`] structs containing choice metadata.
     pub graph: DiGraph<String, ChoiceEdge>,
-    /// Maps node ID → petgraph NodeIndex for O(1) lookup.
+    /// Maps node ID string → petgraph `NodeIndex` for O(1) lookup.
     pub node_indices: HashMap<String, NodeIndex>,
-    /// Maps node ID → full Node struct for attribute access.
+    /// Maps node ID string → full `Node` struct for attribute access
+    /// (e.g. `is_ending`, `set_state`, `prose`).
     pub node_map: HashMap<String, Node>,
 }
 
-/// Parse the normalized_graph.json file into a typed struct.
+/// Parse a `normalized_graph.json` file from disk into a typed [`NormalizedGraph`].
+///
+/// Performs basic validation: ensures the `start_node` ID exists among
+/// the listed nodes. Returns an error if the file cannot be read, the
+/// JSON is malformed, or the start node is missing.
+///
+/// # Arguments
+/// * `path` — Filesystem path to the JSON file.
+///
+/// # Errors
+/// Returns `Err` if the file can't be read, JSON parsing fails, or
+/// `start_node` doesn't match any node ID.
 pub fn parse_graph(path: &str) -> Result<NormalizedGraph, Box<dyn Error>> {
     let content = fs::read_to_string(path)?;
     let graph: NormalizedGraph = serde_json::from_str(&content)?;
@@ -43,8 +58,18 @@ pub fn parse_graph(path: &str) -> Result<NormalizedGraph, Box<dyn Error>> {
     Ok(graph)
 }
 
-/// Build a petgraph DiGraph from the parsed normalized graph.
-/// Returns GraphData with the graph, node indices, and node map.
+/// Build a `petgraph` `DiGraph` from the parsed normalized graph.
+///
+/// This is the core data structure used by all validation algorithms.
+/// Phase 1 adds all nodes, Phase 2 wires up all edges from choices.
+/// Prints warnings to stderr for any choice targeting a non-existent node.
+///
+/// # Arguments
+/// * `normalized` — Reference to the parsed graph.
+///
+/// # Returns
+/// A [`GraphData`] containing the directed graph, node index lookup,
+/// and node attribute lookup.
 pub fn build_petgraph(normalized: &NormalizedGraph) -> GraphData {
     let mut graph = DiGraph::new();
     let mut node_indices = HashMap::new();

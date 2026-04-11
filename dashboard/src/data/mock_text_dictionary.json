@@ -1,510 +1,712 @@
 {
-  "title": "Death Note: The Complete Saga",
-  "world_rules": [
-    "The Death Note is a supernatural notebook — any human whose name is written in it will die.",
-    "The writer must know the face and name of the person to kill them.",
-    "Shinigami Eyes allow the user to see any person's real name and remaining lifespan, but cost half the user's remaining lifespan.",
-    "If a Death Note owner gives up ownership, they lose all memories of using it.",
-    "A shinigami who uses the Death Note to extend a human's life will die."
-  ],
   "nodes": {
-    "node_47": {
-      "prose": "In an alternate timeline, Light and L set aside their differences. L agrees: the justice system is broken. Together, they use the Death Note surgically — only targeting verified serial killers and war criminals. The world changes, slowly, carefully. Two geniuses working together instead of against each other.",
+    "alt_no_quidditch": {
       "character_states": [
-        "Light and L are partners"
+        "Harry never joined Quidditch",
+        "Voldemort returns unchallenged"
       ],
       "established_facts": [
-        "Light and L work together"
-      ]
+        "Inaction has consequences"
+      ],
+      "prose": "You stay planted on the ground. Draco throws the Remembrall and it shatters on the courtyard stones. Draco is given detention. But McGonagall never sees you fly. You never make the Quidditch team. Without the late-night practices, you never overhear Snape threatening Quirrell, never piece together the mystery of the third-floor corridor. By June, Quirrell retrieves the Stone. Voldemort returns."
     },
-    "node_45": {
-      "prose": "In the Shinigami Realm, far above the human world, other death gods discuss what happened. A shinigami named Sidoh complains that his notebook was stolen years ago — the very notebook Mello used. The cycle of death continues, even without Kira.",
-      "character_states": [],
-      "established_facts": []
-    },
-    "node_43": {
-      "prose": "Light staggers out of the warehouse, bleeding. He collapses on a metal staircase in an abandoned building. Ryuk hovers above him. 'Well, Light, it's been fun. But this is where it ends.' Light looks up in horror. 'Ryuk... you wouldn't...'",
+    "alt_sorted_slytherin": {
       "character_states": [
-        "Light is dying",
-        "Ryuk is hovering above"
+        "Harry is in Slytherin",
+        "Ron feels betrayed"
       ],
       "established_facts": [
-        "Light escaped the warehouse",
-        "Light is fatally wounded"
-      ]
+        "Harry chose power over friendship"
+      ],
+      "prose": "'Hmm, you could be great, you know. Slytherin would help you on the way to greatness...' Harry says nothing. 'SLYTHERIN!' The hall goes silent. Then Draco Malfoy starts clapping slowly. Harry walks to the Slytherin table. Ron stares at him like he's a stranger. Snape watches with a thin, cold smile. Over the years, the darkness slowly, inevitably, consumes him."
     },
-    "node_5": {
-      "prose": "Light burns the Death Note in his backyard. The pages curl and blacken. A shadowy figure — the shinigami Ryuk — watches from above, amused. 'Humans are so interesting,' he mutters, and returns to the Shinigami Realm to drop another notebook somewhere else.",
+    "astronomy_tower_norbert": {
       "character_states": [
-        "Light destroyed the notebook"
+        "Harry, Hermione, and Neville have detention",
+        "Gryffindor lost 150 points",
+        "Neville feels guilty"
       ],
       "established_facts": [
-        "Death Note is destroyed",
-        "Ryuk returns to Shinigami Realm"
-      ]
+        "The Invisibility Cloak was left behind",
+        "Harry, Hermione, and Neville were caught",
+        "Draco was also caught and got detention"
+      ],
+      "prose": "Harry and Hermione smuggle Norbert under the Invisibility Cloak to the top of the Astronomy Tower. Charlie's friends whisk the dragon away into the starlit sky. But they left the cloak upstairs. Filch catches them on the way down. McGonagall is waiting — along with Neville, who tried to warn them. Detention. 150 points from Gryffindor. Harry goes from hero to pariah overnight. Even the other Gryffindors despise him."
     },
-    "node_14": {
-      "prose": "L dispatches 12 FBI agents to Japan to shadow potential Kira suspects. One of them — Raye Penber — is assigned to follow Light Yagami. Light notices the tail within days.",
+    "christmas_hogwarts": {
       "character_states": [
-        "Light is being followed by FBI",
-        "Raye Penber is tailing Light"
+        "Harry has an Invisibility Cloak",
+        "Harry received his first Christmas presents"
       ],
       "established_facts": [
-        "12 FBI agents are in Japan",
-        "Raye Penber assigned to Light"
-      ]
+        "The cloak belonged to James Potter",
+        "Dumbledore sent the cloak anonymously",
+        "The Invisibility Cloak is one of the three Deathly Hallows"
+      ],
+      "prose": "Harry stays at Hogwarts for Christmas — his first real Christmas ever. He wakes to presents at the foot of his bed. Mrs. Weasley knitted him a jumper. Hagrid carved him a flute. But one gift has no card: a shimmering, silvery cloak that flows like water. A note reads: 'Your father left this in my possession before he died. Use it well.' It's an Invisibility Cloak. Harry drapes it over himself and vanishes entirely."
     },
-    "node_23": {
-      "prose": "Misa Amane — a famous model and Second Kira — appears. She gained a Death Note from the shinigami Rem and made the Shinigami Eyes deal. She can see L's real name. Obsessed with Kira for killing the man who murdered her family, she tracks Light down and offers herself as his weapon.",
+    "dead_end_peeves_trap": {
       "character_states": [
-        "Misa has Shinigami Eyes",
-        "Misa is devoted to Light",
-        "Rem protects Misa"
+        "Harry is trapped by Peeves",
+        "Harry missed the critical moment"
       ],
       "established_facts": [
-        "Misa is the Second Kira",
-        "Misa has Shinigami Eyes",
-        "shinigami Rem will kill anyone who threatens Misa"
-      ]
+        "Peeves sealed the corridor",
+        "Hours were wasted"
+      ],
+      "prose": "You take a shortcut through the fourth-floor corridor. Peeves swoops down cackling, pelting you with water balloons and chalk. He seals the corridor doors with a jinx he stole from a seventh-year. You pound on the door, but nobody comes. You're stuck here until morning, shivering and soaked. By then, whatever was happening on the third floor is long over."
     },
-    "node_29": {
-      "prose": "Higuchi, a Yotsuba Group executive, uses the Death Note to kill business rivals. Light — now memory-wiped and genuinely innocent — works with L to catch this new Kira. They're allies for the first time, truly. L even admits: 'You're my first friend, Light.'",
+    "dead_end_snape_office": {
       "character_states": [
-        "Light and L are genuine friends",
-        "Higuchi is the new Kira"
+        "Harry is caught by Snape",
+        "Invisibility Cloak confiscated"
       ],
       "established_facts": [
-        "Yotsuba Kira is Higuchi",
-        "Light is helping L sincerely"
-      ]
+        "Harry broke into Snape's office",
+        "Harry is expelled from Hogwarts"
+      ],
+      "prose": "You sneak into Snape's office to find evidence that he's after the Stone. His shelves are lined with pickled things in jars. You find a piece of parchment referencing 'the Dark Lord's return.' Suddenly, the door clicks shut. Snape stands in the doorway, his black eyes glittering. 'Well, well, well. Breaking into a teacher's private office. Your father would be so proud.' He confiscates your Invisibility Cloak. You are expelled the next morning."
     },
-    "node_39": {
-      "prose": "Light screams: 'Mikami! Write their names! NOW!' Mikami pulls out the notebook and writes frantically. 40 seconds pass. Nobody dies. Near smiles coldly. 'We replaced the notebook pages. This is a fake.' Mikami breaks down: 'God... why isn't it working?!'",
+    "dead_end_stone_stolen": {
       "character_states": [
-        "Light's plan has failed",
-        "notebook was swapped"
+        "Voldemort has returned",
+        "Harry failed"
       ],
       "established_facts": [
-        "Near replaced the notebook pages",
-        "Light exposed himself as Kira"
-      ]
+        "Hesitation cost everything"
+      ],
+      "prose": "You wait for Dumbledore. By the time he returns the next morning, Quirrell has already retrieved the Stone from the Mirror of Erised. Voldemort's parasitic form has consumed the Elixir. The Dark Lord rises again from Quirrell's body. Hogwarts falls before the school year ends."
     },
-    "node_1": {
-      "prose": "Light Yagami, top student in Japan, sits bored in class. Through the window, he watches a black notebook fall from the sky and land in the school courtyard. Written on the cover: 'Death Note.'",
+    "dead_end_surrender": {
       "character_states": [
-        "Light is a normal high school student",
-        "Light is bored and disillusioned with the world"
+        "Voldemort has the Stone",
+        "Harry surrendered"
       ],
       "established_facts": [
-        "Death Note fell from the sky",
-        "Light is at school"
-      ]
+        "Fear conquered courage"
+      ],
+      "prose": "Trembling, you hold out the Stone. Quirrell snatches it. Voldemort laughs — a terrible, high sound. The Elixir of Life is brewed within hours. Voldemort rises again, more terrible than before. Dumbledore arrives too late. The Dark Lord returns in Harry's first year. Everything that follows is darkness."
     },
-    "node_13": {
-      "prose": "Light holds back. He suspects a trap. When Tailor finishes speaking and nothing happens, L's voice comes through: 'Interesting. Perhaps Kira is smarter than I thought.' Without confirming the killing method, L has fewer leads. The investigation stalls.",
+    "devils_snare": {
       "character_states": [
-        "Light outsmarted L's trap"
+        "Hermione saved them with a sunlight spell"
       ],
       "established_facts": [
-        "L has less information about Kira"
-      ]
+        "Devil's Snare is Professor Sprout's protection",
+        "It hates sunlight and warmth",
+        "Each teacher contributed one protection for the Stone"
+      ],
+      "prose": "The plant wraps around them, tightening with every struggle. 'Stop moving!' Hermione yells. 'It's Devil's Snare — it'll only kill you faster if you struggle!' Ron panics. 'Oh, lucky we're not panicking!' Hermione remembers: Devil's Snare hates light. 'Lumos Solem!' A jet of sunlight bursts from her wand. The plant recoils and they drop to the stone floor below."
     },
-    "node_10": {
-      "prose": "Light refuses the deal. 'I'll find people's names my own way,' he tells Ryuk. The shinigami shrugs. 'Suit yourself. This is getting interesting either way.' Meanwhile, across the world, someone notices the pattern of deaths. The world's greatest detective has taken the case.",
+    "diagon_alley": {
       "character_states": [
-        "Light refused the Eyes"
+        "Harry is wealthy",
+        "Hagrid is carrying something secret"
       ],
       "established_facts": [
-        "a detective is investigating Kira"
-      ]
+        "Harry's parents left him gold",
+        "Vault 713 contained a small package",
+        "Gringotts is the safest place in the world — besides Hogwarts"
+      ],
+      "prose": "Diagon Alley takes Harry's breath away. Cauldron shops, owl emporiums, stacks of spell books, potion ingredients, broomsticks in windows. They visit Gringotts — the wizard bank run by goblins — where Harry discovers his parents left him a fortune in Vault 687. Then Hagrid retrieves a grubby little package from the high-security Vault 713. 'Hogwarts business,' he says gravely. 'Very secret.'"
     },
-    "node_32": {
-      "prose": "Light manipulates events so that L's investigation threatens Misa's life. Rem, bound by her love for Misa, has no choice — she writes L's name and Watari's name in her Death Note. L collapses. His last sight is Light standing over him, smiling. 'I win, L.' Rem crumbles to dust — a shinigami who killed to save a human dies.",
+    "dumbledore_explains": {
       "character_states": [
-        "L is dead",
-        "Rem is dead",
-        "Light has won"
+        "Harry understands love is the deepest magic",
+        "Dumbledore is hiding something about Snape"
       ],
       "established_facts": [
-        "L died on November 5",
-        "Rem sacrificed herself",
-        "Light takes over as the new L"
-      ]
+        "Lily's love protects Harry physically",
+        "Snape hated James Potter",
+        "Snape owes a life-debt to James",
+        "There is far more to Snape's story than Harry knows"
+      ],
+      "prose": "'Your mother died to save you. If there is one thing Voldemort cannot understand, it is love. He didn't realize that a love as powerful as your mother's for you leaves its own mark. Not a scar, no visible sign... to have been loved so deeply, even though the person who loved us is gone, will give us some protection forever.' Harry's eyes sting. 'And sir, one more thing — why does Professor Snape hate me so much?' Dumbledore pauses. 'He and your father... rather detested each other. Not unlike yourself and Mr. Malfoy. And then your father did something Snape could never forgive.' 'What?' 'He saved his life.'"
     },
-    "node_7": {
-      "prose": "Light hides the Death Note in a locked drawer and tries to forget. But at night, he can still see Otoharada's face collapsing on the TV screen. The guilt eats at him. Five days later, a grotesque shinigami named Ryuk appears in his bedroom, grinning.",
+    "dumbledore_mirror": {
       "character_states": [
-        "Light is guilt-ridden",
-        "Ryuk is present"
+        "Dumbledore has gently warned Harry",
+        "Harry must learn to let go"
       ],
       "established_facts": [
-        "Ryuk followed the notebook to Light"
-      ]
+        "The mirror will be moved",
+        "The happiest man on earth would see only himself in the mirror",
+        "Dumbledore recognizes Harry's loneliness"
+      ],
+      "prose": "'So — back again, Harry?' Dumbledore sits in a desk behind him. 'The Mirror of Erised shows us nothing more or less than the deepest, most desperate desire of our hearts. You, who have never known your family, see them standing around you. But this mirror gives us neither knowledge nor truth. Men have wasted away before it, not knowing if what they see is real. It does not do to dwell on dreams and forget to live. The mirror will be moved to a new home tomorrow. I ask you not to go looking for it again.'"
     },
-    "node_17": {
-      "prose": "Naomi Misora, Raye Penber's fiancée and a brilliant former FBI agent, begins investigating on her own. She deduces that Kira was on the bus with Penber. She walks into the NPA headquarters to share her findings — and runs directly into Light Yagami in the lobby.",
+    "easter_egg_snape_leg": {
       "character_states": [
-        "Naomi Misora is investigating",
-        "Light encounters Naomi"
+        "Harry suspects Snape is trying to steal the protected object"
       ],
       "established_facts": [
-        "Naomi deduced Kira was on the bus"
-      ]
+        "Snape was bitten by Fluffy",
+        "Snape went to the third floor during the troll diversion"
+      ],
+      "prose": "You follow Snape. He's heading toward the third-floor corridor, not the dungeons. He slips through the forbidden door. Minutes later he emerges, limping badly, his robes torn. Blood seeps from a deep bite wound on his leg. He mutters about the 'blasted beast' and limps away. Now you know — Snape tried to get past Fluffy. He must be after whatever the three-headed dog is guarding."
     },
-    "node_27": {
-      "prose": "Light voluntarily surrenders to L and is locked in a cell. Before confinement, he secretly gives up ownership of the Death Note — erasing all his memories of being Kira. In his cell, Light genuinely believes he is innocent. He IS innocent. The old Light is gone.",
+    "exams_end": {
       "character_states": [
-        "Light has no memory of being Kira",
-        "Light is genuinely innocent"
+        "Dumbledore has been lured away",
+        "Harry knows someone is going for the Stone tonight"
       ],
       "established_facts": [
-        "Death Note ownership relinquished",
-        "Light's memories are erased"
-      ]
+        "Music puts Fluffy to sleep",
+        "Dumbledore was called to London",
+        "The owl was a fake — it was a trick to remove Dumbledore"
+      ],
+      "prose": "Exams pass. Harry's scar keeps burning. He suddenly realizes: the stranger who gave Hagrid the dragon egg — Hagrid told him how to get past Fluffy! 'He just has ter play a bit o' music and Fluffy falls straight asleep,' Hagrid admits. They rush to tell Dumbledore, but McGonagall says he's been called away to the Ministry by urgent owl. Harry goes cold. 'It's tonight. Snape's going through the trapdoor tonight.'"
     },
-    "node_28": {
-      "prose": "Light writes 'L Lawliet' in the Death Note. 40 seconds pass. Somewhere in the investigation headquarters, L clutches his chest. His eyes widen. He falls from his chair. The world's greatest detective is dead. But without L, someone worse will come.",
+    "first_classes": {
       "character_states": [
-        "L is dead",
-        "Light killed L directly"
+        "Harry is adjusting to Hogwarts",
+        "Neville is hopelessly lost"
       ],
       "established_facts": [
-        "L Lawliet is dead",
-        "investigation collapses"
-      ]
+        "The castle has moving staircases",
+        "Peeves is a poltergeist",
+        "Each professor teaches a specific subject"
+      ],
+      "prose": "The castle is bewildering — 142 staircases that move, doors that aren't really doors, and a poltergeist named Peeves. Harry learns Transfiguration from McGonagall (who turns her desk into a pig), Charms from tiny Professor Flitwick (who topples off his book stack when he reads Harry's name), and Herbology from Professor Sprout. But the class Harry dreads most is Potions, in the dungeons, with Severus Snape."
     },
-    "node_35": {
-      "prose": "Light tells L everything. About the Death Note. About Ryuk. About his vision for a crime-free world. L listens in silence. Then: 'You're the most brilliant, most dangerous person I've ever met. And you're my only friend. I'll give you 24 hours to stop — or I'll arrest you.'",
+    "first_sight_hogwarts": {
       "character_states": [
-        "L gave Light an ultimatum"
+        "All first years are awestruck"
       ],
       "established_facts": [
-        "L knows everything",
-        "24 hour deadline"
-      ]
+        "Hogwarts is a massive medieval castle",
+        "First years cross the Black Lake by boat"
+      ],
+      "prose": "'Yeh'll get yer firs' sight o' Hogwarts in a sec,' Hagrid calls over his shoulder. They round a bend and — there it is. A vast castle perched atop a high mountain, its windows sparkling in the starry sky, turrets and towers reflected in the glassy black lake. The first-years gasp. Even Hermione is speechless. They cross the lake in enchanted boats, passing beneath a curtain of ivy into the cliff face."
     },
-    "node_8": {
-      "prose": "Ryuk, the shinigami, finally reveals himself to Light. His skeletal grin fills the room. 'I dropped that notebook because I was bored,' he says. 'I'm not on your side or anyone's. I'm just here to watch.' He offers Light a deal: Shinigami Eyes — the ability to see anyone's real name just by looking at them.",
+    "flamel_discovery": {
       "character_states": [
-        "Ryuk has appeared",
-        "Light knows about Shinigami Eyes"
+        "The trio knows the Stone's identity",
+        "They believe Snape wants it for Voldemort"
       ],
       "established_facts": [
-        "Shinigami Eyes cost half remaining lifespan",
-        "Ryuk is neutral"
-      ]
+        "The Philosopher's Stone creates the Elixir of Life",
+        "Nicolas Flamel is over 665 years old",
+        "The Stone is hidden at Hogwarts under multiple protections"
+      ],
+      "prose": "Hermione slams a book on the table. 'I checked this out weeks ago for a bit of light reading.' The book is enormous. She reads: 'Nicolas Flamel is the only known maker of the Philosopher's Stone. The Stone produces the Elixir of Life, which will make the drinker immortal. Mr. Flamel, who celebrated his 665th birthday last year, lives quietly in Devon with his wife Perenelle, 658.' The trio stares at each other. That's what Fluffy is guarding. That's what Snape wants."
     },
-    "node_36": {
-      "prose": "Light hands the Death Note to L. His memories fade like a dying dream. He forgets Kira, forgets the killings, forgets everything. And so Light Yagami lives as an ordinary man — brilliant, bored, ordinary. L locks the Death Note away forever. The killings stop. The world moves on.",
+    "flying_keys": {
       "character_states": [
-        "Light is normal again",
-        "L has the Death Note"
+        "Harry used his Seeker skills to catch the right key"
       ],
       "established_facts": [
-        "Kira is gone",
-        "world returns to normal"
-      ]
+        "This was Professor Flitwick's protection",
+        "The key had a crumpled wing — it had been used before"
+      ],
+      "prose": "They enter a chamber full of hundreds of jewel-bright birds — except they're not birds. They're enchanted, winged keys, fluttering around the vaulted ceiling. A heavy locked door blocks the way. A broomstick hovers in the center. Harry mounts it and shoots into the swarm. He spots it — an old, silver key with a bent wing, as though it's already been caught and stuffed roughly back. He dives, snatches it, and throws it to Hermione. She jams it in the lock."
     },
-    "node_46": {
-      "prose": "Another Death Note falls from the sky. It lands in a schoolyard in New York City. A young girl picks it up. She reads the cover. She smiles. The cycle begins again.",
-      "character_states": [],
-      "established_facts": [
-        "a new Kira may be born"
-      ]
-    },
-    "node_24": {
-      "prose": "Light stops all killings. For weeks, no criminals die. But then — criminals start dying again while Light is under 24/7 surveillance. Someone else has a Death Note. L is confused. Light proposes a radical plan: imprison me. If killings continue while I'm locked up, I'm innocent.",
+    "flying_lesson": {
       "character_states": [
-        "Light is willing to be confined",
-        "another Kira exists"
+        "Neville is injured",
+        "Draco is taunting Harry",
+        "Madam Hooch is absent"
       ],
       "established_facts": [
-        "killings continued without Light",
-        "evidence points to a corporate group"
-      ]
+        "Neville's Remembrall was a gift from his grandmother",
+        "Students were told not to fly"
+      ],
+      "prose": "Madam Hooch blows her whistle. 'Mount your brooms! On my whistle — three, two—' Neville kicks off too early, rising uncontrollably. He falls twenty feet, breaking his wrist. Madam Hooch rushes him to the hospital wing. Draco picks up Neville's Remembrall. 'Look what Longbottom dropped.' Harry steps forward. 'Give it here, Malfoy.' Draco smirks and rockets into the sky on his broom."
     },
-    "node_9": {
-      "prose": "Light's eyes glow red for a brief moment. Now, above every person he sees, their true name and remaining lifespan float in crimson text. The power is intoxicating — no one can hide their identity from him. But he's already sacrificed half his life.",
+    "forbidden_forest": {
       "character_states": [
-        "Light has Shinigami Eyes",
-        "Light's lifespan is halved"
+        "Harry's scar hurt violently",
+        "Firenze saved Harry"
       ],
       "established_facts": [
-        "Light can see anyone's real name"
-      ]
+        "Something is drinking unicorn blood to survive",
+        "Unicorn blood sustains life but curses the drinker",
+        "The hooded figure is Voldemort",
+        "Voldemort wants the Stone to restore his body"
+      ],
+      "prose": "For detention, Hagrid takes them into the Forbidden Forest at night. Something has been killing unicorns and drinking their blood. They split up. Harry and Draco find a dead unicorn in a clearing — and a hooded figure crawling toward it, drinking the silver blood. The figure raises its head. Harry's scar explodes with pain. A centaur named Firenze bursts from the trees, scattering the creature. 'Harry Potter, do you know what unicorn blood is used for?' 'No.' 'It will keep you alive, even if you are an inch from death. But at a terrible price. You have slain something pure and defenseless to save yourself.'"
     },
-    "node_12": {
-      "prose": "Tailor clutches his chest and dies on live television. Then the REAL L's voice speaks through a distorted filter: 'I had Tailor say that — he was a criminal sentenced to die today. You just proved Kira exists, that you're in Kanto, and that you need a face and a name to kill. Thank you, Kira.'",
+    "glass_vanishes": {
       "character_states": [
-        "Light fell into L's trap",
-        "L knows Kira is in Kanto"
+        "Dudley trapped in exhibit",
+        "Vernon is furious",
+        "Harry is punished"
       ],
       "established_facts": [
-        "L confirmed Kira's method",
-        "Kira needs a name and face",
-        "Kira is in Kanto region"
-      ]
+        "Harry performed accidental magic",
+        "Harry doesn't understand what happened"
+      ],
+      "prose": "Dudley shoves Harry aside to see the snake. Harry hits the floor — and something strange happens. The glass vanishes. The boa constrictor slides out, pausing by Harry. 'Brazil, here I come. Thanksss, amigo.' Dudley stumbles backward into the enclosure as the glass reappears, trapping him inside. Uncle Vernon's face turns purple with rage. Harry is locked in his cupboard for a week."
     },
-    "node_26": {
-      "prose": "Light pushes Misa away. She's devastated but the shinigami Rem grows hostile. Rem threatens Light: 'If you make Misa unhappy, I will write YOUR name in my Death Note.' Light now has an enemy he literally cannot outmaneuver — a god of death.",
+    "going_home": {
       "character_states": [
-        "Rem is threatening Light"
+        "Harry has a photo album of his parents",
+        "Harry returns to Privet Drive with friends for the first time",
+        "Harry is already looking forward to returning to Hogwarts"
       ],
       "established_facts": [
-        "Rem will kill Light if Misa is unhappy"
-      ]
+        "Harry survived his first year",
+        "Voldemort is still out there",
+        "Harry has found his home at Hogwarts",
+        "The adventure is only beginning"
+      ],
+      "prose": "The Hogwarts Express rolls through the countryside. Exam results came — even Neville passed. Harry gives Ron and Hermione his phone number (Ron has no idea what a telephone is). At King's Cross, Hagrid is waiting. He hands Harry a leather-bound photo album full of pictures of his parents — smiling, waving, holding baby Harry. 'Sent owls around to all yer parents' old school friends, askin' fer photos. Knew yeh didn't have any.' Harry's eyes fill with tears. The Dursleys are waiting, looking horrified. 'They don't know we're not allowed to use magic at home,' Harry grins at Ron. 'I'm going to have a lot of fun with Dudley this summer.'"
     },
-    "node_15": {
-      "prose": "Light orchestrates a bus hijacking to force Raye Penber to show his FBI ID. Then, using that name, Light manipulates Penber into writing the names of all 12 FBI agents on pages from the Death Note. Penber dies on a train, watching Light's smiling face as the doors close.",
+    "hagrid_arrives_baby": {
       "character_states": [
-        "all 12 FBI agents are dead",
-        "Light is ruthless"
+        "Harry is a baby with the scar",
+        "Hagrid is emotional",
+        "Dumbledore is solemn"
       ],
       "established_facts": [
-        "Raye Penber is dead",
-        "all FBI agents died of heart attacks",
-        "Light killed innocent people"
-      ]
+        "Harry survived the Killing Curse",
+        "Voldemort's curse left a scar",
+        "Sirius Black lent his motorcycle",
+        "Harry's parents James and Lily Potter are dead"
+      ],
+      "prose": "A low rumbling sound breaks the silence. A huge motorcycle falls out of the sky and lands on the road. Rubeus Hagrid, an enormous man with a wild black beard, climbs off Sirius Black's flying motorcycle. In his massive arms, wrapped in blankets, is a sleeping baby with a fresh, lightning-bolt shaped cut on his forehead. 'Little tyke fell asleep as we was flyin' over Bristol,' Hagrid sniffles."
     },
-    "node_11": {
-      "prose": "A worldwide broadcast interrupts every channel. A man calling himself 'L' directly challenges Kira: 'Kira, I know you're in Japan. And I will find you.' But it's a trap — the man on screen is Lind L. Tailor, a condemned criminal used as L's decoy.",
+    "hagrid_flamel": {
       "character_states": [
-        "L has publicly challenged Kira",
-        "Light is enraged"
+        "Hagrid accidentally revealed Nicolas Flamel's name",
+        "The trio now has a lead"
       ],
       "established_facts": [
-        "L is investigating Kira",
-        "broadcast targets Kanto region of Japan"
-      ]
+        "Nicolas Flamel is connected to whatever Fluffy is guarding",
+        "The package from Vault 713 is under Fluffy's trapdoor",
+        "Hagrid is terrible at keeping secrets"
+      ],
+      "prose": "Harry, Ron, and Hermione confront Hagrid. 'Snape tried to kill me!' Hagrid scoffs. 'Snape? He's a Hogwarts teacher!' They press him. 'Who else knows how to get past Fluffy?' 'Well, I lent Fluffy to Dumbledore to guard the— I shouldn' have said that. Don' ask me anymore.' When they mention the package from Vault 713, Hagrid goes pale. 'That's between Dumbledore and Nicolas Flamel.' He claps his hand over his mouth. 'I should NOT have said that.'"
     },
-    "node_22": {
-      "prose": "Light avoids the task force. Without inside information, he can't predict L's moves. L, meanwhile, deploys surveillance everywhere. Light becomes increasingly paranoid, working alone against the world's greatest detective without any advantage.",
+    "halloween_feast": {
       "character_states": [
-        "Light is isolated",
-        "L has the advantage"
+        "Hermione is alone in the bathroom",
+        "Quirrell reported the troll",
+        "The school is in panic"
       ],
       "established_facts": [
-        "Light has no inside information on L"
-      ]
+        "Hermione is upset and isolated",
+        "A mountain troll has entered Hogwarts",
+        "Quirrell let the troll in as a diversion"
+      ],
+      "prose": "On Halloween, Professor Flitwick teaches the levitation charm. 'Wingardium Leviosa!' Ron flicks his wand wildly. 'You're saying it wrong,' Hermione corrects him. 'It's Levi-O-sa, not Levio-SA.' Ron mocks her afterward: 'It's Levi-O-sa, not Levio-SA. She's a nightmare, honestly.' Hermione hears him. She spends the rest of the afternoon crying in the girls' bathroom. At the Halloween feast, Quirrell bursts through the doors, turban askew. 'TROLL! IN THE DUNGEON! Thought you ought to know.' He faints."
     },
-    "node_21": {
-      "prose": "Light joins the task force alongside his own father, Soichiro Yagami. He now has access to everything L knows. But L has cameras in Light's bedroom. Every move is watched. The cat-and-mouse game intensifies to unbearable levels.",
+    "hedwig": {
       "character_states": [
-        "Light is on the task force",
-        "L has cameras in Light's room"
+        "Harry has his first-ever birthday present",
+        "Harry owns Hedwig"
       ],
       "established_facts": [
-        "Light's room is under surveillance",
-        "Light must hide the Death Note"
-      ]
+        "Hedwig is a snowy owl",
+        "Owls deliver wizard mail"
+      ],
+      "prose": "While Harry stares at the wand shop window, Hagrid disappears into Eeylops Owl Emporium. He returns with a beautiful snowy owl in a cage. 'Happy birthday, Harry.' It's the first real birthday present Harry has ever received. He names her Hedwig, after a name he found in A History of Magic."
     },
-    "node_4": {
-      "prose": "A hostage situation plays live on TV. Light writes the criminal's name: Kurou Otoharada. He waits. 40 seconds later, the man collapses — dead of a heart attack. Light's hands tremble. The notebook is real.",
+    "hogwarts_express": {
       "character_states": [
-        "Light killed for the first time",
-        "Light is in shock"
+        "Ron is Harry's first real friend",
+        "Hermione is bossy but brilliant",
+        "Neville has lost his toad Trevor"
       ],
       "established_facts": [
-        "Death Note works",
-        "Kurou Otoharada is dead",
-        "cause of death = heart attack"
-      ]
+        "Scabbers is Ron's rat",
+        "Nicolas Flamel is mentioned on Dumbledore's Chocolate Frog card",
+        "Hermione has already memorized her textbooks",
+        "Ron's family is poor but loving"
+      ],
+      "prose": "The scarlet steam engine pulls away. Harry finds a compartment and is joined by Ron Weasley. Ron has a smudge on his nose and a hand-me-down rat named Scabbers. Harry buys the entire trolley of sweets — Chocolate Frogs, Bertie Bott's Every Flavour Beans, Pumpkin Pasties. Ron's eyes go wide. Harry gets his first Chocolate Frog card: Albus Dumbledore. 'So THAT'S Dumbledore!' The card mentions Nicolas Flamel. A bushy-haired girl appears at the door: 'Has anyone seen a toad? A boy named Neville's lost one. I'm Hermione Granger, by the way.'"
     },
-    "node_19": {
-      "prose": "Light avoids Naomi, but she successfully delivers her findings to L. L now knows Kira was on the Spaceland bus with Raye Penber. The list of suspects narrows dramatically — and Light Yagami is at the top.",
+    "hospital_wing": {
       "character_states": [
-        "L has strong evidence",
-        "Light is primary suspect"
+        "Harry survived",
+        "Dumbledore is being cryptic and wise"
       ],
       "established_facts": [
-        "Naomi's evidence reached L",
-        "Light is top suspect"
-      ]
+        "The Stone was destroyed",
+        "Nicolas Flamel will die",
+        "Dumbledore arrived just in time"
+      ],
+      "prose": "Harry wakes in blinding white light. He's in the Hospital Wing. Dumbledore sits beside his bed, smiling gently. Every surface is covered in sweets from admirers. 'What happened to the Stone?' Harry asks. 'It has been destroyed. Nicolas Flamel and I had a little chat. He agreed it was for the best.' Harry is stunned. 'But that means he'll die?' 'To the well-organized mind, death is but the next great adventure,' Dumbledore says softly."
     },
-    "node_30": {
-      "prose": "With L dead, Light reigns as Kira for five years. Crime drops 70%. Wars end. The world worships and fears him equally. But two orphans from Wammy's House — Near and Mello — have inherited L's legacy. They're coming for Kira.",
+    "house_cup": {
       "character_states": [
-        "Light has ruled for 5 years",
-        "Near and Mello are investigating"
+        "Gryffindor wins the House Cup",
+        "Neville is in tears of joy",
+        "Draco's jaw drops"
       ],
       "established_facts": [
-        "crime dropped 70%",
-        "Near leads SPK",
-        "Mello works with the mafia"
-      ]
+        "Dumbledore awarded 170 last-minute points",
+        "Neville earned the final, deciding points",
+        "The decorations change from green to scarlet and gold"
+      ],
+      "prose": "The Great Hall is decorated in Slytherin green and silver — they've won the House Cup. Then Dumbledore stands. 'I have a few last-minute points to dish out.' To Ron Weasley: 50 points for the best-played game of chess Hogwarts has seen. To Hermione Granger: 50 points for the use of cool logic in the face of fire. To Harry Potter: 60 points for pure nerve and outstanding courage. Gryffindor ties Slytherin. Then: 'It takes a great deal of bravery to stand up to our enemies, but just as much to stand up to our friends. I therefore award 10 points to Mr. Neville Longbottom.'"
     },
-    "node_37": {
-      "prose": "Near arranges a final confrontation at the Yellow Box warehouse. He claims to have proof that Light is Kira. Light is confident — Mikami has the notebook and will write everyone's name at his signal. Everything has been planned to the second.",
+    "hut_on_rock": {
       "character_states": [
-        "Near and Light face off",
-        "Mikami has the notebook"
+        "Harry just turned 11",
+        "Hagrid has arrived"
       ],
       "established_facts": [
-        "meeting at Yellow Box warehouse",
-        "Near claims to have proof"
-      ]
+        "location = shack on rock in the sea",
+        "time = midnight, July 31st"
+      ],
+      "prose": "The shack is miserable. Rain hammers the walls. Dudley is asleep. Harry lies on the floor, drawing a birthday cake in the dust. He watches Dudley's watch tick to midnight. July 31st. 'Make a wish, Harry,' he whispers to himself, and blows. BOOM. The entire door is smashed flat. A giant of a man fills the doorframe, his face nearly hidden by a wild tangle of hair and beard."
     },
-    "node_31": {
-      "prose": "The task force corners Higuchi in a car chase. He's captured. But when Light touches the Death Note recovered from Higuchi — his memories return in a flood. Every death. Every manipulation. Every lie. Light Yagami remembers he is Kira. The mask goes back on. No one notices.",
+    "leaky_cauldron": {
       "character_states": [
-        "Light's memories are restored",
-        "Light is Kira again",
-        "no one suspects"
+        "Harry is overwhelmed by fame",
+        "Quirrell seems nervous and harmless"
       ],
       "established_facts": [
-        "touching the Death Note restored Light's memories"
-      ]
+        "Harry is a celebrity in the wizarding world",
+        "Quirrell is the Defense Against the Dark Arts professor",
+        "Quirrell wears a turban",
+        "The Leaky Cauldron is the gateway to Diagon Alley"
+      ],
+      "prose": "Hagrid leads Harry to a tiny, grubby pub called the Leaky Cauldron, invisible to Muggles. Inside, the pub goes silent. Then everyone swarms Harry — shaking his hand, bowing, crying. A pale young man in a turban stutters forward: Professor Quirrell. 'P-p-pleased to m-meet you, P-Potter.' He can't seem to meet Harry's eyes. Hagrid leads Harry through to the back alley and taps a specific brick with his umbrella. The wall rearranges itself into an archway."
     },
-    "node_42": {
-      "prose": "Light breaks. All the composure, all the masks, all the calculations — gone. He screams at everyone in the warehouse: 'I AM KIRA! And? What's wrong with that? I've been cleansing this world! I'm the god of the new world!' The task force stares at the boy they once trusted. His father's legacy in ruins.",
+    "letters_arrive": {
       "character_states": [
-        "Light has fully confessed",
-        "everyone is horrified"
+        "Vernon is desperate",
+        "Petunia is frightened",
+        "Harry is desperate to read a letter"
       ],
       "established_facts": [
-        "Light admitted to being Kira publicly"
-      ]
+        "Hogwarts is trying to contact Harry",
+        "Address was impossibly specific",
+        "Letters are enchanted to find Harry"
+      ],
+      "prose": "A letter arrives for Harry — addressed in emerald-green ink to 'Mr. H. Potter, The Cupboard Under The Stairs.' Vernon snatches it away. More letters come. Then dozens. Then hundreds, pouring through the mail slot, shot from the chimney, tucked inside eggs. Vernon boards up the house, but on Sunday — 'No post on Sundays!' — letters pour through the fireplace like a blizzard. Vernon snaps."
     },
-    "node_44": {
-      "prose": "Ryuk grins his skeletal grin one final time. 'I told you from the very beginning, Light — I would be the one to write your name.' He opens his shinigami notebook. In elegant script, he writes: Light Yagami. 40 seconds. Light's eyes go wide. His heart stops. The genius who tried to become a god dies alone on a cold staircase. Kira is dead.",
+    "madam_malkins": {
       "character_states": [
-        "Light Yagami is dead"
+        "Harry met Draco Malfoy without knowing his name"
       ],
       "established_facts": [
-        "Ryuk wrote Light's name",
-        "Kira is dead",
-        "the Death Note saga ends"
-      ]
+        "Draco is prejudiced against Muggle-borns",
+        "Draco's family is wealthy and influential"
+      ],
+      "prose": "At Madam Malkin's Robes for All Occasions, Harry meets a pale, pointed-faced boy already being fitted. 'Hogwarts too?' the boy drawls. He talks about broomsticks, his father's influence, and how he thinks they 'shouldn't let the other sort in.' Before Harry can respond, the boy leaves. He never gives his name. Harry feels immediately uneasy."
     },
-    "node_41": {
-      "prose": "Light pulls a tiny scrap of Death Note from his hidden watch compartment. He pricks his finger and starts writing Near's name in blood. Matsuda sees it. 'LIGHT!' A gunshot rings out. The bullet tears through Light's hand. The paper falls. Matsuda fires again. And again.",
+    "mirror_of_erised": {
       "character_states": [
-        "Light is shot multiple times",
-        "Matsuda shot Light"
+        "Harry is obsessed with the mirror",
+        "Harry sees his deepest desire: his family"
       ],
       "established_facts": [
-        "Light tried to use hidden Death Note scrap",
-        "Matsuda shot him"
-      ]
+        "The Mirror of Erised shows the deepest desire of the viewer's heart",
+        "The inscription reads backwards: 'I show not your face but your heart's desire'",
+        "Dumbledore sees himself holding thick woolen socks"
+      ],
+      "prose": "Sneaking through the library at night, Harry ducks into an unused classroom to avoid Filch. There, he finds an enormous mirror with the inscription: 'Erised stra ehru oyt ube cafru oyt on wohsi.' He looks into it and gasps — his mother and father are standing behind him, smiling and waving. He reaches back — but there's nobody there. He returns night after night, sitting before the mirror for hours, watching his dead parents."
     },
-    "node_3": {
-      "prose": "Light walks past the notebook. Later that evening, another student — a quiet, troubled boy named Teru Mikami — picks it up instead. Within weeks, criminals begin dying of heart attacks across Japan. Light watches the news, unaware of what he almost held in his hands.",
+    "mirror_of_erised_final": {
       "character_states": [
-        "Light never touched the Death Note",
-        "Mikami becomes Kira"
+        "Harry has the Stone in his pocket",
+        "Quirrell doesn't know"
       ],
       "established_facts": [
-        "Light's life continues normally",
-        "someone else became Kira"
-      ]
+        "Only someone who wanted to find the Stone but not use it could get it from the Mirror",
+        "This was Dumbledore's final protection",
+        "The voice is Voldemort"
+      ],
+      "prose": "Quirrell stares into the Mirror of Erised but sees only himself presenting the Stone to his master. He can't figure out how to get it out. Then a voice — high, cold — whispers from beneath Quirrell's turban: 'Use the boy.' Quirrell snaps his fingers and ropes bind Harry. 'Come here, Potter. Tell me what you see.' Harry looks into the mirror. He sees himself — and his reflection winks, pulls the blood-red Stone from its pocket, and drops it into Harry's pocket. Harry feels the weight. He lies: 'I... I see myself shaking hands with Dumbledore. I've won the House Cup.'"
     },
-    "node_25": {
-      "prose": "Misa sees L's face and reads the name floating above his head: L Lawliet. She whispers it to Light. For the first time, Light holds L's fate in his hands. He could write it right now and end everything.",
+    "norbert_dragon": {
       "character_states": [
-        "Light knows L's real name"
+        "Hagrid is keeping an illegal dragon",
+        "Draco saw the dragon"
       ],
       "established_facts": [
-        "L's real name is L Lawliet"
-      ]
+        "Dragon-breeding is illegal",
+        "The stranger who gave Hagrid the egg asked about Fluffy",
+        "Hagrid told the stranger that music puts Fluffy to sleep"
+      ],
+      "prose": "Hagrid has won a dragon egg in a card game at the pub. It hatches in his wooden hut — a Norwegian Ridgeback. 'Isn't he beautiful?' Hagrid coos, as the dragon sets his beard on fire. 'I've decided to call him Norbert.' But Draco sees the dragon through the window. They must get rid of it before Hagrid is arrested. Ron's brother Charlie works with dragons in Romania — they arrange a midnight handoff on the Astronomy Tower."
     },
-    "node_20": {
-      "prose": "L introduces himself to Light directly — at university, under the alias 'Ryuzaki.' He says he's working with the police on the Kira case. Light realizes this is L testing him face to face. Both geniuses smile at each other, each hiding everything.",
+    "ollivanders": {
       "character_states": [
-        "Light and L have met",
-        "both are playing mind games"
+        "Harry's wand is the brother of Voldemort's wand"
       ],
       "established_facts": [
-        "L uses alias Ryuzaki",
-        "L suspects Light",
-        "Light suspects Ryuzaki is L"
-      ]
+        "Harry's wand = holly, phoenix feather, 11 inches",
+        "Voldemort's wand shares the same core",
+        "The phoenix is Fawkes (Dumbledore's phoenix)",
+        "Ollivander remembers every wand he's sold"
+      ],
+      "prose": "Ollivanders is dusty and ancient. The old wandmaker appears silently. 'I wondered when I'd be seeing you, Mr. Potter.' Wand after wand fails — until one. Holly and phoenix feather, eleven inches. Warmth surges through Harry's fingers. Red and gold sparks shoot from the tip. Ollivander goes pale. 'Curious... very curious. The phoenix whose tail feather is in your wand gave another feather — just one other. It is curious that you should be destined for this wand, when its brother gave you that scar.'"
     },
-    "node_33": {
-      "prose": "Light continues working alongside L, biding his time. But L is too perceptive. During a quiet moment on the rooftop in the rain, L says: 'Light... I know you're Kira. I've always known. But I could never prove it.' The rain falls between them.",
+    "platform_nine": {
       "character_states": [
-        "L has confronted Light privately"
+        "Harry meets the Weasley family",
+        "Molly Weasley is kind to Harry"
       ],
       "established_facts": [
-        "L believes Light is Kira but has no proof"
-      ]
+        "Platform 9 3/4 is accessed by running at the barrier between platforms 9 and 10",
+        "The Weasleys are a large, warm wizarding family"
+      ],
+      "prose": "Harry stands between platforms 9 and 10 at King's Cross. His ticket says Platform 9 3/4. That doesn't exist. He's about to panic when he hears a plump red-haired woman say, 'Packed with Muggles, of course...' She shepherds her children toward the barrier. Harry watches a freckled boy run straight at the brick wall — and vanish. 'Excuse me,' Harry asks. 'Could you tell me how to—?' 'How to get onto the platform? Not to worry, dear. Ron's new too. Just walk straight at the barrier.'"
     },
-    "node_34": {
-      "prose": "Light operates as both Kira and the new 'L' for five years. Crime plummets. He builds a new world order with Misa and a devoted follower named Teru Mikami handling the killings. But L left successors: Near, a cold logical genius, and Mello, an emotional wildcard. They know 'L' died years ago.",
+    "potion_riddle": {
       "character_states": [
-        "Light is both Kira and L",
-        "Near is investigating",
-        "Mello is investigating",
-        "Mikami is Light's proxy"
+        "Hermione stays behind to get Ron out",
+        "Harry goes on alone"
       ],
       "established_facts": [
-        "5 years have passed",
-        "Near leads the SPK",
-        "Mello kidnapped Sayu Yagami"
-      ]
+        "This was Snape's protection",
+        "The puzzle requires logic, not magic",
+        "Only one person can go forward"
+      ],
+      "prose": "A table of seven potion bottles and a scroll of logic. Purple fire blocks the way forward; black fire blocks the way back. Hermione reads the riddle. 'This isn't magic — it's logic — a puzzle. A lot of the greatest wizards haven't got an ounce of logic.' She works it out: the smallest bottle will take Harry forward. There's only enough for one. 'You're a great wizard, Harry,' she says, eyes bright. 'Me? Books and cleverness. There are more important things. Friendship and bravery and — oh, Harry, be careful!'"
     },
-    "node_6": {
-      "prose": "Over the next days, Light systematically writes the names of violent criminals. Dozens die of heart attacks. The public notices. The media gives the unknown killer a name: 'Kira.' Some worship him as a god of justice. Others call him a monster.",
+    "potions_class": {
       "character_states": [
-        "Light has become Kira",
-        "Light believes he is justice"
+        "Snape is targeting Harry specifically",
+        "Hermione knows every answer",
+        "Draco is smirking"
       ],
       "established_facts": [
-        "criminals dying worldwide",
-        "public calls the killer 'Kira'",
-        "Kira has worshippers and critics"
-      ]
+        "Asphodel and wormwood make the Draught of Living Death",
+        "A bezoar is a stone from a goat's stomach that cures most poisons",
+        "Monkshood and wolfsbane are the same plant (aconite)",
+        "Snape's hatred of Harry is personal, not professional"
+      ],
+      "prose": "'You are here to learn the subtle science and exact art of potion-making,' Snape whispers. His voice is barely audible, but every student is frozen. 'Potter! What would I get if I added powdered root of asphodel to an infusion of wormwood?' Harry doesn't know. 'Where would you look if I told you to find me a bezoar?' Harry glances at Hermione — her hand is in the air. 'What is the difference between monkshood and wolfsbane?' 'I don't know, sir.' Snape's lip curls. 'Clearly, fame isn't everything.'"
     },
-    "node_16": {
-      "prose": "Light acts like a perfect student. He attends cram school, helps his father with police work, and never touches the Death Note while being watched. Weeks pass. The FBI finds nothing and withdraws from Japan. But L remains suspicious — the one person who was too perfect.",
+    "privet_drive_night": {
       "character_states": [
-        "Light appeared innocent",
-        "L is still suspicious"
+        "Dumbledore has arrived at Privet Drive",
+        "McGonagall has been watching the Dursleys all day"
       ],
       "established_facts": [
-        "FBI withdrew from Japan",
-        "L suspects Light is too clean"
-      ]
+        "location = 4 Privet Drive, Little Whinging, Surrey",
+        "time = night, November 1st 1981",
+        "The Put-Outer can extinguish streetlamps"
+      ],
+      "prose": "A tabby cat sits on a brick wall at Number 4 Privet Drive, reading a map. As night falls, an old man in sweeping purple robes appears at the end of the street. Albus Dumbledore clicks the Put-Outer, and every streetlamp on the road goes dark. He addresses the cat: 'I should have known you'd be here, Professor McGonagall.'"
     },
-    "node_2": {
-      "prose": "Light picks up the notebook and reads the rules inside. 'The human whose name is written in this note shall die.' He scoffs — it has to be a sick joke. But that night, alone in his room, curiosity overwhelms him.",
+    "quidditch_match": {
       "character_states": [
-        "Light possesses the Death Note",
-        "Light is skeptical"
+        "Harry caught the Snitch",
+        "Harry believes Snape jinxed his broom"
       ],
       "established_facts": [
-        "Light read the rules",
-        "Light took the notebook home"
-      ]
+        "Someone was jinxing Harry's broom",
+        "Hermione accidentally broke Quirrell's eye contact too",
+        "The real jinxer was Quirrell — Snape was performing the counter-curse"
+      ],
+      "prose": "Harry's first Quidditch match: Gryffindor vs Slytherin. Harry spots the Golden Snitch but his broom suddenly bucks and jerks wildly, trying to throw him off. In the stands, Hermione spots Snape muttering, his eyes locked on Harry — a jinx! She creeps behind the stands and sets Snape's robes on fire with a bluebell flame. In the confusion, she also knocks over Quirrell. Harry's broom steadies. He dives, catches the Snitch in his mouth, and nearly swallows it. Gryffindor wins 170-60."
     },
-    "node_18": {
-      "prose": "Light pretends to be a fellow investigator. Through careful conversation, he manipulates Naomi into revealing her real name. He writes it in the Death Note hidden in his jacket. She walks away — and never arrives at the police station. Her body is never found. She was programmed to die by suicide in a location where she won't be discovered.",
+    "quirrell_reveal": {
       "character_states": [
-        "Naomi Misora is dead",
-        "Light's manipulation is escalating"
+        "Quirrell was the villain all along",
+        "Snape was protecting Harry"
       ],
       "established_facts": [
-        "Light killed an innocent woman",
-        "Naomi's evidence died with her"
-      ]
+        "Quirrell faked his stutter",
+        "Snape was performing the counter-curse at Quidditch",
+        "Quirrell let the troll in to create a diversion"
+      ],
+      "prose": "Harry steps through the black flames into the final chamber. But it's not Snape standing before the Mirror of Erised. It's Quirrell. His stutter is gone. His eyes are hard. 'You!' Harry gasps. Quirrell smiles coldly. 'Yes, me. I wondered whether I'd be meeting you here, Potter. Snape does seem the type, doesn't he? Next to me, who would suspect p-p-poor, st-stuttering Professor Quirrell?'"
     },
-    "node_40": {
-      "prose": "Near opens the notebook and reads the names inside. Every name matches a criminal Kira killed. Then he reveals the writing analysis: Teru Mikami's handwriting. And embedded in the pages — Light Yagami's fingerprints from when he originally owned it.",
+    "remembrall_catch": {
       "character_states": [
-        "Light is exposed"
+        "Harry is the youngest Seeker in a century",
+        "McGonagall is secretly thrilled"
       ],
       "established_facts": [
-        "fingerprint evidence links Light to Death Note"
-      ]
+        "Harry is a natural on a broomstick",
+        "Harry is now on the Gryffindor Quidditch team",
+        "First-years normally aren't allowed brooms"
+      ],
+      "prose": "Harry mounts his broom and shoots upward. He's never flown before — but it's instinctive, pure freedom. Draco throws the Remembrall. Harry dives — fifty feet straight down — and catches it inches from the ground. The Gryffindors roar. Then a voice: 'HARRY POTTER!' McGonagall is at the window, white-faced. Harry's stomach drops. But instead of expelling him, she marches him to Oliver Wood. 'Wood, I've found you a Seeker.'"
     },
-    "node_38": {
-      "prose": "Light relies entirely on Mikami. But Mikami is too devoted — he acts independently, visiting the bank where the real Death Note is hidden. Mello's mafia contacts notice. They photograph Mikami at the bank. Near now knows where the real notebook is.",
+    "sorted_gryffindor": {
       "character_states": [
-        "Mikami exposed the real notebook's location"
+        "Harry is a Gryffindor",
+        "Snape already hates Harry",
+        "Dumbledore is watching closely"
       ],
       "established_facts": [
-        "Near knows about the real notebook",
-        "Mello's sacrifice led to this"
-      ]
+        "The hat considered Slytherin for Harry",
+        "Snape despises Harry on sight"
+      ],
+      "prose": "'Not Slytherin, eh?' the hat muses inside Harry's head. 'Are you sure? You could be great, you know. It's all here, in your head. And Slytherin will help you on the way to greatness, no doubt about that. No? Well, if you're sure — better be... GRYFFINDOR!' The Gryffindor table explodes. Fred and George Weasley chant, 'We got Potter! We got Potter!' Harry sits next to Ron, grinning. At the staff table, Dumbledore's eyes twinkle — and Snape stares at Harry with a look of pure loathing."
+    },
+    "sorting_ceremony": {
+      "character_states": [
+        "The whole school is watching Harry",
+        "The Sorting Hat is deliberating"
+      ],
+      "established_facts": [
+        "The Sorting Hat reads minds",
+        "The ceiling reflects the sky outside"
+      ],
+      "prose": "The Great Hall is lit by thousands of floating candles. The ceiling is enchanted to look like the night sky. Professor McGonagall places a battered, patched hat on a stool. The Sorting Hat sings its song about the four houses. 'Granger, Hermione!' She nearly runs to the stool. 'GRYFFINDOR!' Then 'Malfoy, Draco!' The hat barely touches his head — 'SLYTHERIN!' Neville is sorted into Gryffindor. Then: 'Potter, Harry!' The entire hall erupts in whispers."
+    },
+    "ten_years_later": {
+      "character_states": [
+        "Harry lives in a cupboard",
+        "Dudley is a bully",
+        "The Dursleys despise Harry"
+      ],
+      "established_facts": [
+        "Harry has been abused and neglected for 10 years",
+        "Harry wears Dudley's oversized hand-me-downs",
+        "Harry has round glasses held together with tape"
+      ],
+      "prose": "Ten years pass. Harry Potter now sleeps in the cupboard under the stairs at Number 4 Privet Drive. His cousin Dudley — fat, spoiled, and cruel — has two bedrooms. Aunt Petunia raps on the cupboard door. 'Up! Get up! Now!' It's Dudley's birthday. Harry must cook breakfast and stay out of trouble."
+    },
+    "third_floor_corridor": {
+      "character_states": [
+        "Harry, Ron, Hermione, and Neville found Fluffy",
+        "Hermione noticed the trapdoor"
+      ],
+      "established_facts": [
+        "A three-headed dog guards a trapdoor on the third floor",
+        "Dumbledore warned students that the corridor was forbidden on pain of death",
+        "The dog belongs to Hagrid — its name is Fluffy"
+      ],
+      "prose": "That night, Draco challenges Harry to a midnight wizard's duel in the trophy room. It's a trick — Filch is waiting. Running from the caretaker, Harry, Ron, Hermione, and Neville accidentally stumble through a locked door on the third-floor corridor. They come face to face with a monstrous three-headed dog standing on a trapdoor. All three heads snarl. They slam the door and run. 'What do they think they're doing, keeping a thing like that locked up in a school?' Ron gasps. Hermione's eyes narrow. 'Didn't you see what it was standing on? A trapdoor. It's guarding something.'"
+    },
+    "through_trapdoor": {
+      "character_states": [
+        "Harry, Ron, and Hermione are beneath the trapdoor",
+        "Someone has already gone through"
+      ],
+      "established_facts": [
+        "Neville tried to stop them",
+        "Fluffy was already asleep — someone else played music"
+      ],
+      "prose": "That night, they sneak past Neville (Hermione petrifies him with a tearful 'Petrificus Totalus'), past the harp already playing for Fluffy (someone's already been here), and jump through the trapdoor into darkness. They land on something soft, squishy, and alive."
+    },
+    "touch_of_love": {
+      "character_states": [
+        "Quirrell is dead",
+        "Voldemort's spirit has fled",
+        "Harry is unconscious"
+      ],
+      "established_facts": [
+        "Lily's sacrifice created a love-based protection in Harry's blood",
+        "Voldemort cannot touch Harry without being burned",
+        "Love is the most powerful magic"
+      ],
+      "prose": "'SEIZE HIM!' Voldemort screams. Quirrell lunges and wraps his hands around Harry's throat. Harry's scar screams with agony — but Quirrell recoils, howling. His hands are blistering, burning, crumbling as if made of ember. Harry grabs Quirrell's face and holds on. Quirrell shrieks. His skin cracks and flakes into ash. The protection Lily Potter placed on Harry with her sacrifice — her love — is burning Voldemort's vessel alive. A wraith-like shadow rips from Quirrell's crumbling body and passes through Harry with a shriek. Everything goes black."
+    },
+    "troll_fight": {
+      "character_states": [
+        "The Golden Trio is officially formed",
+        "Hermione lied to protect them"
+      ],
+      "established_facts": [
+        "Ron performed Wingardium Leviosa perfectly under pressure",
+        "Hermione is now friends with Harry and Ron",
+        "There are some things you can't share without ending up liking each other"
+      ],
+      "prose": "The mountain troll has found Hermione. It's twelve feet tall, skin like granite, dragging a massive club. Hermione screams. Harry jumps on its back and shoves his wand up its nose. Ron pulls out his wand — 'Wingardium Leviosa!' — and levitates the troll's own club above its head. It drops with a sickening crack. The troll crumples. McGonagall arrives: 'Explain yourselves!' Hermione lies for the first time: 'I went looking for the troll. I thought I could handle it. If Harry and Ron hadn't come, I'd be dead.'"
+    },
+    "unreachable_ariana_death": {
+      "character_states": [
+        "Ariana Dumbledore is dead",
+        "Dumbledore carries permanent guilt"
+      ],
+      "established_facts": [
+        "Dumbledore's deepest desire is his family",
+        "He lied to Harry about the socks",
+        "Grindelwald fled after Ariana's death"
+      ],
+      "prose": "A three-way duel erupted between Albus, his brother Aberforth, and Grindelwald. In the crossfire, a stray curse struck Ariana Dumbledore — Albus's younger sister. She died instantly. Dumbledore never forgave himself. This is why, decades later, when he looks in the Mirror of Erised, he does not see socks. He sees his family, whole and unbroken."
+    },
+    "unreachable_fluffy_music": {
+      "character_states": [
+        "The stranger was Quirrell in disguise"
+      ],
+      "established_facts": [
+        "Music puts Fluffy to sleep",
+        "Quirrell manipulated Hagrid",
+        "The flute Hagrid gave Harry is the same one he used on Fluffy"
+      ],
+      "prose": "Hagrid discovered by accident that all three of Fluffy's heads would droop simultaneously when he played his wooden flute — the same flute he later carved for Harry as a Christmas present. 'Any sort o' music puts him right out,' Hagrid told the stranger in the pub. He didn't realize the stranger in the hooded cloak was Professor Quirrell, gathering intelligence for Voldemort."
+    },
+    "unreachable_fluffy_origin": {
+      "character_states": [
+        "Fluffy was once a puppy"
+      ],
+      "established_facts": [
+        "Hagrid won Fluffy in a card game in Greece",
+        "Fluffy grew to fill an entire corridor"
+      ],
+      "prose": "Years before Harry arrived at Hogwarts, Hagrid won Fluffy in a card game at a pub in Greece. The three-headed dog was a puppy then — barely the size of a horse. 'He was jus' a little fella,' Hagrid recalls fondly. 'Used ter sleep on me bed.' By the time Dumbledore needed a guardian for the Stone, Fluffy filled an entire corridor."
+    },
+    "unreachable_grindelwald_backstory": {
+      "character_states": [
+        "Young Dumbledore was ambitious and dangerous",
+        "Grindelwald was charismatic"
+      ],
+      "established_facts": [
+        "Dumbledore and Grindelwald were once close friends",
+        "The Deathly Hallows are real artifacts",
+        "The Invisibility Cloak Harry owns is one of the three Hallows"
+      ],
+      "prose": "In the summer of 1899, a young Albus Dumbledore met Gellert Grindelwald in Godric's Hollow. Two brilliant minds, consumed by the idea of wizard supremacy and the Deathly Hallows. They made plans to find the three legendary artifacts — the Elder Wand, the Resurrection Stone, and the Cloak of Invisibility — and rule over Muggles 'for the greater good.'"
+    },
+    "voldemort_face": {
+      "character_states": [
+        "Voldemort is parasitically attached to Quirrell's head",
+        "Harry is face to face with his parents' killer"
+      ],
+      "established_facts": [
+        "Voldemort has been living on the back of Quirrell's head all year",
+        "The turban hid Voldemort",
+        "Voldemort wants the Stone to create a new body"
+      ],
+      "prose": "'He lies,' the voice hisses. 'Let me speak to him... face to face.' Quirrell slowly unwraps his turban. Harry stares in horror. Where there should be a back of Quirrell's head, there is a face — chalk-white with glaring red eyes and slits for nostrils. Lord Voldemort. 'See what I have become?' the face whispers. 'Mere shadow and vapor. I have form only when I can share another's body. Unicorn blood has sustained me, but it cannot give me a body of my own. But there is something that can. Something that, conveniently enough, lies in your pocket.'"
+    },
+    "wizard_chess": {
+      "character_states": [
+        "Ron is unconscious",
+        "Ron sacrificed himself for the mission"
+      ],
+      "established_facts": [
+        "This was McGonagall's protection",
+        "Ron played the best chess game Hogwarts has ever seen"
+      ],
+      "prose": "A full-size wizard chess set blocks their path. The pieces are alive, towering, and violent. Ron takes command — chess is the one thing he's brilliant at. He plays as a knight. The game is brutal. Stone pieces smash each other to rubble. Finally, Ron sees the winning move. 'I've got to be taken. Then you're free to checkmate the king.' 'NO!' Harry and Hermione shout. 'That's chess!' Ron snaps. 'You've got to make some sacrifices!' He moves forward. The white queen drags him from his horse and strikes him across the head. Ron crumples. Harry checkmates the king. They rush on."
+    },
+    "yer_a_wizard": {
+      "character_states": [
+        "Harry knows he's a wizard",
+        "Dudley has a pig tail",
+        "Hagrid illegally used magic"
+      ],
+      "established_facts": [
+        "Hagrid was expelled from Hogwarts",
+        "Hagrid's wand is hidden in his umbrella",
+        "Harry's parents didn't die in a car crash — they were murdered"
+      ],
+      "prose": "'Yer a wizard, Harry.' Hagrid hands him the crumpled Hogwarts letter. Harry learns he has been accepted at Hogwarts School of Witchcraft and Wizardry. Vernon tries to stop it — 'I will not pay for some crackpot old fool to teach him magic tricks!' Hagrid points his pink umbrella at Dudley. A pig's tail bursts from Dudley's backside. 'I'd appreciate it if yeh didn't tell anyone at Hogwarts about that,' Hagrid says. 'Strictly speakin', I'm not allowed ter do magic.'"
+    },
+    "zoo_snake": {
+      "character_states": [
+        "Harry can speak to snakes (Parseltongue)",
+        "Harry doesn't know this is unusual"
+      ],
+      "established_facts": [
+        "Harry is a Parselmouth",
+        "The snake is a boa constrictor from Brazil"
+      ],
+      "prose": "At the zoo, Harry finds himself alone in front of a large boa constrictor exhibit. He leans against the glass and sighs. 'I know how you feel,' he tells the snake. 'Stuck behind glass, everyone gawking at you.' The snake raises its head and winks. Harry jumps — the snake is communicating with him. It nods toward a small sign: Bred in Captivity. 'That's me too,' Harry whispers."
     }
-  }
+  },
+  "title": "Harry Potter and the Sorcerer's Stone",
+  "world_rules": [
+    "This is the wizarding world of Harry Potter, set in 1991-1992 Britain.",
+    "Magic is real but governed by strict rules — wands channel magic, spells require incantations and intent.",
+    "Hogwarts School of Witchcraft and Wizardry has four houses: Gryffindor, Slytherin, Ravenclaw, and Hufflepuff.",
+    "The Dark wizard Lord Voldemort was defeated ten years ago when his Killing Curse rebounded off baby Harry Potter.",
+    "Harry is famous in the wizarding world as 'The Boy Who Lived' but has no memory of these events.",
+    "Muggles (non-magical people) are unaware of the wizarding world.",
+    "The Philosopher's Stone (Sorcerer's Stone) can produce the Elixir of Life and turn any metal into gold.",
+    "A Horcrux-like fragment of Voldemort's soul is unknowingly attached to Harry, giving him a lightning-bolt scar."
+  ]
 }

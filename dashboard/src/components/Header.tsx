@@ -33,7 +33,7 @@ export default function Header({
     <header
       className="flex items-center justify-between px-5 shrink-0"
       style={{
-        height: 48,
+        height: 52,
         background: 'var(--bg-panel)',
         borderBottom: '1px solid var(--border)',
       }}
@@ -52,10 +52,10 @@ export default function Header({
         </svg>
 
         <div className="flex items-baseline gap-2">
-          <span style={{ fontFamily: 'var(--font-display)', fontStyle: 'italic', fontSize: 17, fontWeight: 600 }}>
+          <span style={{ fontFamily: 'var(--font-display)', fontSize: 19, fontWeight: 700 }}>
             NVE
           </span>
-          <span style={{ fontSize: 10, opacity: 0.4, letterSpacing: '0.05em' }}>
+          <span style={{ fontSize: 12, color: 'var(--text-muted)', letterSpacing: '0.04em', fontFamily: 'var(--font-body)' }}>
             Narrative Validation Engine
           </span>
         </div>
@@ -63,17 +63,19 @@ export default function Header({
 
       {/* Center — narrative title + stats */}
       <div className="flex items-center gap-3">
-        <span style={{ fontFamily: 'var(--font-display)', fontSize: 13, opacity: 0.85 }}>
+        <span style={{ fontFamily: 'var(--font-display)', fontSize: 15, color: 'var(--text-primary)' }}>
           {title || 'No narrative loaded'}
         </span>
         {nodeCount > 0 && (
           <span
             style={{
-              fontSize: 10,
-              padding: '2px 8px',
+              fontSize: 12,
+              padding: '3px 10px',
               borderRadius: 999,
               background: '#ffffff0a',
               border: '1px solid var(--border)',
+              fontFamily: 'var(--font-mono)',
+              color: 'var(--text-secondary)',
             }}
           >
             {nodeCount} nodes · {edgeCount} edges
@@ -86,13 +88,15 @@ export default function Header({
         <button
           onClick={onLoadFile}
           style={{
-            fontSize: 11,
-            padding: '4px 10px',
-            borderRadius: 4,
-            border: '1px solid #3b82f650',
-            background: '#3b82f610',
+            fontSize: 13,
+            padding: '5px 12px',
+            borderRadius: 5,
+            border: '1px solid #5b9cf540',
+            background: '#5b9cf510',
             color: '#93c5fd',
             cursor: 'pointer',
+            fontFamily: 'var(--font-body)',
+            fontWeight: 500,
           }}
         >
           ✦ Load Literature
@@ -103,14 +107,16 @@ export default function Header({
           disabled={!structuralEnabled || structuralRunning}
           title={structuralEnabled ? undefined : 'Load a narrative first'}
           style={{
-            fontSize: 11,
-            padding: '4px 10px',
-            borderRadius: 4,
+            fontSize: 13,
+            padding: '5px 12px',
+            borderRadius: 5,
             border: 'none',
             background: !structuralEnabled ? '#27272a' : structuralRunning ? '#1d4ed8' : '#2563eb',
             color: !structuralEnabled ? '#52525b' : '#fff',
             cursor: !structuralEnabled || structuralRunning ? 'default' : 'pointer',
             opacity: structuralRunning ? 0.7 : 1,
+            fontFamily: 'var(--font-body)',
+            fontWeight: 600,
           }}
         >
           {structuralRunning ? '▶ Running...' : '▶ Run Structural'}
@@ -121,14 +127,16 @@ export default function Header({
           disabled={!hindsightEnabled || hindsightRunning}
           title={hindsightEnabled ? undefined : 'Run structural validation first'}
           style={{
-            fontSize: 11,
-            padding: '4px 10px',
-            borderRadius: 4,
+            fontSize: 13,
+            padding: '5px 12px',
+            borderRadius: 5,
             border: 'none',
             background: hindsightEnabled ? '#7c3aed' : '#27272a',
             color: hindsightEnabled ? '#fff' : '#52525b',
             cursor: hindsightEnabled && !hindsightRunning ? 'pointer' : 'default',
             opacity: hindsightRunning ? 0.7 : 1,
+            fontFamily: 'var(--font-body)',
+            fontWeight: 600,
           }}
         >
           {hindsightRunning ? '◈ Running...' : '◈ Run Hindsight'}
@@ -148,13 +156,15 @@ export default function Header({
               key={mode}
               onClick={onToggleView}
               style={{
-                fontSize: 11,
-                padding: '4px 9px',
+                fontSize: 12,
+                padding: '5px 10px',
                 border: 'none',
                 background: viewMode === mode ? '#3f3f46' : 'transparent',
                 color: viewMode === mode ? '#e4e4e7' : '#71717a',
                 cursor: 'pointer',
                 textTransform: 'uppercase',
+                fontFamily: 'var(--font-mono)',
+                fontWeight: 500,
               }}
             >
               {mode}

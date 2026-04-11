@@ -183,7 +183,7 @@ export default function GraphCanvas2D({
     // Defs — glow filter
     const defs = svg.append('defs')
     const filter = defs.append('filter').attr('id', 'glow').attr('x', '-50%').attr('y', '-50%').attr('width', '200%').attr('height', '200%')
-    filter.append('feGaussianBlur').attr('stdDeviation', '4').attr('result', 'coloredBlur')
+    filter.append('feGaussianBlur').attr('stdDeviation', '8').attr('result', 'coloredBlur')
     const merge = filter.append('feMerge')
     merge.append('feMergeNode').attr('in', 'coloredBlur')
     merge.append('feMergeNode').attr('in', 'SourceGraphic')
@@ -200,7 +200,7 @@ export default function GraphCanvas2D({
       .attr('orient', 'auto')
       .append('path')
       .attr('d', 'M0,-4L10,0L0,4')
-      .attr('fill', '#ffffff25')
+      .attr('fill', '#ffffff60')
 
     // Zoom/pan
     const g = svg.append('g')
@@ -222,8 +222,8 @@ export default function GraphCanvas2D({
       .selectAll('line')
       .data(links)
       .join('line')
-      .attr('stroke', (d) => (d.conditional ? '#c77dff30' : '#ffffff12'))
-      .attr('stroke-width', 1)
+      .attr('stroke', (d) => (d.conditional ? '#c77dff80' : '#ffffff40'))
+      .attr('stroke-width', 2)
       .attr('stroke-dasharray', (d) => (d.conditional ? '6,3' : 'none'))
       .attr('marker-end', 'url(#arrowhead)')
 
@@ -235,10 +235,10 @@ export default function GraphCanvas2D({
       .data(links)
       .join('text')
       .text((d) => d.label)
-      .attr('font-size', 7)
-      .attr('fill', '#52525b')
+      .attr('font-size', 9)
+      .attr('fill', '#a1a1aa')
       .attr('text-anchor', 'middle')
-      .attr('dy', -4)
+      .attr('dy', -6)
       .attr('opacity', 0)
       .style('pointer-events', 'none')
       .style('user-select', 'none')
@@ -255,7 +255,7 @@ export default function GraphCanvas2D({
       .attr('stroke', (d) =>
         d.meta.isSelected ? COLORS.selected : d.meta.isOnPath ? '#ffffffa0' : `${nodeColor(d.meta)}40`,
       )
-      .attr('stroke-width', (d) => (d.meta.isSelected ? 3 : d.meta.isOnPath ? 2 : 1))
+      .attr('stroke-width', (d) => (d.meta.isSelected ? 4 : d.meta.isOnPath ? 3 : 2))
       .style('filter', 'url(#glow)')
       .style('cursor', 'pointer')
       .on('click', (_event, d) => onNodeClick(d.id))
@@ -292,14 +292,16 @@ export default function GraphCanvas2D({
       .data(nodes)
       .join('text')
       .text((d) => nodeLabel(d.id, textDict))
-      .attr('font-size', 9)
+      .attr('font-size', 11)
       .attr('fill', '#d4d4d8')
       .attr('text-anchor', 'middle')
-      .attr('dy', (d) => Math.sqrt(nodeSize(d.meta) / Math.PI) + 14)
-      .style('font-family', "'Inter', 'Segoe UI', sans-serif")
+      .attr('dy', (d) => Math.sqrt(nodeSize(d.meta) / Math.PI) + 16)
+      .style('font-family', "'Source Sans 3', 'Segoe UI', sans-serif")
+      .style('font-weight', '500')
       .style('pointer-events', 'none')
       .style('user-select', 'none')
-      .style('letter-spacing', '0.02em')
+      .style('letter-spacing', '0.01em')
+      .attr('opacity', (d) => (d.meta?.isSelected ? 1 : 0))
 
     // Force simulation
     const sim = d3
@@ -367,6 +369,7 @@ export default function GraphCanvas2D({
       .selectAll<SVGTextElement, SimNode>('.labels text')
       .attr('fill', (d) => (d.meta.isSelected ? '#ffffff' : '#d4d4d8'))
       .attr('font-weight', (d) => (d.meta.isSelected ? 'bold' : 'normal'))
+      .attr('opacity', (d) => (d.meta.isSelected ? 1 : 0))
   }, [graph, faults, activePath, hindsightActive, selectedNodeId])
 
   // ── Smooth pan to selected node ──────────────────────────────
@@ -436,15 +439,15 @@ export default function GraphCanvas2D({
             border: 'none',
             cursor: 'pointer',
             color: '#71717a',
-            fontFamily: "'Inter', sans-serif",
+            fontFamily: "'Source Sans 3', sans-serif",
           }}
         >
           <span
             style={{
-              fontSize: 9,
+              fontSize: 10,
               fontWeight: 600,
               textTransform: 'uppercase',
-              letterSpacing: '0.08em',
+              letterSpacing: '0.06em',
             }}
           >
             Shape Atlas
@@ -490,9 +493,10 @@ export default function GraphCanvas2D({
               </svg>
               <span
                 style={{
-                  fontSize: 10,
-                  color: '#a1a1aa',
-                  fontFamily: "'Inter', 'Segoe UI', sans-serif",
+                  fontSize: 12,
+                  color: '#b0b0be',
+                  fontFamily: "'Source Sans 3', sans-serif",
+                  fontWeight: 400,
                 }}
               >
                 {item.label}
@@ -527,12 +531,12 @@ function updateHighlight(
   nodeGroup
     .transition()
     .duration(200)
-    .attr('opacity', (d: SimNode) => (connectedIds.has(d.id) ? 1 : 0.12))
+    .attr('opacity', (d: SimNode) => (connectedIds.has(d.id) ? 1 : 0.35))
 
   labelGroup
     .transition()
     .duration(200)
-    .attr('opacity', (d: SimNode) => (connectedIds.has(d.id) ? 1 : 0.12))
+    .attr('opacity', (d: SimNode) => (connectedIds.has(d.id) || d.meta.isSelected ? 1 : 0))
 
   linkGroup
     .transition()
@@ -540,12 +544,12 @@ function updateHighlight(
     .attr('opacity', (d: SimLink) => {
       const sId = typeof d.source === 'object' ? (d.source as SimNode).id : d.sourceId
       const tId = typeof d.target === 'object' ? (d.target as SimNode).id : d.targetId
-      return sId === hoveredId || tId === hoveredId ? 0.8 : 0.03
+      return sId === hoveredId || tId === hoveredId ? 0.9 : 0.2
     })
     .attr('stroke-width', (d: SimLink) => {
       const sId = typeof d.source === 'object' ? (d.source as SimNode).id : d.sourceId
       const tId = typeof d.target === 'object' ? (d.target as SimNode).id : d.targetId
-      return sId === hoveredId || tId === hoveredId ? 2.5 : 1
+      return sId === hoveredId || tId === hoveredId ? 3.5 : 2
     })
 
   linkLabelGroup
@@ -565,7 +569,7 @@ function clearHighlight(
   linkLabelGroup: AnySelection,
 ) {
   nodeGroup.transition().duration(200).attr('opacity', 1)
-  labelGroup.transition().duration(200).attr('opacity', 1)
-  linkGroup.transition().duration(200).attr('opacity', 1).attr('stroke-width', 1)
+  labelGroup.transition().duration(200).attr('opacity', (d: SimNode) => (d.meta.isSelected ? 1 : 0))
+  linkGroup.transition().duration(200).attr('opacity', 1).attr('stroke-width', 2)
   linkLabelGroup.transition().duration(200).attr('opacity', 0)
 }

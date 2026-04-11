@@ -1,17 +1,30 @@
 @import "tailwindcss";
 
 :root {
-  --bg-base:       #09090b;
-  --bg-panel:      #111113;
-  --border:        #1f1f23;
-  --node-default:  #3b82f6;
-  --node-valid:    #22c55e;
-  --node-dead-end: #ef4444;
-  --node-orphan:   #f59e0b;
-  --node-semantic: #a855f7;
+  /* ── Colors ─────────────────────────────────── */
+  --bg-base:       #0c0c0e;
+  --bg-panel:      #141416;
+  --bg-elevated:   #1a1a1e;
+  --border:        #26262c;
+  --text-primary:  #e8e8ec;
+  --text-secondary:#a0a0ae;
+  --text-muted:    #6a6a78;
+  --text-faint:    #44444f;
+
+  /* Node accents — updated palette */
+  --node-default:  #6e8efb;
+  --node-valid:    #4fc3f7;
+  --node-dead-end: #ff6b9d;
+  --node-orphan:   #8e8ea0;
+  --node-semantic: #c77dff;
   --node-selected: #ffffff;
-  --font-display:  'Playfair Display', serif;
-  --font-mono:     'JetBrains Mono', monospace;
+  --accent-blue:   #5b9cf5;
+  --accent-gold:   #ffd54f;
+
+  /* ── Fonts ──────────────────────────────────── */
+  --font-body:     'Source Sans 3', 'Segoe UI', system-ui, sans-serif;
+  --font-display:  'Source Serif 4', Georgia, serif;
+  --font-mono:     'Source Code Pro', 'Consolas', monospace;
 }
 
 * {
@@ -23,14 +36,18 @@ html, body, #root {
   margin: 0;
   padding: 0;
   background: var(--bg-base);
-  color: #e4e4e7;
-  font-family: var(--font-mono);
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dead-end node pulsing red glow */
+/* Dead-end node pulsing glow */
 @keyframes dead-end-pulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-  50%       { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255, 107, 157, 0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(255, 107, 157, 0); }
 }
 
 /* Semantic error rotating violet ring */

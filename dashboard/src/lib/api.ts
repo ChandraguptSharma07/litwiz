@@ -23,7 +23,7 @@ import type {
  * Defaults to `/api` which is proxied by Vite in development.
  * In production, set VITE_API_URL to the deployed server origin.
  */
-const BASE = '/api'
+const BASE = 'https://litwiz-0odu.onrender.com/api'
 
 // ═══════════════════════════════════════════════════════════════
 //  POST /api/ingest — LLM-powered narrative extraction
